@@ -68,6 +68,8 @@ use common\components\Service;
  * @property \addons\TinyShop\services\pickup\PointService $pickupPoint 自提点
  * @property \addons\TinyShop\services\pickup\AuditorService $pickupAuditor 自提审核用户
  *
+ * @property \addons\TinyShop\services\jd\JdService $jd 京东
+ *
  * @author Rf <1458015476@qq.com>
  */
 class Application extends Service
@@ -144,5 +146,8 @@ class Application extends Service
         'notify' => 'addons\TinyShop\services\common\NotifyService',
         'notifySubscriptionConfig' => 'addons\TinyShop\services\common\NotifySubscriptionConfigService',
         'searchHistory' => 'addons\TinyShop\services\common\SearchHistoryService',
+
+        //--------------京东
+        'jd' => '\addons\TinyShop\services\jd\JdService',
     ];
 }

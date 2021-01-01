@@ -5,10 +5,7 @@ namespace addons\autocellphone\api\controllers;
 
 use api\controllers\OnAuthController;
 use addons\autocellphone\common\models\Android;
-use addons\autocellphone\common\models\Douyinqun;
-use addons\autocellphone\common\models\Douyinuser;
 use addons\autocellphone\common\models\Jihuoma;
-use common\models\jd\Sku;
 use GatewayWorker\Lib\Gateway;
 use yii\db\Exception;
 

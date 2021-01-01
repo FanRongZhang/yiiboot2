@@ -1,9 +1,9 @@
 <?php
 
-namespace api\modules\v1\controllers;
+namespace addons\TinyShop\api\modules\v1\controllers\jd;
 
+use addons\TinyShop\common\models\jd\Sku;
 use api\controllers\OnAuthController;
-use common\models\jd\Sku;
 
 
 class SkuController extends OnAuthController
@@ -15,6 +15,11 @@ class SkuController extends OnAuthController
      */
     protected $authOptional = ['index', 'save'];
 
+    //http://localhost/api/tiny-shop/v1/jd/sku/index
+    public function actionIndex()
+    {
+        return "time is ".time();
+    }
 
     public function actionSave()
     {

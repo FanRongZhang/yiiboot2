@@ -72,8 +72,6 @@ use common\components\Service;
  *
  * @property \services\common\PackageService $package googleplay服务
  * @property \services\common\TelegramService $telegram TelegramService
- * @property \services\jd\JdService $jd
- * @property \services\autojs\AutojsService $autojs
  *
  * @author Rf <1458015476@qq.com>
  */
@@ -176,9 +174,5 @@ class Application extends Service
         'oauth2RefreshToken' => 'services\oauth2\RefreshTokenService',
         'oauth2AuthorizationCode' => 'services\oauth2\AuthorizationCodeService',
 
-        /** ----京东----- */
-        'jd' => 'services\jd\JdService',
-        /** ----autojs----- */
-        'autojs' => 'services\autojs\AutojsService',
     ];
 }

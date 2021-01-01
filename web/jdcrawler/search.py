@@ -68,7 +68,7 @@ class gp(object):
         # self.driver.set_window_size(1440, 900)
         self.driver.maximize_window()
 
-        self.api = 'http://jd.xiaozhumeimeigou.com/api/v1'
+        self.api = 'http://jd.xiaozhumeimeigou.com/api/tiny-shop/v1/jd'
 
         self.pagecount = 0
         self.maxtopage = 100

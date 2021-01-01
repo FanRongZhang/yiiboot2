@@ -1,13 +1,12 @@
 <?php
 namespace addons\TinyShop\services\jd;
 
+use addons\TinyShop\common\models\jd\Goods;
 use common\components\Service;
 use common\helpers\ArrayHelper;
-use common\models\jd\Goods;
 use linslin\yii2\curl\Curl;
 
 /**
- * 广场试一试（发布支持凑单操作，同步到广场）
  *
  * 商业模式：专注    满减， 满减
  *
@@ -17,22 +16,36 @@ use linslin\yii2\curl\Curl;
 class JdService extends Service
 {
 
-    public function saveAfterGetItemInfo($id){
+    public function saveAfterGetItemInfo($id)
+    {
         /** @var Goods $m */
         $m = Goods::find()->andWhere([
             'skuId' => strval($id),
         ])->one();
-        if($m == false)
-        {
-            $m = new Goods();
-        }else{
+        if ($m == false) {
+            $m = new Goods(['skuId' => strval($id),]);
+        } else {
             $inSec = 3600;//在前面这几秒刚检查过了,，跳过
-            if(time() - $m->program_last_check_time <= $inSec){
+            if (time() - $m->program_last_check_time <= $inSec) {
                 return true;
             }
         }
         $ary = $this->getItemInfo($id);
-        if(!$ary){
+        if (!$ary) {
+            if ($m->isNewRecord) {
+                $m->loadDefaultValues();
+                $m->isCanGetInfoFromZTK = 0;
+                $m->brandName = $m->brandCode = $m->cid1 = $m->cid1Name = $m->cid2
+                    = $m->cid2Name = $m->cid3 = $m->cid3Name = $m->comments = $m->skuName
+                    = $m->imageList = $m->whiteImage = $m->shopName = $m->materialUrl = '';
+
+                $m->isHot = $m->isJdSale = $m->shopId = $m->shopLevel = $m->stockState = $m->price = 0;
+
+                $m->maxMeiDanSheng = $m->isUp = $m->isFxg = $m->is7ToReturn = $m->endTime = $m->program_last_check_time = 0;
+                $m->couInfoJson = $m->promotionInfoJson = $m->fxgServiceList = json_encode([]);
+
+                $m->save();
+            }
             return false;
         }
         $m->brandCode = $ary['brandCode'];
@@ -44,7 +57,7 @@ class JdService extends Service
         $m->cid3 = strval($ary['categoryInfo']['cid3']);
         $m->cid3Name = $ary['categoryInfo']['cid3Name'];
         $m->comments = $ary['comments'];
-        $m->imageList = json_encode($ary['imageInfo']['imageList'],JSON_UNESCAPED_UNICODE);
+        $m->imageList = json_encode($ary['imageInfo']['imageList'], JSON_UNESCAPED_UNICODE);
         $m->whiteImage = $ary['imageInfo']['whiteImage'];
         $m->isHot = $ary['isHot'];
         $m->isJdSale = $ary['isJdSale'];
@@ -56,28 +69,29 @@ class JdService extends Service
         $m->price = $ary['priceInfo']['price'];
         $m->skuName = $ary['skuName'];
         $m->skuId = $id;
-        $m->couInfoJson = json_encode($ary['promotionInfo']['couInfo'],JSON_UNESCAPED_UNICODE);
+        $m->couInfoJson = json_encode($ary['promotionInfo']['couInfo'], JSON_UNESCAPED_UNICODE);
         $m->maxMeiDanSheng = $ary['promotionInfo']['maxMeiDanSheng'];
         unset(
             $ary['promotionInfo']['couInfo'],
             $ary['promotionInfo']['maxMeiDanSheng']
         );
-        $m->promotionInfoJson = json_encode($ary['promotionInfo'],JSON_UNESCAPED_UNICODE);
-        $m->isUp = $ary['promotionInfo']['isFit'] ? 1 :0;
+        $m->promotionInfoJson = json_encode($ary['promotionInfo'], JSON_UNESCAPED_UNICODE);
+        $m->isUp = $ary['promotionInfo']['isFit'] ? 1 : 0;
         $m->program_last_check_time = time();
         $m->endTime = $ary['promotionInfo']['endTime'];
-        $m->fxg = isset($ary['skuLabelInfo'])
-            && isset($ary['skuLabelInfo']['fxg'])
-            ? $ary['skuLabelInfo']['fxg'] : 0;
+        $m->isFxg = isset($ary['skuLabelInfo'])
+        && isset($ary['skuLabelInfo']['fxg'])
+            ? $ary['skuLabelInfo']['fxg'] : 0;//放心购
         $m->is7ToReturn = isset($ary['skuLabelInfo'])
-        && isset($ary['skuLabelInfo']['is7ToReturn']) ? $ary['skuLabelInfo']['is7ToReturn'] : 0;
+        && isset($ary['skuLabelInfo']['is7ToReturn']) ?
+            $ary['skuLabelInfo']['is7ToReturn'] : 0;
         $serviceList = [];
-        if(isset($ary['skuLabelInfo']) && isset($ary['skuLabelInfo']['fxgServiceList'])){
-            foreach ($ary['skuLabelInfo']['fxgServiceList'] as $one){
+        if (isset($ary['skuLabelInfo']) && isset($ary['skuLabelInfo']['fxgServiceList'])) {
+            foreach ($ary['skuLabelInfo']['fxgServiceList'] as $one) {
                 $serviceList[] = $one['serviceName'];
             }
         }
-        $m->fxgServiceList = json_encode($serviceList,JSON_UNESCAPED_UNICODE);
+        $m->fxgServiceList = json_encode($serviceList, JSON_UNESCAPED_UNICODE);
         $m->isCanGetInfoFromZTK = 1;
         $m->save();
         return $m;
@@ -228,8 +242,22 @@ class JdService extends Service
         $maxMeiDanSheng = 0;
         if($couInfo) {
             $couInfo = array_values($couInfo);
-            $couInfo = ArrayHelper::arraySort($couInfo, 'meidansheng', 'desc');
-            $maxMeiDanSheng = $couInfo[0]['meidansheng'];
+
+            //去掉    单数更多，每单省也更少的
+            $couInfo = ArrayHelper::arraySort($couInfo, 'danshu');
+            $aryRemoveIndex = [];
+            if(count($couInfo) >= 2) {
+                for ($i = 1; $i < count($couInfo); $i++) {
+                    if ($couInfo[$i]['meidansheng'] < $couInfo[$i-1]['meidansheng']) {
+                        $aryRemoveIndex[] = $i;
+                    }
+                }
+                foreach ($aryRemoveIndex as $i){
+                    unset($couInfo[$i]);
+                }
+            }
+
+            $maxMeiDanSheng = ArrayHelper::arraySort($couInfo, 'meidansheng', 'desc')[0]['meidansheng'];
         }
 
         $promotionInfo = [

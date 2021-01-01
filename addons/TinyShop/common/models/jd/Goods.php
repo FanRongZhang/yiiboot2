@@ -5,7 +5,7 @@ namespace addons\TinyShop\common\models\jd;
 use Yii;
 
 /**
- * This is the model class for table "yii_goods".
+ * This is the model class for table "yii_addon_shop_jd_goods".
  *
  * @property int $id
  * @property string $brandCode
@@ -34,6 +34,11 @@ use Yii;
  * @property array $couInfoJson 凑着买满减的信息
  * @property string $price
  * @property string $maxMeiDanSheng
+ * @property int $endTime 满减结束时间
+ * @property int $isFxg 放心购
+ * @property int $is7ToReturn 支持7天无理由退货
+ * @property array $fxgServiceList 服务支持
+ * @property int $isCanGetInfoFromZTK 是否可以通过接口获取到数据
  */
 class Goods extends \yii\db\ActiveRecord
 {
@@ -48,20 +53,20 @@ class Goods extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
-//    public function rules()
-//    {
-//        return [
-//            [['brandCode', 'brandName', 'cid1', 'cid1Name', 'cid2', 'cid2Name', 'cid3', 'cid3Name', 'comments', 'isHot', 'imageList', 'whiteImage', 'isJdSale', 'materialUrl', 'shopName', 'skuId', 'skuName', 'promotionInfoJson', 'program_last_check_time', 'isUp', 'stockState', 'shopId', 'shopLevel', 'couInfoJson'], 'required'],
-//            [['comments', 'isHot', 'isJdSale', 'program_last_check_time', 'isUp', 'stockState'], 'integer'],
-//            [['imageList'], 'string'],
-//            [['promotionInfoJson', 'couInfoJson'], 'safe'],
-//            [['shopLevel','price','maxMeiDanSheng'], 'number'],
-//            [['brandCode', 'brandName', 'cid1', 'cid1Name', 'cid2', 'cid2Name', 'cid3', 'cid3Name', 'skuId', 'shopId'], 'string', 'max' => 50],
-//            [['whiteImage'], 'string', 'max' => 300],
-//            [['materialUrl', 'skuName'], 'string', 'max' => 200],
-//            [['shopName'], 'string', 'max' => 100],
-//        ];
-//    }
+    public function rules()
+    {
+        return [
+            [['brandCode', 'brandName', 'cid1', 'cid1Name', 'cid2', 'cid2Name', 'cid3', 'cid3Name', 'comments', 'isHot', 'imageList', 'whiteImage', 'isJdSale', 'materialUrl', 'shopName', 'skuId', 'skuName', 'promotionInfoJson', 'program_last_check_time', 'isUp', 'stockState', 'shopId', 'shopLevel', 'couInfoJson', 'price', 'maxMeiDanSheng'], 'required'],
+            [['comments', 'isHot', 'isJdSale', 'program_last_check_time', 'isUp', 'stockState', 'endTime', 'isFxg', 'is7ToReturn', 'isCanGetInfoFromZTK'], 'integer'],
+            [['imageList'], 'string'],
+            [['promotionInfoJson', 'couInfoJson', 'fxgServiceList'], 'safe'],
+            [['shopLevel', 'price', 'maxMeiDanSheng'], 'number'],
+            [['brandCode', 'brandName', 'cid1', 'cid1Name', 'cid2', 'cid2Name', 'cid3', 'cid3Name', 'skuId', 'shopId'], 'string', 'max' => 50],
+            [['whiteImage'], 'string', 'max' => 300],
+            [['materialUrl', 'skuName'], 'string', 'max' => 200],
+            [['shopName'], 'string', 'max' => 100],
+        ];
+    }
 
     /**
      * {@inheritdoc}
@@ -78,7 +83,7 @@ class Goods extends \yii\db\ActiveRecord
             'cid2Name' => 'Cid2name',
             'cid3' => 'Cid3',
             'cid3Name' => 'Cid3name',
-            'comments' => 'Comments',
+            'comments' => '评论数',
             'isHot' => 'Is Hot',
             'imageList' => 'Image List',
             'whiteImage' => 'White Image',
@@ -87,15 +92,20 @@ class Goods extends \yii\db\ActiveRecord
             'shopName' => 'Shop Name',
             'skuId' => 'Sku ID',
             'skuName' => 'Sku Name',
-            'promotionInfoJson' => 'Promotion Info Json',
-            'program_last_check_time' => 'Program Last Check Time',
-            'isUp' => 'Is Up',
-            'stockState' => 'Stock State',
+            'promotionInfoJson' => '优惠信息数据',
+            'program_last_check_time' => '软件上次检测数据时间',
+            'isUp' => '是否显示到平台',
+            'stockState' => '1:有货  0:无货',
             'shopId' => 'Shop ID',
             'shopLevel' => 'Shop Level',
-            'couInfoJson' => 'Cou Info Json',
+            'couInfoJson' => '凑着买满减的信息',
             'price' => 'Price',
-            'maxMeiDanSheng' => 'max Mei Dan Sheng'
+            'maxMeiDanSheng' => 'Max Mei Dan Sheng',
+            'endTime' => '满减结束时间',
+            'isFxg' => '放心购',
+            'is7ToReturn' => '支持7天无理由退货',
+            'fxgServiceList' => '服务支持',
+            'isCanGetInfoFromZTK' => '是否可以通过接口获取到数据',
         ];
     }
 }

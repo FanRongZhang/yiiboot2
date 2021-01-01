@@ -45,10 +45,10 @@ CREATE TABLE {{%addon_shop_jd_goods}} (
   `price` decimal(10,2) NOT NULL,
   `maxMeiDanSheng` decimal(10,2) NOT NULL,
   `endTime` int NOT NULL DEFAULT '0' COMMENT '满减结束时间',
-  `fxg` int DEFAULT NULL COMMENT '放心购',
+  `isFxg` int DEFAULT NULL COMMENT '放心购',
   `is7ToReturn` int DEFAULT NULL COMMENT '支持7天无理由退货',
   `fxgServiceList` json DEFAULT NULL COMMENT '服务支持',
-  `isCanGetInfoFromZTK` int DEFAULT NULL,
+  `isCanGetInfoFromZTK` int NOT NULL DEFAULT '1' COMMENT '是否可以通过接口获取到数据',
   PRIMARY KEY (`id`)
 );
 

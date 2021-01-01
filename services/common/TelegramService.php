@@ -2,12 +2,7 @@
 
 namespace services\common;
 
-use common\models\common\Queue;
-use common\models\common\WatchingPackage;
-use common\queues\PackageCheckJob;
-use common\traits\QueueTrait;
 use linslin\yii2\curl\Curl;
-use Yii;
 use common\components\Service;
 
 
@@ -40,28 +35,5 @@ class TelegramService extends Service
             return $e->getMessage();
         }
     }
-
-    function geturl($url, $params = []){
-        try {
-            if ($params) {
-                $url = $url . '?' . http_build_query($params);
-            }
-            $headerArray = array("Content-type:application/json;", "Accept:application/json");
-            $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, $url);
-            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
-            curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
-//            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 0);
-            curl_setopt($ch, CURLOPT_TIMEOUT, 2);
-            curl_setopt($ch, CURLOPT_HTTPHEADER, $headerArray);
-            $output = curl_exec($ch);
-            curl_close($ch);
-            $output = json_decode($output, true);
-            return $output;
-        }catch (\Exception $e){
-            return ['err'=>$e->getMessage()];
-        }
-    }
-
 
 }
