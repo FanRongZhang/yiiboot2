@@ -93,8 +93,11 @@ class Init implements BootstrapInterface
         foreach ($addons as $addon) {
             $name = $addon['name'];
             $app_id = $this->id;
-            // 模块映射
-            if ($this->id == AppEnum::BACKEND && $addon['is_merchant_route_map'] == true) {
+
+            // 如果当前appID为backend,模块映射的话
+            // 可将merchant文件夹下的内容放入到模块
+            // 而不是backend文件夹下的内容
+            if ($app_id == AppEnum::BACKEND && $addon['is_merchant_route_map'] == true) {
                 $app_id = $merchant;
             }
 
