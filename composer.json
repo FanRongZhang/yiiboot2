@@ -1,7 +1,7 @@
 {
-    "name": "yiisoft/yii2",
+    "name": "yiisoft/yiiboot2",
     "description": "一个基于Yii2高级框架的企业级云计算平台",
-    "keywords": ["yii2", "framework", "advanced", "project template", "rageframe", "rageframe2"],
+    "keywords": ["yii2", "framework", "advanced", "project template"],
     "homepage": "http://www.xiaozhumeimeigou.com/",
     "type": "project",
     "license": "Apache-2.0",
