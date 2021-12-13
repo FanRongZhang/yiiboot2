@@ -26,13 +26,13 @@
 1、克隆
 
 ```
-git clone https://github.com/yiisoft/yii2.git
+git clone https://github.com/yiisoft/yii2.git yiiboot
 ```
 
 2、进入目录
 
 ```
-cd rageframe2
+cd yiiboot
 ```
 
 3、安装依赖
@@ -88,7 +88,7 @@ Linux 环境下如果是文件缓存去  `backend/runtime`  目录执行一下 `
 例如: 
 
 ```
-/path/to/rageframe2/web/
+/path/to/yiiboot/web/
 ```
 
 访问说明

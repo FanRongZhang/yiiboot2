@@ -94,9 +94,10 @@ class Init implements BootstrapInterface
             $name = $addon['name'];
             $app_id = $this->id;
 
-            // 如果当前appID为backend,模块映射的话
-            // 可将merchant文件夹下的内容放入到模块
-            // 而不是backend文件夹下的内容
+            // 模块映射的话
+            // 通过设置 模块子类 common\components\BaseAddonModule
+            // 的方法 $this->setBasePath("@addons/$this->name/$this->app_id");  来设置模块的路径
+            // 见 BaseAddonModule line 50 行左右逻辑处理
             if ($app_id == AppEnum::BACKEND && $addon['is_merchant_route_map'] == true) {
                 $app_id = $merchant;
             }
