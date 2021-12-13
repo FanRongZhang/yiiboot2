@@ -17,7 +17,7 @@ class QrForm extends Model
     public $background = '#FFFFFF';
     public $logo;
     public $logo_size = 50;
-    public $label = 'RageFrame';
+    public $label = '微信扫码';
     public $label_size = 14;
     public $label_location = 'center';
     public $error_correction_level = 'low';

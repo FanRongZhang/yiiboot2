@@ -41,11 +41,12 @@ class m200529_155245_backend_member extends Migration
         ], "ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COMMENT='系统_后台管理员表'");
         
         /* 索引设置 */
-        
-        
+
+        $password = '123456';
+        $password = Yii::$app->getSecurity()->generatePasswordHash($password);
         /* 表数据 */
-        $this->insert('{{%backend_member}}',['id'=>'1','username'=>'yeDhj','password_hash'=>'$2y$13$0Pa1MeyAyOUMub2ZMkttEea.MojRU5fyvhgLIbr7c7d7pspGHkgym','auth_key'=>'z6lrwixmdNF4VqtkXw6z-3vMZdSdngm2','password_reset_token'=>'','type'=>'10','realname'=>'小主科技','head_portrait'=>'','gender'=>'1','qq'=>'','email'=>'','birthday'=>'2016-04-16','province_id'=>'370000','city_id'=>'371100','area_id'=>'371102','address'=>'大潮街道666号','mobile'=>'','home_phone'=>'','dingtalk_robot_token'=>'','visit_count'=>'0','last_time'=>'1590722804','last_ip'=>'127.0.0.1','role'=>'10','status'=>'1','created_at'=>'1449114934','updated_at'=>'1590722804']);
-        $this->insert('{{%backend_member}}',['id'=>'2','username'=>'test','password_hash'=>'$2y$13$Pt6VvtKpuDUDcT2JWskVj.qaMpizdX17IcR1NW3sZ7yIgyp0PbsUa','auth_key'=>'IX_tLgIVE-9MV_QpPko4h1hnxJK_Dhtf','password_reset_token'=>'','type'=>'1','realname'=>'','head_portrait'=>'','gender'=>'0','qq'=>'','email'=>'','birthday'=>NULL,'province_id'=>'0','city_id'=>'0','area_id'=>'0','address'=>'','mobile'=>'','home_phone'=>'','dingtalk_robot_token'=>'','visit_count'=>'0','last_time'=>'1590595474','last_ip'=>'127.0.0.1','role'=>'10','status'=>'1','created_at'=>'1574918260','updated_at'=>'1590595474']);
+        $this->insert('{{%backend_member}}',['id'=>'1','username'=>'admin','password_hash'=> $password,'auth_key'=>'z6lrwixmdNF4VqtkXw6z-3vMZdSdngm2','password_reset_token'=>'','type'=>'10','realname'=>'小主科技','head_portrait'=>'','gender'=>'1','qq'=>'','email'=>'','birthday'=>'2016-04-16','province_id'=>'370000','city_id'=>'371100','area_id'=>'371102','address'=>'大潮街道666号','mobile'=>'','home_phone'=>'','dingtalk_robot_token'=>'','visit_count'=>'0','last_time'=>'1590722804','last_ip'=>'127.0.0.1','role'=>'10','status'=>'1','created_at'=>'1449114934','updated_at'=>'1590722804']);
+        $this->insert('{{%backend_member}}',['id'=>'2','username'=>'test','password_hash'=> $password,'auth_key'=>'IX_tLgIVE-9MV_QpPko4h1hnxJK_Dhtf','password_reset_token'=>'','type'=>'1','realname'=>'','head_portrait'=>'','gender'=>'0','qq'=>'','email'=>'','birthday'=>NULL,'province_id'=>'0','city_id'=>'0','area_id'=>'0','address'=>'','mobile'=>'','home_phone'=>'','dingtalk_robot_token'=>'','visit_count'=>'0','last_time'=>'1590595474','last_ip'=>'127.0.0.1','role'=>'10','status'=>'1','created_at'=>'1574918260','updated_at'=>'1590595474']);
         
         /* 设置外键约束 */
         $this->execute('SET foreign_key_checks = 1;');

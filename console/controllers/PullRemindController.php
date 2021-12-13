@@ -39,17 +39,17 @@ class PullRemindController extends Controller
         $list = Yii::$app->services->backendNotifySubscriptionConfig->findAllWithMember();
         /** @var NotifySubscriptionConfig $item */
         foreach ($list as $item) {
-            if (!empty($item->manager)) {
+            if (!empty($item->member)) {
                 $result = Yii::$app->services->backendNotify->pullRemind($item, SubscriptionAlertTypeEnum::DINGTALK);
 
-                if ($result && !empty($item->manager->dingtalk_robot_token)) {
+                if ($result && !empty($item->member->dingtalk_robot_token)) {
                     $text = [];
                     foreach ($result as $value) {
                         $text[] = '#' . $value['id'] . ' ' . $value['content'];
                     }
 
                     try {
-                        $robot = Robot::create($item->manager->dingtalk_robot_token);
+                        $robot = Robot::create($item->member->dingtalk_robot_token);
                         $robot->send([
                             'msgtype' => 'markdown',
                             'markdown' => [

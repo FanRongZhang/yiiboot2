@@ -81,8 +81,8 @@ $prefix = !RegularHelper::verify('url', Yii::getAlias('@attachurl')) ? Yii::$app
                         <td><?= Yii::$app->params['exploitOfficialWebsite']?></td>
                     </tr>
                     <tr>
-                        <td>官方QQ群</td>
-                        <td><a href="https://jq.qq.com/?_wv=1027&amp;k=4BeVA2r" target="_blank">655084090</a></td>
+                        <td>技术支持微信</td>
+                        <td>fangouhuikefu</td>
                     </tr>
                     <tr>
                         <td>GitHub</td>

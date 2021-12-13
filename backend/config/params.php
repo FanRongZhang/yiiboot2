@@ -18,7 +18,7 @@ return [
     /** ------ 开发者信息 ------ **/
     'exploitDeveloper' => '小主科技',
     'exploitFullName' => '小主科技工作室',
-    'exploitOfficialWebsite' => '<a href="http://www.rageframe.com" target="_blank">www.rageframe.com</a>',
+    'exploitOfficialWebsite' => '<a href="https://github.com/yiisoft/yii2" target="_blank">https://github.com/yiisoft/yii2</a>',
     'exploitGitHub' => '<a href="https://github.com/yiisoft/yii2" target="_blank">https://github.com/yiisoft/yii2</a>',
 
     /**
