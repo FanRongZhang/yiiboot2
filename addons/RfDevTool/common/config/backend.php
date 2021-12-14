@@ -28,6 +28,13 @@ return [
             ],
         ],
         [
+            'title' => '表模型生成',
+            'route' => 'model/index',
+            'icon' => '',
+            'params' => [
+            ],
+        ],
+        [
             'title' => 'Excel导入权限',
             'route' => 'auth/index',
             'icon' => '',

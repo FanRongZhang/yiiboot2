@@ -116,7 +116,7 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
         <div class="box box-solid">
             <div class="box-header">
                 <i class="fa fa-circle blue" style="font-size: 8px"></i>
-                <h3 class="box-title">关注人数统计</h3>
+                <h3 class="box-title">注册会员人数统计</h3>
             </div>
             <?= \common\widgets\echarts\Echarts::widget([
                 'config' => [
