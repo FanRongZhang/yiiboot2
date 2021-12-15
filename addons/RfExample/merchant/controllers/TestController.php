@@ -5,7 +5,7 @@ namespace addons\RfExample\merchant\controllers;
 /**
  * Class TestController
  * @package addons\RfExample\merchant\controllers
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class TestController extends BaseController
 {

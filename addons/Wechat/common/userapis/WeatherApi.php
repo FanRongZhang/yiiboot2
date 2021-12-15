@@ -10,7 +10,7 @@ use common\interfaces\AddonWidget;
  *
  * Class WeatherApi
  * @package addons\Wechat\common\userapis
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class WeatherApi implements AddonWidget
 {

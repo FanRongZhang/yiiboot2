@@ -14,7 +14,7 @@ use addons\TinyShop\common\models\forms\ProductSearch;
  *
  * Class IndexController
  * @package addons\TinyShop\api\modules\v1\controllers
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class IndexController extends OnAuthController
 {

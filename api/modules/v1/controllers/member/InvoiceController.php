@@ -10,7 +10,7 @@ use common\models\member\Invoice;
  *
  * Class InvoiceController
  * @package api\modules\v1\controllers\member
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class InvoiceController extends UserAuthController
 {

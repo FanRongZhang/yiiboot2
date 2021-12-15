@@ -14,7 +14,7 @@ use common\enums\AppEnum;
 /**
  * Class ConfigController
  * @package addons\Merchants\backend\controllers
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class ConfigController extends BaseController
 {

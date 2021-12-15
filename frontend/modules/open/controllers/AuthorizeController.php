@@ -20,7 +20,7 @@ use frontend\forms\LoginForm;
  *
  * Class AuthorizeController
  * @package frontend\modules\open\controllers
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class AuthorizeController extends Controller
 {

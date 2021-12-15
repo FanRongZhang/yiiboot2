@@ -22,7 +22,7 @@ class AddonConfig extends BaseAddonConfig
         'title' => '微商城',
         'brief_introduction' => '基础的多商户购物商城',
         'description' => '快速可以进行二次开发的商城，麻雀虽小五脏俱全',
-        'author' => '小主科技',
+        'author' => 'Rf',
         'version' => '1.2.0',
     ];
 

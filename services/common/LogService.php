@@ -20,7 +20,7 @@ use common\enums\MessageLevelEnum;
 /**
  * Class LogService
  * @package services\common
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class LogService extends Service
 {

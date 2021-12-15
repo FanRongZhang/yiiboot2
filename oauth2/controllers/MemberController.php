@@ -10,7 +10,7 @@ use common\traits\BaseAction;
 /**
  * Class MemberController
  * @package oauth2\controllers
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class MemberController extends \yii\rest\ActiveController
 {

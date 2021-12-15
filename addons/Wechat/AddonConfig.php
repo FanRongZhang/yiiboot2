@@ -22,7 +22,7 @@ class AddonConfig extends BaseAddonConfig
         'title' => '微信公众号',
         'brief_introduction' => '微信公众号基础功能管理',
         'description' => '管理公众号的菜单、素材、消息群发、数据统计等',
-        'author' => '小主科技',
+        'author' => 'Rf',
         'version' => '1.0.3',
     ];
 

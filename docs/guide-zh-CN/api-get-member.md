@@ -27,7 +27,7 @@
     "data": {
         "id": "1",
         "username": "admin",
-        "nickname": "小主科技",
+        "nickname": "Rf",
         "realname": null,
         "head_portrait": null,
         "sex": "1",
@@ -62,7 +62,7 @@
     "data": {
         "id": "1",
         "username": "admin",
-        "nickname": "小主科技",
+        "nickname": "Rf",
         "realname": null,
         "head_portrait": null,
         "sex": "1",

@@ -12,7 +12,7 @@ use addons\TinyShop\common\models\marketing\MiniProgramLive;
 /**
  * Class MiniProgramLiveController
  * @package addons\TinyShop\api\modules\v1\controllers\marketing
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class MiniProgramLiveController extends OnAuthController
 {

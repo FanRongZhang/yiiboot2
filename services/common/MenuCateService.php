@@ -13,7 +13,7 @@ use common\models\common\MenuCate;
 /**
  * Class MenuCateService
  * @package services\common
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class MenuCateService extends Service
 {

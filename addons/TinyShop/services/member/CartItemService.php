@@ -18,7 +18,7 @@ use addons\TinyShop\common\enums\PointExchangeTypeEnum;
  *
  * Class CartItemService
  * @package addons\TinyShop\common\services
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class CartItemService extends Service implements CartItemInterface
 {

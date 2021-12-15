@@ -13,7 +13,7 @@ use addons\TinyShop\common\models\marketing\CouponType;
 /**
  * Class CouponTypeService
  * @package addons\TinyShop\services\marketing
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class CouponTypeService extends Service
 {

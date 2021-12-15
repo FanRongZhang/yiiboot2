@@ -15,7 +15,7 @@ use addons\TinyShop\common\components\InitOrderDataInterface;
  *
  * Class BuyNow
  * @package addons\TinyShop\common\components\purchase
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class BuyNowPurchase extends InitOrderDataInterface
 {

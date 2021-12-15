@@ -26,7 +26,7 @@ use common\models\common\Provinces;
  * }
  *
  * @package common\queues
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class MapJob extends BaseObject implements \yii\queue\JobInterface
 {

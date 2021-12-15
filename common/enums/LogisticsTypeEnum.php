@@ -5,7 +5,7 @@ namespace common\enums;
 /**
  * Class LogisticsTypeEnum
  * @package addons\TinyShop\common\enums
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class LogisticsTypeEnum extends BaseEnum
 {

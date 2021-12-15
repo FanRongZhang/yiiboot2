@@ -14,7 +14,7 @@ use addons\Wechat\common\models\Rule;
  *
  * Class MsgHistoryController
  * @package addons\Wechat\merchant\controllers
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class MsgHistoryController extends BaseController
 {

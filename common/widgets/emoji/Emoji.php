@@ -11,7 +11,7 @@ use common\widgets\emoji\assets\AppAsset;
  *
  * Class Emoji
  * @package common\widgets\emoji
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class Emoji extends Widget
 {

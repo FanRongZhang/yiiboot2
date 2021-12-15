@@ -8,7 +8,7 @@ use yii\base\Widget;
 /**
  * Class Notify
  * @package backend\widgets\notify
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class Notify extends Widget
 {

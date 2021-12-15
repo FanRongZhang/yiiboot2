@@ -11,7 +11,7 @@ use common\models\common\Attachment;
 /**
  * Trait FileActions
  * @package common\traits
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 trait FileActions
 {

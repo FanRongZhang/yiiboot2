@@ -7,7 +7,7 @@ use yii\base\Model;
 /**
  * Class MigrateForm
  * @package addons\RfDevTool\common\models
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class MigrateForm extends Model
 {

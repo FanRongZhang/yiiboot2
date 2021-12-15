@@ -12,7 +12,7 @@ use addons\RfHelpers\common\models\Database;
  *
  * Class DataBaseController
  * @package backend\modules\sys\controllers
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class DataBaseController extends BaseController
 {

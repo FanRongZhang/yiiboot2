@@ -21,7 +21,7 @@ class AddonConfig extends BaseAddonConfig
         'title' => '功能案例',
         'brief_introduction' => '系统的一些功能案例',
         'description' => '系统自带的功能使用示例及其说明，包含一些简单的交互',
-        'author' => '小主科技',
+        'author' => 'Rf',
         'version' => '1.0.0',
     ];
 

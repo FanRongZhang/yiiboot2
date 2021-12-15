@@ -22,7 +22,7 @@ use addons\TinyShop\common\models\forms\RechargePayFrom;
  *
  * Class PayController
  * @package addons\TinyShop\api\controllers
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class PayController extends OnAuthController
 {

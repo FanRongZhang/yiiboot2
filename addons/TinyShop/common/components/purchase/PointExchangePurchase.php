@@ -14,7 +14,7 @@ use yii\web\UnprocessableEntityHttpException;
  *
  * Class PointExchangePurchase
  * @package addons\TinyShop\common\components\purchase
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class PointExchangePurchase extends BuyNowPurchase
 {

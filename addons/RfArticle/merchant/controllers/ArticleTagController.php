@@ -11,7 +11,7 @@ use addons\RfArticle\common\models\ArticleTag;
  *
  * Class ArticleTagController
  * @package addons\RfArticle\merchant\controllers
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class ArticleTagController extends BaseController
 {

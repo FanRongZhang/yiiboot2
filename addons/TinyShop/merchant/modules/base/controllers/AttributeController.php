@@ -15,7 +15,7 @@ use addons\TinyShop\backend\controllers\BaseController;
  *
  * Class BaseAttributeController
  * @package addons\TinyShop\merchant\controllers
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class AttributeController extends BaseController
 {

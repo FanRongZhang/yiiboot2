@@ -9,7 +9,7 @@ use addons\TinyShop\common\models\base\SpecValue;
 /**
  * Class SpecValue
  * @package addons\TinyShop\common\services\base
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class SpecValueService extends Service
 {

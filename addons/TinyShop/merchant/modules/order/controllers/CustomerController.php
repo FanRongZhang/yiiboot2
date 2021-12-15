@@ -21,7 +21,7 @@ use addons\TinyShop\common\models\order\Order;
  *
  * Class CustomerController
  * @package addons\TinyShop\merchant\modules\order\controllers
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class CustomerController extends BaseController
 {

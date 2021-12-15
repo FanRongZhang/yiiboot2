@@ -12,7 +12,7 @@ use Qiniu\Auth;
 /**
  * Class StorageController
  * @package frontend\controllers
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class StorageController extends BaseController
 {

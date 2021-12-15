@@ -8,7 +8,7 @@ use yii\base\Behavior;
 /**
  * Class BeforeSend
  * @package api\behaviors
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class BeforeSend extends Behavior
 {

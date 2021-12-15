@@ -8,7 +8,7 @@ use addons\TinyShop\common\models\base\CashAgainstArea;
 /**
  * Class CashAgainstAreaService
  * @package addons\TinyShop\services\base
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class CashAgainstAreaService extends Service
 {

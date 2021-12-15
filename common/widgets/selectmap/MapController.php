@@ -9,7 +9,7 @@ use yii\filters\AccessControl;
 /**
  * Class MapController
  * @package common\widgets\selectmap
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class MapController extends Controller
 {

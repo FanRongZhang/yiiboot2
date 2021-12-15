@@ -10,7 +10,7 @@ use Yii;
 /**
  * Trait MemberInfo
  * @package addons\TinyShop\common\traits
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 trait MemberInfo
 {

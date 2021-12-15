@@ -10,7 +10,7 @@ use common\helpers\StringHelper;
 /**
  * Class UrlRule
  * @package api\rest
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class UrlRule extends \yii\rest\UrlRule
 {

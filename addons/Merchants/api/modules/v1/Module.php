@@ -4,7 +4,7 @@ namespace addons\Merchants\api\modules\v1;
 
 /**
  * Class Module
- * @package addons\Merchants\api\modules\v1 * @author 小主科技 <1458015476@qq.com>
+ * @package addons\Merchants\api\modules\v1 * @author Rf <1458015476@qq.com>
  */
 class Module extends \yii\base\Module
 {

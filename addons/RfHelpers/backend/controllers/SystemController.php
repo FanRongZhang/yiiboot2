@@ -9,7 +9,7 @@ use common\helpers\ResultHelper;
 /**
  * Class SystemController
  * @package backend\modules\sys\controllers
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class SystemController extends BaseController
 {

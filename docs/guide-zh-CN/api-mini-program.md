@@ -37,7 +37,7 @@ code | string| 是 | 无 | 小程序code
             "id": 1,
             "username": "admin",
             "type": 1,
-            "nickname": "小主科技",
+            "nickname": "Rf",
             "realname": null,
             "head_portrait": null,
             "sex": 1,

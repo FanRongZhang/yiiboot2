@@ -11,7 +11,7 @@ use addons\TinyShop\common\enums\ExplainTypeEnum;
 /**
  * Class EvaluateForm
  * @package addons\TinyShop\api\modules\v1\forms
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class EvaluateForm extends Evaluate
 {

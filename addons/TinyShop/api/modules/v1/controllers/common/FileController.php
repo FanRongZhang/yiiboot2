@@ -7,7 +7,7 @@ namespace addons\TinyShop\api\modules\v1\controllers\common;
  *
  * Class FileController
  * @package addons\TinyShop\api\modules\v1\controllers\common
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class FileController extends \api\modules\v1\controllers\FileController
 {

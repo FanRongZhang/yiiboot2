@@ -11,7 +11,7 @@ use api\controllers\OnAuthController;
  * Class FileController
  * @package api\modules\v1\controllers
  * @property \yii\db\ActiveRecord $modelClass
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class FileController extends OnAuthController
 {

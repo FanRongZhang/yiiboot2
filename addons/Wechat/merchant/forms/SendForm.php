@@ -11,7 +11,7 @@ use common\enums\StatusEnum;
 /**
  * Class SendForm
  * @package merchant\modules\wechat\models
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class SendForm extends MassRecord
 {

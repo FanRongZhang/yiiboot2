@@ -10,7 +10,7 @@ use common\models\merchant\CommissionWithdraw;
 /**
  * Class CommissionWithdrawService
  * @package services\merchant
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class CommissionWithdrawService extends Service
 {

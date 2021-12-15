@@ -62,7 +62,7 @@ id | int | 是 |  | 文章id |
         "position": 3,
         "content": "<p>内容<br/></p>",
         "link": "",
-        "author": "小主科技",
+        "author": "Rf",
         "view": 0,
         "sort": 0,
         "status": 1,

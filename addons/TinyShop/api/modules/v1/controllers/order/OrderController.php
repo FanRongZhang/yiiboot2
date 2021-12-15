@@ -28,7 +28,7 @@ use addons\TinyShop\common\models\SettingForm;
  *
  * Class OrderController
  * @package addons\TinyShop\api\modules\v1\controllers\order
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class OrderController extends OnAuthController
 {

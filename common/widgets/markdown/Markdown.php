@@ -11,7 +11,7 @@ use common\helpers\ArrayHelper;
 /**
  * Class Markdown
  * @package common\widgets\markdown
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class Markdown extends yii\widgets\InputWidget
 {

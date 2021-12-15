@@ -13,7 +13,7 @@ use common\models\oauth2\repository\RefreshTokenRepository;
  *
  * Class RefreshTokenController
  * @package oauth2\controllers
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class RefreshTokenController extends OnAuthController
 {

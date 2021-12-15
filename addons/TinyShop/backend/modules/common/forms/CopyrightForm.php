@@ -7,7 +7,7 @@ use yii\base\Model;
 /**
  * Class CopyrightForm
  * @package addons\TinyShop\backend\modules\common\forms
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class CopyrightForm extends Model
 {

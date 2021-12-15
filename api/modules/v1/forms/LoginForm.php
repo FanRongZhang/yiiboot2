@@ -9,7 +9,7 @@ use common\enums\AccessTokenGroupEnum;
 /**
  * Class LoginForm
  * @package api\modules\v1\forms
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class LoginForm extends \common\models\forms\LoginForm
 {

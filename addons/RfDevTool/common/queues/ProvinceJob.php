@@ -13,7 +13,7 @@ use QL\QueryList;
 /**
  * Class ProvinceJob
  * @package addons\RfDevTool\common\queues
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class ProvinceJob extends BaseObject implements JobInterface
 {

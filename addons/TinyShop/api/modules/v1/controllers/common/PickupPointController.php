@@ -13,7 +13,7 @@ use addons\TinyShop\api\modules\v1\forms\PickupPointSearchForm;
 /**
  * Class PickupPointController
  * @package addons\TinyShop\api\modules\v1\controllers\common
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class PickupPointController extends OnAuthController
 {

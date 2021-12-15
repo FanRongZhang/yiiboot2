@@ -12,7 +12,7 @@ use common\helpers\TreeHelper;
 /**
  * Class MemberService
  * @package services\member
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class MemberService extends Service
 {

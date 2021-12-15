@@ -8,7 +8,7 @@ use common\traits\MemberSelectAction;
 /**
  * Class MemberController
  * @package addons\TinyShop\backend\controllers
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class MemberController extends BaseController
 {

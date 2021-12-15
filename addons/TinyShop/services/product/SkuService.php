@@ -13,7 +13,7 @@ use yii\web\UnprocessableEntityHttpException;
 /**
  * Class Sku
  * @package addons\TinyShop\common\components\product
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class SkuService extends Service
 {

@@ -7,7 +7,7 @@ use common\enums\BaseEnum;
 /**
  * Class MenuClientPlatformTypeEnum
  * @package addons\Wechat\common\enums
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class MenuClientPlatformTypeEnum extends BaseEnum
 {

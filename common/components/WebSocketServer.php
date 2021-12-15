@@ -19,7 +19,7 @@ use addons\TinyService\common\enums\TypeEnum;
 /**
  * Class WebSocketServer
  * @package common\components
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class WebSocketServer
 {

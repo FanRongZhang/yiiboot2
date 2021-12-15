@@ -16,7 +16,7 @@ use addons\TinyShop\common\traits\CalculatePriceTrait;
  *
  * Class UsePointHandler
  * @package addons\TinyShop\common\components
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class UsePointHandler extends PreviewInterface
 {

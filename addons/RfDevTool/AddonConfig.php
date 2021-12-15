@@ -21,7 +21,7 @@ class AddonConfig extends BaseAddonConfig
         'title' => '开发工具',
         'brief_introduction' => '提供一些简单的开发辅助工具，比如爬取省市区，数据迁移等等',
         'description' => '让你更加快捷的进行系统开发',
-        'author' => '小主科技',
+        'author' => 'Rf',
         'version' => '1.0.0',
     ];
 

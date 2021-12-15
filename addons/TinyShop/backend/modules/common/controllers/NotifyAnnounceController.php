@@ -13,7 +13,7 @@ use addons\TinyShop\backend\controllers\BaseController;
 /**
  * Class BaseNotifyAnnounceController
  * @package backend\modules\base\controllers
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class NotifyAnnounceController extends BaseController
 {

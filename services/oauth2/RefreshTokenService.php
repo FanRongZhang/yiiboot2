@@ -8,7 +8,7 @@ use common\models\oauth2\RefreshToken;
 /**
  * Class RefreshTokenService
  * @package services\oauth2
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class RefreshTokenService extends Service
 {

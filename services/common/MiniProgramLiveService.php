@@ -10,7 +10,7 @@ use linslin\yii2\curl\Curl;
 /**
  * Class MiniProgramLiveService
  * @package services\common
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class MiniProgramLiveService extends Service
 {

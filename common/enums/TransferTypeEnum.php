@@ -7,7 +7,7 @@ namespace common\enums;
  *
  * Class TransferTypeEnum
  * @package common\enums
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class TransferTypeEnum extends BaseEnum
 {

@@ -10,7 +10,7 @@ use common\models\forms\CreditsLogForm;
 /**
  * Class RechargeForm
  * @package backend\modules\member\forms
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class RechargeForm extends Model
 {

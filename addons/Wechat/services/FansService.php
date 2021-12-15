@@ -10,7 +10,7 @@ use addons\Wechat\common\models\Fans;
 /**
  * Class FansService
  * @package addons\Wechat\services
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class FansService extends Service
 {

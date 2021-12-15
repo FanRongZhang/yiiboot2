@@ -11,7 +11,7 @@ use addons\TinyShop\common\models\marketing\FullMail;
 /**
  * Class FullMailService
  * @package addons\TinyShop\services\marketing
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class FullMailService extends Service
 {

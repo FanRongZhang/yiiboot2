@@ -123,7 +123,7 @@ use common\traits\AuthItemTrait;
 /**
  * Class AuthItemController
  * @package backend\modules\common\controllers
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class AuthItemController extends BaseController
 {
@@ -167,7 +167,7 @@ use common\enums\AppEnum;
 /**
  * Class RoleController
  * @package addons\Merchants\backend\controllers
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class AuthRoleController extends BaseController
 {

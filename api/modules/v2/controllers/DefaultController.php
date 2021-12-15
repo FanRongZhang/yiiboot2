@@ -10,7 +10,7 @@ use api\controllers\OnAuthController;
  *
  * Class DefaultController
  * @package api\modules\v2\controllers
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class DefaultController extends OnAuthController
 {

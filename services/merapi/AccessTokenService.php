@@ -17,7 +17,7 @@ use common\models\merchant\Merchant;
 /**
  * Class AccessTokenService
  * @package services\merapi
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class AccessTokenService extends Service
 {

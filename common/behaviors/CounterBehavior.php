@@ -14,7 +14,7 @@ use common\helpers\DateHelper;
  *
  * Class CounterBehavior
  * @package common\behaviors
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class CounterBehavior extends Behavior
 {

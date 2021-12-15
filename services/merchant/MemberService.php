@@ -10,7 +10,7 @@ use common\components\Service;
 /**
  * Class MemberService
  * @package services\merchant
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class MemberService extends Service
 {

@@ -3,7 +3,7 @@
 return [
     'adminEmail' => 'admin@example.com',
     'adminAcronym' => '小主',
-    'adminTitle' => '小主科技',
+    'adminTitle' => 'Rf',
     'adminDefaultHomePage' => ['main/system'], // 默认主页
 
     /** ------ 总管理员配置 ------ **/
@@ -16,8 +16,8 @@ return [
     'user.log.except.code' => [404], // 不记录的code
 
     /** ------ 开发者信息 ------ **/
-    'exploitDeveloper' => '小主科技',
-    'exploitFullName' => '小主科技工作室',
+    'exploitDeveloper' => 'Rf',
+    'exploitFullName' => 'Rf工作室',
     'exploitOfficialWebsite' => '<a href="https://github.com/yiisoft/yii2" target="_blank">https://github.com/yiisoft/yii2</a>',
     'exploitGitHub' => '<a href="https://github.com/yiisoft/yii2" target="_blank">https://github.com/yiisoft/yii2</a>',
 

@@ -4,7 +4,7 @@ namespace addons\TinyShop\oauth2\modules\v2;
 
 /**
  * Class Module
- * @package addons\TinyShop\oauth2\modules\v2 * @author 小主科技 <1458015476@qq.com>
+ * @package addons\TinyShop\oauth2\modules\v2 * @author Rf <1458015476@qq.com>
  */
 class Module extends \yii\base\Module
 {

@@ -15,7 +15,7 @@ use GuzzleHttp\Psr7\ServerRequest;
  *
  * Class AuthorizeController
  * @package frontend\modules\open\controllers
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class AuthorizeController extends OnAuthController
 {

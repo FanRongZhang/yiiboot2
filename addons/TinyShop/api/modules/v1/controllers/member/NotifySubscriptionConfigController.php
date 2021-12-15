@@ -10,7 +10,7 @@ use addons\TinyShop\common\models\base\NotifySubscriptionConfig;
 /**
  * Class NotifySubscriptionConfigController
  * @package addons\TinyShop\api\modules\v1\controllers\member
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class NotifySubscriptionConfigController extends UserAuthController
 {

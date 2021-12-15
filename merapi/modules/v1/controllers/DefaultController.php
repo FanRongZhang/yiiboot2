@@ -10,7 +10,7 @@ use merapi\controllers\OnAuthController;
  * Class DefaultController
  * @package merapi\modules\v1\controllers
  * @property \yii\db\ActiveRecord $modelClass
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class DefaultController extends OnAuthController
 {

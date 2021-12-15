@@ -8,7 +8,7 @@ use League\OAuth2\Server\Entities\Traits\EntityTrait;
 /**
  * Class ScopeEntity
  * @package common\models\oauth2\entity
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class ScopeEntity implements ScopeEntityInterface
 {

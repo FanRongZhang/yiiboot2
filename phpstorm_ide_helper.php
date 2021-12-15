@@ -37,7 +37,7 @@ class Yii
  * @property \jianyan\easywechat\Wechat $wechat
  * @property \Da\QrCode\Component\QrCodeComponent $qr
  *
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class MyApplication
 {

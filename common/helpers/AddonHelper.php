@@ -14,7 +14,7 @@ use League\Flysystem\Adapter\Local;
 /**
  * Class AddonHelper
  * @package common\helpers
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class AddonHelper
 {

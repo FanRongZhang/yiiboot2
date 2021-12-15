@@ -11,7 +11,7 @@ use addons\TinyShop\common\models\product\Product;
 /**
  * Class CartItemForm
  * @package addons\TinyShop\common\models\forms
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class CartItemForm extends Model
 {

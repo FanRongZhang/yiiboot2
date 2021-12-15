@@ -7,7 +7,7 @@ use addons\RfExample\merchant\controllers\BaseController;
 /**
  * Class TestController
  * @package addons\RfExample\merchant\controllers\test\test
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class TestController extends BaseController
 {

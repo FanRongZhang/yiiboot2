@@ -9,7 +9,7 @@ use addons\TinyShop\merchant\controllers\BaseController;
 /**
  * Class GeneralController
  * @package addons\TinyShop\merchant\modules\statistics\controllers
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class GeneralController extends BaseController
 {

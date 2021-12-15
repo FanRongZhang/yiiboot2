@@ -11,7 +11,7 @@ use addons\TinyShop\common\models\base\Spec;
 /**
  * Class Spec
  * @package addons\TinyShop\common\services\base
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class SpecService extends Service
 {

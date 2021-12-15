@@ -11,7 +11,7 @@ use addons\TinyShop\common\models\common\Notify;
 /**
  * Class NotifyAnnounceController
  * @package addons\TinyShop\api\modules\v1\controllers\common
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class NotifyAnnounceController extends OnAuthController
 {

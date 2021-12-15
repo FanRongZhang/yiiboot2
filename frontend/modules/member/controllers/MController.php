@@ -7,7 +7,7 @@ use frontend\controllers\BaseController;
 /**
  * Class MController
  * @package frontend\modules\member\controllers
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class MController extends BaseController
 {

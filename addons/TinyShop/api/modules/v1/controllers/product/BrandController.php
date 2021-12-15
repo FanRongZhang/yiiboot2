@@ -12,7 +12,7 @@ use addons\TinyShop\common\models\product\Brand;
  *
  * Class BrandController
  * @package addons\TinyShop\api\controllers\product
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class BrandController extends OnAuthController
 {

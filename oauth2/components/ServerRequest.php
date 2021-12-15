@@ -8,7 +8,7 @@ use GuzzleHttp\Psr7\LazyOpenStream;
 /**
  * Class ServerRequest
  * @package oauth2\components
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class ServerRequest extends \GuzzleHttp\Psr7\ServerRequest
 {

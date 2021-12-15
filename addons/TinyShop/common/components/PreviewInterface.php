@@ -9,7 +9,7 @@ use addons\TinyShop\common\models\forms\PreviewForm;
  *
  * Class PreviewHandler
  * @package addons\TinyShop\common\components
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 abstract class PreviewInterface
 {

@@ -9,7 +9,7 @@ use common\models\member\Invoice;
 /**
  * Class InvoiceForm
  * @package addons\TinyShop\api\modules\v1\forms
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class InvoiceForm extends Model
 {

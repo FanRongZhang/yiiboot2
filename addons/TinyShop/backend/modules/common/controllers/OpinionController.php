@@ -14,7 +14,7 @@ use addons\TinyShop\backend\controllers\BaseController;
  *
  * Class OpinionController
  * @package addons\TinyShop\backend\modules\common\controllers
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class OpinionController extends BaseController
 {

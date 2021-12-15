@@ -13,7 +13,7 @@ use addons\Wechat\common\models\MsgHistory;
 /**
  * Class MsgHistoryService
  * @package addons\Wechat\services
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class MsgHistoryService extends Service
 {

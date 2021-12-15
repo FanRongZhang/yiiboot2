@@ -13,7 +13,7 @@ use addons\TinyShop\common\enums\RefundStatusEnum;
 /**
  * Class OrderProductController
  * @package addons\TinyShop\api\modules\v1\controllers\member
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class OrderProductController extends UserAuthController
 {

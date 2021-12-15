@@ -25,7 +25,7 @@ use yii\web\UnprocessableEntityHttpException;
 /**
  * Class ProductService
  * @package addons\TinyShop\services\product
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class ProductService extends Service
 {

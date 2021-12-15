@@ -17,7 +17,7 @@ use addons\TinyShop\common\enums\PointExchangeTypeEnum;
 /**
  * Class ProductForm
  * @package addons\TinyShop\merchant\forms
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class ProductForm extends \addons\TinyShop\common\models\product\Product
 {

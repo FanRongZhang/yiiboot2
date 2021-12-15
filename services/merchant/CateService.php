@@ -11,7 +11,7 @@ use common\models\merchant\Cate;
 /**
  * Class Cate
  * @package addons\TinyShop\common\components\product
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class CateService extends Service
 {

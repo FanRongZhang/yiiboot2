@@ -9,7 +9,7 @@ use addons\TinyShop\common\enums\ProductMarketingEnum;
 /**
  * Class MarketingService
  * @package addons\TinyShop\services\marketing
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class MarketingService extends Service
 {

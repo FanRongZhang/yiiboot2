@@ -21,7 +21,7 @@ class AddonConfig extends BaseAddonConfig
         'title' => '小助手',
         'brief_introduction' => '有事助手干',
         'description' => '提供一些简单的增强辅助工具，比如生成二维码、查看系统状态等等',
-        'author' => '小主科技',
+        'author' => 'Rf',
         'version' => '1.0.0',
     ];
 

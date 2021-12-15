@@ -8,7 +8,7 @@ use common\traits\HasOneMerchant;
 /**
  * Class Collect
  * @package addons\TinyShop\common\models\common
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class Collect extends Follow
 {

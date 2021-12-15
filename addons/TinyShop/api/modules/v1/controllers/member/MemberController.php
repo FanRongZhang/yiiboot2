@@ -16,7 +16,7 @@ use addons\TinyShop\common\models\SettingForm;
  *
  * Class MemberController
  * @package addons\TinyShop\api\controllers
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class MemberController extends OnAuthController
 {

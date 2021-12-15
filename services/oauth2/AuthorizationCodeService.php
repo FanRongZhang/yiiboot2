@@ -8,7 +8,7 @@ use common\models\oauth2\AuthorizationCode;
 /**
  * Class AuthorizationCodeService
  * @package services\oauth2
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class AuthorizationCodeService extends Service
 {

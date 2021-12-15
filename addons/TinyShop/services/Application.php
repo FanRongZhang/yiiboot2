@@ -68,7 +68,7 @@ use common\components\Service;
  * @property \addons\TinyShop\services\pickup\PointService $pickupPoint 自提点
  * @property \addons\TinyShop\services\pickup\AuditorService $pickupAuditor 自提审核用户
  *
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class Application extends Service
 {

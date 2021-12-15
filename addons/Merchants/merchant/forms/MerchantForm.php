@@ -7,7 +7,7 @@ use common\models\merchant\Merchant;
 /**
  * Class MerchantForm
  * @package addons\Merchants\merchant\forms
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class MerchantForm extends Merchant
 {

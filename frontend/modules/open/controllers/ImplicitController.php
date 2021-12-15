@@ -14,7 +14,7 @@ use common\models\oauth2\entity\UserEntity;
  *
  * Class ImplicitController
  * @package frontend\modules\open\controllers
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class ImplicitController extends Controller
 {

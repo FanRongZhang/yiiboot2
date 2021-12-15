@@ -11,7 +11,7 @@ use common\models\member\Address;
  * Class AddressController
  * @package api\modules\v1\controllers\member
  * @property \yii\db\ActiveRecord $modelClass
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class AddressController extends UserAuthController
 {

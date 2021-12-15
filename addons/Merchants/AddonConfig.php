@@ -21,7 +21,7 @@ class AddonConfig extends BaseAddonConfig
         'title' => '商户管理',
         'brief_introduction' => '商家基础管理',
         'description' => '管理商家权限、商家菜单、商家配置等',
-        'author' => '小主科技',
+        'author' => 'Rf',
         'version' => '1.0.0',
     ];
 

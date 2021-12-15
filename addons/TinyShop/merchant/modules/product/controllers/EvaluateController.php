@@ -14,7 +14,7 @@ use addons\TinyShop\merchant\controllers\BaseController;
  *
  * Class ProductEvaluateController
  * @package addons\TinyShop\merchant\controllers
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class EvaluateController extends BaseController
 {

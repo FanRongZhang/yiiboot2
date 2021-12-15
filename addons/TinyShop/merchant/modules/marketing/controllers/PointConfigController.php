@@ -9,7 +9,7 @@ use addons\TinyShop\merchant\controllers\BaseController;
 /**
  * Class PointConfigController
  * @package addons\TinyShop\merchant\modules\marketing\controllers
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class PointConfigController extends BaseController
 {

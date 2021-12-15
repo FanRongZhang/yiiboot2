@@ -13,7 +13,7 @@ use common\models\merchant\Member;
  * Class MemberController
  * @package merapi\modules\v1\controllers\member
  * @property \yii\db\ActiveRecord $modelClass
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class MemberController extends OnAuthController
 {

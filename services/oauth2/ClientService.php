@@ -9,7 +9,7 @@ use common\models\oauth2\Client;
 /**
  * Class ClientService
  * @package services\oauth2
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class ClientService extends Service
 {

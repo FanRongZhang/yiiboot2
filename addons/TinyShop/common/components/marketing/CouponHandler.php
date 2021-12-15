@@ -19,7 +19,7 @@ use addons\TinyShop\common\enums\ProductMarketingEnum;
  *
  * Class CouponHandler
  * @package addons\TinyShop\common\components\marketing
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class CouponHandler extends PreviewInterface
 {

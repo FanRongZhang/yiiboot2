@@ -12,7 +12,7 @@ use common\enums\StatusEnum;
  * 自提
  *
  * Class PickupDelivery
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class PickupDelivery extends PreviewInterface
 {

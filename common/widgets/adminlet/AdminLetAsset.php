@@ -7,7 +7,7 @@ use yii\web\AssetBundle;
 /**
  * Class AdminLetAsset
  * @package common\widgets\adminlet
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class AdminLetAsset extends AssetBundle
 {

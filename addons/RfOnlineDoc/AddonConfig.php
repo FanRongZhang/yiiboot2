@@ -22,7 +22,7 @@ class AddonConfig extends BaseAddonConfig
         'title' => '在线文档',
         'brief_introduction' => '在线文档管理',
         'description' => '马克笔记文档编辑',
-        'author' => '小主科技',
+        'author' => 'Rf',
         'version' => '1.1.0',
     ];
 

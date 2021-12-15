@@ -8,7 +8,7 @@ use addons\Wechat\common\models\RuleKeywordStat;
 /**
  * Class RuleKeywordStatService
  * @package addons\Wechat\services
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class RuleKeywordStatService extends Service
 {

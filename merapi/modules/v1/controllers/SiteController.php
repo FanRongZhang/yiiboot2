@@ -20,7 +20,7 @@ use merapi\modules\v1\forms\RegisterForm;
  *
  * Class SiteController
  * @package merapi\modules\v1\controllers
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class SiteController extends OnAuthController
 {

@@ -9,7 +9,7 @@ use addons\RfDevTool\common\helpers\ImportHelper;
 /**
  * Class AuthController
  * @package addons\RfDevTool\backend\controllers
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class AuthController extends BaseController
 {

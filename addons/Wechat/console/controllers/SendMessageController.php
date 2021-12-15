@@ -10,7 +10,7 @@ use addons\Wechat\common\models\MassRecord;
 /**
  * Class SendMessageController
  * @package console\controllers
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class SendMessageController extends Controller
 {

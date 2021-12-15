@@ -8,7 +8,7 @@ use addons\TinyShop\common\models\product\EvaluateStat;
 /**
  * Class EvaluateStatController
  * @package addons\TinyShop\api\modules\v1\controllers\product
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class EvaluateStatController extends OnAuthController
 {

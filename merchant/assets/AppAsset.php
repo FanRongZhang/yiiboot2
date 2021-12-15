@@ -9,7 +9,7 @@ use common\widgets\adminlet\AdminLetAsset;
 /**
  * Class AppAsset
  * @package merchant\assets
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class AppAsset extends AssetBundle
 {

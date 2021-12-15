@@ -24,7 +24,7 @@ use addons\TinyShop\common\enums\ExplainStatusEnum;
 /**
  * Class OrderProductService
  * @package addons\TinyShop\services\order
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class ProductService extends Service
 {

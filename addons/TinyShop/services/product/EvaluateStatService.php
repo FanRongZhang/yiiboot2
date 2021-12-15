@@ -9,7 +9,7 @@ use addons\TinyShop\common\models\product\EvaluateStat;
 /**
  * Class EvaluateStatService
  * @package addons\TinyShop\services\product
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class EvaluateStatService extends Service
 {

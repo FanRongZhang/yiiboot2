@@ -7,7 +7,7 @@ use yii\web\AssetBundle;
 /**
  * Class AppAsset
  * @package html5\assets
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class AppAsset extends AssetBundle
 {

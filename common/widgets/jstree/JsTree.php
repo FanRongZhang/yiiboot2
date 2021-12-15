@@ -39,7 +39,7 @@ use common\widgets\jstree\assets\AppAsset;
  * ```
  *
  * @package common\widgets\jstree
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class JsTree extends InputWidget
 {

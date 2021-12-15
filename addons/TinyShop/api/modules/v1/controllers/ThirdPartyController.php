@@ -28,7 +28,7 @@ use addons\TinyShop\common\models\SettingForm;
  *
  * Class ThirdPartyController
  * @package addons\TinyShop\api\modules\v1\controllers
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class ThirdPartyController extends OnAuthController
 {

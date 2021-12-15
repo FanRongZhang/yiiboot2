@@ -8,7 +8,7 @@ use merapi\controllers\OnAuthController;
 /**
  * Class DefaultController
  * @package addons\Merchants\merapi\modules\v1\controllers
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class DefaultController extends OnAuthController
 {

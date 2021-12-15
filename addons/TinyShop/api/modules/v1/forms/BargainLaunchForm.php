@@ -16,7 +16,7 @@ use yii\web\UnprocessableEntityHttpException;
 /**
  * Class BargainLaunchForm
  * @package addons\TinyShop\api\modules\v1\forms
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class BargainLaunchForm extends BargainLaunch
 {

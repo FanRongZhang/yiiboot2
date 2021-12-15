@@ -10,7 +10,7 @@ use addons\TinyShop\common\enums\RangeTypeEnum;
 /**
  * Class CouponTypeForm
  * @package addons\TinyShop\merchant\forms
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class CouponTypeForm extends CouponType
 {

@@ -7,7 +7,7 @@ use common\components\Service;
 /**
  * Class LocalDistributionMemberService
  * @package addons\TinyShop\services\base
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class LocalDistributionMemberService extends Service
 {

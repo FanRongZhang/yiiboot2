@@ -21,7 +21,7 @@ class AddonConfig extends BaseAddonConfig
         'title' => '内容管理',
         'brief_introduction' => '内置基础的单页，文章管理、幻灯片等',
         'description' => '',
-        'author' => '小主科技',
+        'author' => 'Rf',
         'version' => '1.0.0',
     ];
 

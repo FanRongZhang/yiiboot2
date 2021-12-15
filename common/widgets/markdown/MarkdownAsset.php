@@ -7,7 +7,7 @@ use yii\web\AssetBundle;
 /**
  * Class MarkdownAsset
  * @package common\widgets\markdown
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class MarkdownAsset extends AssetBundle
 {

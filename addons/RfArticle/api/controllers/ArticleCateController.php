@@ -10,7 +10,7 @@ use api\controllers\OnAuthController;
  *
  * Class ArticleCateController
  * @package addons\RfArticle\api\controllers
- * @author 小主科技 <1458015476@qq.com>
+ * @author Rf <1458015476@qq.com>
  */
 class ArticleCateController extends OnAuthController
 {
