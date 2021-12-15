@@ -3,7 +3,7 @@
 namespace common\models\common;
 
 /**
- * This is the model class for table "{{%sys_addons_binding}}".
+ * This is the model class for table "{{%common_addons_binding}}".
  *
  * @property int $id 主键
  * @property string $addons_name 插件名称

@@ -60,7 +60,7 @@ class ModelController extends BaseController
 
         return $this->render($this->action->id, [
             'tableList' => ArrayHelper::map($tableList, 'name', 'name'),
-            'addonList' => ArrayHelper::merge(['0' => '默认系统'], ArrayHelper::map($addonList, 'name', 'title')),
+            'addonList' => ArrayHelper::merge(['0' => '默认系统（被禁用）'], ArrayHelper::map($addonList, 'name', 'title')),
             'model' => $model
         ]);
     }
