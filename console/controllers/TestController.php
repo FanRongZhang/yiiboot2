@@ -12,13 +12,7 @@ use yii\console\Controller;
 class TestController extends Controller
 {
     public function actionIndex(){
-        $pythonfile = Yii::getAlias("@root/web/watchingapp/google_play.py");
-        $key = str_replace(' ', '-', 'teenpatti');
-        if (StringHelper::isWindowsOS())
-            $cmd = " python {$pythonfile} $key";
-        else
-            $cmd = " python3 {$pythonfile} $key";
-        exec($cmd, $output);
-        var_dump($output);
+        $ary = Yii::$app->services->jd->getItemInfo('18241105903');
+        var_dump($ary);
     }
 }
