@@ -43,10 +43,11 @@ class gp(object):
 
         port = random.randint(9515,9517)
         port = str(port)
-        self.driver = webdriver.Remote("http://gg.lucktp.com:"+port+"/wd/hub", options=chrome_option)
+        port = '9515'
+        self.driver = webdriver.Remote("http://192.168.1.178:"+port+"/wd/hub", options=chrome_option)
         self.driver.set_window_size(1440, 900)
 
-        self.api = 'http://gg.lucktp.com/api/v1'
+        self.api = 'http://192.168.1.178/api/v1'
 
     def search(self, name):
         try:
@@ -60,8 +61,11 @@ class gp(object):
             self.driver.get(url)
 
             time.sleep(2)
-            #self.driver.save_screenshot("search/"+name+".png")
-            self.driver.find_element(By.TAG_NAME,'html').screenshot("search/"+name+".png")
+            self.driver.save_screenshot("search/"+name+".png")
+
+            fd = open("r.html","w")
+            fd.write(self.driver.page_source)
+            fd.close()
 
             list_dom = self.driver.find_elements(By.XPATH,'//*[@id="J_goodsList"]/ul/li')
             
@@ -179,20 +183,13 @@ class gp(object):
             self.driver.quit()
 
 
-# python google_play.py whatsapp 
+# python search.py "满减 化妆品" 
 if __name__ == "__main__":
-    if len(sys.argv) <= 1:
-        print('缺少执行参数')
-        exit
+    print(sys.argv)
     name = sys.argv[1]
-    name = name.replace('-',' ')
     print(name)
-
     h = gp()
-    if len(sys.argv) == 2: # 1个额外参数就搜索
-        h.search(name)
-    else:
-        h.check(name) # 直接去目标也进行检查
+    h.search(name)
 
 
 

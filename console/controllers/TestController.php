@@ -12,7 +12,9 @@ use yii\console\Controller;
 class TestController extends Controller
 {
     public function actionIndex(){
-        $ary = Yii::$app->services->jd->getItemInfo('18241105903');
-        var_dump($ary);
+//        $ary = Yii::$app->services->jd->getItemInfo('2990352');
+//        var_dump($ary);
+        preg_match('/^满([\d+]*)\D+([\d+]*)/','满199元b100元', $matches);
+var_dump($matches);
     }
 }
