@@ -19,6 +19,8 @@ import urllib.request
 from urllib.parse import urlencode
 import traceback
 
+
+
 class gp(object):
     def __init__(self):
         chrome_option = webdriver.ChromeOptions()
@@ -45,7 +47,17 @@ class gp(object):
         port = str(port)
         port = '9515'
         self.driver = webdriver.Remote("http://192.168.1.178:"+port+"/wd/hub", options=chrome_option)
-        self.driver.set_window_size(1440, 900)
+
+        # 处理selenium中webdriver特征值
+        self.driver.execute_cdp_cmd(
+            'Page.addScriptToEvaluateOnNewDocument',
+            {
+                'source':'Object.defineProperty(navigator,"webdriver",{get:()=>undefined})'
+            }
+        )
+
+        # self.driver.set_window_size(1440, 900)
+        self.driver.maximize_window()
 
         self.api = 'http://192.168.1.178/api/v1'
 
