@@ -41,7 +41,7 @@ class jd(object):
         #self.driver = webdriver.Chrome(executable_path=r"F:\下载\chromedriver.exe", chrome_options=chrome_option)
         
         #chrome_option.add_argument('--no-sandbox')       
-        self.driver = webdriver.Chrome(executable_path=r"C:\Users\Administrator\AppData\Local\MyChrome\Chrome\Application\chromedriver.exe")
+        # self.driver = webdriver.Chrome(executable_path=r"C:\Users\Administrator\AppData\Local\MyChrome\Chrome\Application\chromedriver.exe")
         # port = random.randint(9515,9517)
         # port = str(port)
         # self.driver = webdriver.Remote("http://gg.lucktp.com:"+port+"/wd/hub", options=chrome_option)
@@ -53,6 +53,7 @@ class jd(object):
         #     }
         # )
 
+        self.driver = webdriver.Chrome()
         # self.driver.set_window_size(1440, 900)
         self.driver.maximize_window()
 
@@ -78,7 +79,7 @@ class jd(object):
         if self.driver.current_url.startswith("https://passport.jd.com"):
             self.driver.find_element(By.XPATH,"//div[@class='qrcode-img']").screenshot("login_qr.png")
             #等待扫码登录
-            urllib.request.urlopen(self.api + "/jd/qr?name=zrf") #发送扫码提醒
+            #urllib.request.urlopen(self.api + "/jd/qr?name=zrf") #发送扫码提醒
             time.sleep(30)
             #获取cookie
             my_cookie = self.driver.get_cookies()

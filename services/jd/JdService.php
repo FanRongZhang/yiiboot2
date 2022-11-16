@@ -26,89 +26,93 @@ class JdService extends Service
     {
         $curl = new Curl();
         $curl->setHeaders([
-           'user-agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36',
+            'user-agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36',
             'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
             'cache-control' => 'max-age=0',
             'referer' => "https://item.jd.com/$id.html",
         ]);
-        $jsonData = $curl->get("https://item-soa.jd.com/getWareBusiness?callback=&skuId=$id&num=1",false);
-
-        //是否适合在平台上 凑着买
-        $isFit = true;
+        $jsonData = $curl->get("https://item-soa.jd.com/getWareBusiness?callback=&skuId=$id&num=1", false);
 
         // text  跨自营/店铺满减 不要
         // text  多买优惠
         //text 满减
         //text 限购
         $aryPromo = [];
-        if(isset($jsonData['promotion']) && isset($jsonData['promotion']['activity'])){
-            foreach ($jsonData['promotion']['activity'] as $onePromo){
-                //限购   基本  没任何 有利可图
-                if($onePromo['text'] == '限购' || $onePromo['text'] =='满额返券'){
-                    $isFit = false;
-                }
-                //进口商品有每年的交易限额   基本  没任何 有利可图
-                if(isset($onePromo['worldBuyInfo']) && isset($onePromo['worldBuyInfo']['nationName'])){
-                    $isFit = false;
-                }
-
-//                if($isFit && $onePromo['text'][0] != ''){}
+        if (isset($jsonData['promotion']) && isset($jsonData['promotion']['activity'])) {
+            foreach ($jsonData['promotion']['activity'] as $onePromo) {
                 $aryPromo[] = $onePromo;
+
+                //限购   基本  没任何 有利可图
+//                if ($onePromo['text'] == '限购' || $onePromo['text'] == '满额返券') {
+//                    $isFit = false;
+//                }
+//                //进口商品有每年的交易限额   基本  没任何 有利可图
+//                if (isset($onePromo['worldBuyInfo']) && isset($onePromo['worldBuyInfo']['nationName'])) {
+//                    $isFit = false;
+//                }
+
+//                $aryPromo[] = $onePromo;
 //                if($onePromo['text'][0] != '跨'){
 //                    $aryPromo[] = $onePromo;
 //                }
             }
         }
 
-        //没任何满减 或  多件优惠
-        if(  $aryPromo == false ){
-            $isFit = false;
-        }
-
-        //直接给个 京东联盟 链接过去让用户直接买就行了
-        $directBuyLink = '';
-        if($isFit == false){
-
-        }
-
         $price = $jsonData['price']['p'];
         $name = $jsonData['wareInfo']['wname'];
-        $promotionInfo = [
-            'isFit' => $isFit,
-            'directBuyLink' => $directBuyLink,
-            'name' => $name,
-            'price' => $price,
-//            'shopInfo' => $jsonData['shopInfo']['shop'],
-//            'adText' => isset($jsonData['adText']) ? $jsonData['adText'] : '',
-            'aryPromo' => $aryPromo,
-        ];
 
-        $isUp = 0;//上架
-        $meiDanJian = 0;
-        if($isFit){
-            $youfei = 5;//邮费
-            $wodefuwufei = 3;//我的服务费
-            $e_wai_pay = $youfei + $wodefuwufei;
-            foreach ($aryPromo as $one) {
-//                preg_match('/^满([\d+]*)\D+([\d+]*)/','满199元减100元', $matches);
-                preg_match('/^满([\d+]*)\D+([\d+]*)/', $one['value'], $matches);
+        //是否适合在平台上 凑着买
+        $isFit = false;
+
+        //算出每一个满减的金额情况
+        $couInfo = [];
+        foreach ($aryPromo as $onePromo) {
+            if($onePromo['text'] != '满减'){
+                continue;
+            }
+
+            $aryManJian = [];
+            //满199元减20元，满299元减30元，满399元减50元
+            if(explode('减',$onePromo['value']) >= 2){
+                $aryManJian = explode('，',$onePromo['value']);
+            }else{
+                $aryManJian[] = $onePromo['value'];
+            }
+
+            foreach ($aryManJian as $oneManJian) {
+                preg_match('/^满([\d+]*)\D+([\d+]*)/', $oneManJian, $matches);
                 if ($matches && count($matches) == 3 && is_numeric($matches[1]) && is_numeric($matches[2])) {
                     $man = $matches[1];//满多少
                     $jian = $matches[2];//减去的金额
-                    if ($man > $price) {
+                    if ($man > $price) {//满的金额需要大于单个卖价，不然凑屁
+                        $isFit = true;
                         $danshu = ceil($man / $price);//获取满减需要购买的件数
                         $meiDanJian = $jian / $danshu;//每单对于用户来说优惠了多少钱
 
-//                        //用户除去给我的钱，还可以额外至少节省20元钱，那么就上架
-//                        $jieyuele = 20;
-//                        if($meiDanJian - $e_wai_pay >= $jieyuele){
-//                            $isUp = 1;
-//                        }
+                        //相同单量情况下，只保留对用户最划算的
+                        $meiDanJieSheng = round($meiDanJian, 2);
+                        if( isset($couInfo[$danshu]) == false || $meiDanJieSheng > $couInfo[$danshu]['sheng']) {
+                            $couInfo[$danshu] = [
+                                'man' => $man,//满
+                                'jian' => $jian,//减
+                                'danshu' => $danshu,//几单达到满
+                                'meidansheng' => $meiDanJieSheng,//每单省
+                            ];
+                        }
                     }
                 }
             }
         }
 
+        $promotionInfo = [
+            'isFit' => $isFit,
+            'name' => $name,
+            'price' => $price,
+//            'shopInfo' => $jsonData['shopInfo']['shop'],
+//            'adText' => isset($jsonData['adText']) ? $jsonData['adText'] : '',
+            'aryPromo' => $aryPromo,
+            'couInfo' => $couInfo,
+        ];
 
         return ArrayHelper::merge($isMergeInfo ? $this->getInfoViaZTK($id) : [], [
             'promotionInfo' => $promotionInfo,
@@ -120,6 +124,7 @@ class JdService extends Service
         $url ="https://api.zhetaoke.com:10001/api/open_jing_union_open_goods_query.ashx?".http_build_query([
                 'appkey' => $this->appkey_ztk,
                 'skuIds' => $id,
+                'area' => \Yii::$app->params['jd_area_id'],
             ]);
         $data = file_get_contents($url);
         $aryJson = \Qiniu\json_decode($data, true);
