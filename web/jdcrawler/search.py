@@ -61,7 +61,7 @@ class gp(object):
         # self.driver.set_window_size(1440, 900)
         self.driver.maximize_window()
 
-        self.api = 'http://192.168.1.178/api/v1'
+        self.api = 'http://jd.xiaozhumeimeigou.com/api/v1'
 
         self.pagecount = 0
         self.maxtopage = 40
@@ -143,7 +143,13 @@ class gp(object):
                     break
 
         print("skus are ",','.join(aryGreatSku))
-        urllib.request.urlopen(self.api + "/package/save?sku="+ ','.join(aryGreatSku))
+
+        if len(aryGreatSku) > 0:
+            params = {
+                'skus' : ','.join(aryGreatSku),
+                'page' : self.currentpage
+            }
+            urllib.request.urlopen(self.api + "/sku/save?"+ urlencode(params))
 
 # python search.py "化妆品" 
 if __name__ == "__main__":

@@ -5,6 +5,7 @@ namespace services\jd;
 use common\components\Service;
 use common\helpers\ArrayHelper;
 use common\helpers\RegularHelper;
+use common\models\jd\Goods;
 use linslin\yii2\curl\Curl;
 
 /**
@@ -22,6 +23,38 @@ use linslin\yii2\curl\Curl;
  */
 class JdService extends Service
 {
+    public function saveAfterGetItemInfo($id){
+        $ary = $this->getItemInfo($id);
+
+        $m = new Goods();
+        $m->brandCode = $ary['brandCode'];
+        $m->brandName = $ary['brandName'];
+        $m->cid1 = strval($ary['categoryInfo']['cid1']);
+        $m->cid1Name = $ary['categoryInfo']['cid1Name'];
+        $m->cid2 = strval($ary['categoryInfo']['cid2']);
+        $m->cid2Name = $ary['categoryInfo']['cid2Name'];
+        $m->cid3 = strval($ary['categoryInfo']['cid3']);
+        $m->cid3Name = $ary['categoryInfo']['cid3Name'];
+        $m->comments = $ary['comments'];
+        $m->imageList = json_encode($ary['imageInfo']['imageList'],JSON_UNESCAPED_UNICODE);
+        $m->whiteImage = $ary['imageInfo']['whiteImage'];
+        $m->isHot = $ary['isHot'];
+        $m->isJdSale = $ary['isJdSale'];
+        $m->shopId = strval($ary['shopInfo']['shopId']);
+        $m->shopLevel = $ary['shopInfo']['shopLevel'];
+        $m->shopName = $ary['shopInfo']['shopName'];
+        $m->stockState = 1;
+        $m->materialUrl = $ary['materialUrl'];
+        $m->price = $ary['promotionInfo']['price'];
+        $m->skuName = $ary['skuName'];
+        $m->skuId = strval($ary['skuId']);
+        $m->promotionInfoJson = json_encode($ary['promotionInfo'],JSON_UNESCAPED_UNICODE);
+        $m->couInfoJson = json_encode($ary['promotionInfo']['couInfo'],JSON_UNESCAPED_UNICODE);
+        $m->is_up = $ary['promotionInfo']['isFit'] ? 1 :0;
+        $m->program_last_check_time = time();
+        return $m->save();
+    }
+
     public function getItemInfo($id, $isMergeInfo = true)
     {
         $curl = new Curl();
@@ -129,7 +162,7 @@ class JdService extends Service
         $data = file_get_contents($url);
         $aryJson = \Qiniu\json_decode($data, true);
 //        return $aryJson;
-        return \Qiniu\json_decode( $aryJson['jd_union_open_goods_query_response']['result'] , true)['data'];
+        return \Qiniu\json_decode( $aryJson['jd_union_open_goods_query_response']['result'] , true)['data'][0];
     }
 
 }
