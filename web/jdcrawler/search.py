@@ -74,7 +74,7 @@ class gp(object):
                 'enc' : 'utf-8',
                 'wq' : name,
             }
-            url="https://search.jd.com/Search?"+urlencode(params)
+            url="https://search.jd.com/Search?shop=1&stock=1&"+urlencode(params) # shop=1 京东物流 stock=1 有货
             if pageurl:
                 url = pageurl
             
@@ -82,9 +82,10 @@ class gp(object):
 
             time.sleep(2)
 
-            #点击京东物流
-            
+            #点击勾选中京东物流
 
+
+            time.sleep(3)
             #将滚动条移动到页面的底部
             js="var q=document.documentElement.scrollTop=100000"  
             self.driver.execute_script(js)  
