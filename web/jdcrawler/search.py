@@ -81,6 +81,10 @@ class gp(object):
             self.driver.get(url)
 
             time.sleep(2)
+
+            #点击京东物流
+            
+
             #将滚动条移动到页面的底部
             js="var q=document.documentElement.scrollTop=100000"  
             self.driver.execute_script(js)  
