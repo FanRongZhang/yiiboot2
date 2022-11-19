@@ -27,9 +27,16 @@ class gp(object):
         chrome_option = webdriver.ChromeOptions()
         UserAgent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36'
         chrome_option.add_argument('User-Agent=' + UserAgent)
-
-        #这里！！！！实现不关闭的重点
-        chrome_option.add_experimental_option("detach", True)
+        # chrome_option.add_experimental_option("mobileEmulation", {
+        #     "deviceMetrics": {
+        #         "width": 375, 
+        #         "height": 667, 
+        #         "pixelRatio": 2.0,
+        #         'deviceName':'Galaxy S5'
+        #     },
+        #     "userAgent": "Mozilla/5.0 (Linux; U; Android 4.0.4; en-gb; GT-I9300 Build/IMM76D) AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30"
+        # })
+        
         # proxy 代理 options 选项
                 
         #代理IP池
