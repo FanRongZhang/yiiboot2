@@ -9,7 +9,13 @@ use common\traits\QueueTrait;
 use Yii;
 use yii\console\Controller;
 
-
+/**
+ *
+ * 首单 免服务费
+ *
+ * Class TestController
+ * @package console\controllers
+ */
 class TestController extends Controller
 {
     public function actionIndex(){
