@@ -124,7 +124,7 @@ class JdService extends Service
 
                         //相同单量情况下，只保留对用户最划算的
                         $meiDanJieSheng = round($meiDanJian, 2);
-                        if( isset($couInfo[$danshu]) == false || $meiDanJieSheng > $couInfo[$danshu]['sheng']) {
+                        if( isset($couInfo[$danshu]) == false || $meiDanJieSheng > $couInfo[$danshu]['meidansheng']) {
                             $couInfo[$danshu] = [
                                 'man' => $man,//满
                                 'jian' => $jian,//减
