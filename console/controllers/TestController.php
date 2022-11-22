@@ -19,7 +19,7 @@ use yii\console\Controller;
 class TestController extends Controller
 {
     public function actionIndex(){
-        $ary = Yii::$app->services->jd->getItemInfo('66941229212');
-        echo json_encode($ary);
+        $ary = Yii::$app->services->jd->getItemInfo('67938515689',false);
+        var_dump($ary);
     }
 }
