@@ -17,9 +17,7 @@ class SkuController extends Controller
         /** @var Sku $oneSku */
         foreach ($arySku as $oneSku){
             try {
-                $ary = Yii::$app->services->jd->getItemInfo($oneSku->skuid);
-                var_dump($ary);
-                sleep(rand(5,10));
+                Yii::$app->services->jd->saveAfterGetItemInfo($oneSku->skuid);
             }catch (\Throwable $e){}
         }
     }
