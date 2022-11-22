@@ -64,7 +64,7 @@ class JdService extends Service
             'cache-control' => 'max-age=0',
             'referer' => "https://item.jd.com/$id.html",
         ]);
-        $jsonData = $curl->get("https://item-soa.jd.com/getWareBusiness?callback=&skuId=$id&num=1", false);
+        $jsonData = $curl->get("https://item-soa.jd.com/getWareBusiness?callback=&skuId=$id&num=1&area=17_1421_1430_7471", false);
 
         // text  跨自营/店铺满减 不要
         // text  多买优惠
