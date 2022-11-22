@@ -98,9 +98,8 @@ class gp(object):
             self.driver.execute_script(js)  
             time.sleep(3)
 
-            fd = open("r.html","w")
-            fd.write(self.driver.page_source)
-            fd.close()
+            with open("r.html","w",encoding="utf-8") as fd:
+                fd.write(self.driver.page_source)
 
             self.pagecount = self.driver.find_element(By.CLASS_NAME,'p-skip').find_element(By.TAG_NAME,'b').get_attribute("textContent")
             print('总页数',self.pagecount)
