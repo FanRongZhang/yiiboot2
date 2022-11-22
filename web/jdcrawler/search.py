@@ -71,7 +71,7 @@ class gp(object):
         self.api = 'http://jd.xiaozhumeimeigou.com/api/v1'
 
         self.pagecount = 0
-        self.maxtopage = 40
+        self.maxtopage = 100
         self.currentpage = 0
 
     def search(self, name, pageurl=''):
