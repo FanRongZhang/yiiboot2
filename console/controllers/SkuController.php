@@ -18,6 +18,8 @@ class SkuController extends Controller
         foreach ($arySku as $oneSku){
             try {
                 Yii::$app->services->jd->saveAfterGetItemInfo($oneSku->skuid);
+                $oneSku->checktime = time();
+                $oneSku->save();
             }catch (\Throwable $e){
                 echo $e->getMessage();
                 break;

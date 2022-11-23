@@ -31,6 +31,11 @@ class JdService extends Service
         if($m == false)
         {
             $m = new Goods();
+        }else{
+            $inSec = 3600;//在前面这几秒刚检查过了,，跳过
+            if(time() - $m->program_last_check_time <= $inSec){
+                return true;
+            }
         }
         $m->brandCode = $ary['brandCode'];
         $m->brandName = $ary['brandName'];
