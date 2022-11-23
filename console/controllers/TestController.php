@@ -19,7 +19,9 @@ use yii\console\Controller;
 class TestController extends Controller
 {
     public function actionIndex(){
-        $ary = Yii::$app->services->jd->getItemInfo('67938515689',false);
+        //$ary = Yii::$app->services->jd->getInfoViaZTK('67938515689');
+//        $ary = Yii::$app->services->jd->getItemInfo('67938515689',false);
+        $ary = Yii::$app->services->jd->saveAfterGetItemInfo('67938515689');
         var_dump($ary);
     }
 }
