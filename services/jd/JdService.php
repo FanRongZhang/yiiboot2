@@ -25,9 +25,10 @@ class JdService extends Service
 {
     public function saveAfterGetItemInfo($id){
         $ary = $this->getItemInfo($id);
-        $m = Goods::findOne([
+        /** @var Goods $m */
+        $m = Goods::find()->andWhere([
             'skuId' => strval($ary['skuId']),
-        ]);
+        ])->one();
         if($m == false)
         {
             $m = new Goods();
