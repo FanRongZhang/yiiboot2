@@ -58,11 +58,17 @@ class JdService extends Service
     public function getItemInfo($id, $isMergeInfo = true)
     {
         $curl = new Curl();
+		//https://github.com/xiaobao996/jd_Spider/blob/549176e61587624a1c5573acb0923f06fad5bd61/jd.py#L44
         $curl->setHeaders([
             'user-agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36',
             'accept' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
             'cache-control' => 'max-age=0',
-            'referer' => "https://item.jd.com/$id.html",
+            //'referer' => "https://item.jd.com/$id.html",
+			'Host'=> 'cd.jd.com',
+			'Connection'=> 'keep-alive',
+			'User-Agent'=>'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2486.0 Safari/537.36 Edge/13.10586',
+			//'Accept'=> '*/*',
+			'Cookie'=> 'user-key=2bfbe09b-0f42-42c0-811b-ab56450db8e8; ipLoc-djd=1-2800-2849-0.138300342; ipLocation=%u5317%u4EAC; areaId=1; unpl=V2_ZzNtbUJSERJ9AERQf0teV2IKGglKU0AcdVgSA3wZCwYzB0UJclRCFXMUR1NnGVgUZAIZXEFcQxVFCHZXchBYAWcCGllyBBNNIEwHDCRSBUE3XHxcFVUWF3RaTwEoSVoAYwtBDkZUFBYhW0IAKElVVTUFR21yVEMldQl2V3oZXwdhAhJdQWdzEkU4dld4G1UBYDMTbUNnAUEpC0NTeBtbSGQCEl5AUUIVdQt2VUsa; __jdv=122270672|baidu-pinzhuan|t_288551095_baidupinzhuan|cpc|0f3d30c8dba7459bb52f2eb5eba8ac7d_0_14c699355c3c489e95281aef61f2e5fe|1497528124631; mt_xid=V2_52007VwATUl5aVFsfSRpsUDcHElRcC1pGTE0cVBliVhQGQVAGCkxVGg8HNAdHAV9YAVkbeRpdBWEfE1VBWFZLHEgSXQZsABJiX2hSah9JEV8AZgIaU21YV1wY; pin=guanfangzhanghao; _tp=Q65pAl67vai0QY5ZcDYFjN%2BLg8cBR7nqqHw9I0DlABg%3D; _pst=guanfangzhanghao; TrackID=1Z3HN0vwCksbe3xembF38t1V0iShJpm8CIhbCVsYYdNehxHMhHeXfnJAfKqYOYsmqCHUCx-iLItRozWL5og6WGbd5LmoQem0U9GDvI4gBeWA|||xupYxaphrv2-V2BUUpiB6LV9-x-f3wj7; unick=guanfangzhanghao; pinId=xupYxaphrv2-V2BUUpiB6LV9-x-f3wj7; cn=0; 3AB9D23F7A4B3C9B=IK4KNJCB5IKI3TZOLTHYUNLR7CSSZQQXQJHK7LXWVXVR3CA4QICX4GJMCK3ODS4LQYXFCO5ATFOEEGN2Q3KMKQTXQM; __jda=122270672.2012370112.1494920356.1497518633.1497578162.34; __jdb=122270672.7.2012370112|34.1497578162; __jdc=122270672; __jdu=2012370112; thor=8D545014BC7B0DA50777F43FFED760334CF7139A43DD89736F837F4A6E1412E5989DD4744AB7CB431B29D41DF581DF2249A269AF2E5B7942C190BAAFB95F2275B24F25EA35CD43753EBA4B1DCD2AB99D50ACCC6BBBF95EF8F650088DC9CE362ACFED4924B528F54E480C0E1205B4254341DD46CE770D857CE3A041AAB768F3FBF5CA836215BDAB0C3A194C6D7D5E867F06824C2F0D3F5D4A527D7857D39CA38B',
         ]);
         $jsonData = $curl->get("https://item-soa.jd.com/getWareBusiness?callback=&skuId=$id&num=1&area=17_1421_1430_7471", false);
 
