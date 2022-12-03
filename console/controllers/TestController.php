@@ -19,9 +19,14 @@ use yii\console\Controller;
 class TestController extends Controller
 {
     public function actionIndex(){
-        //$ary = Yii::$app->services->jd->getInfoViaZTK('67938515689');
-//        $ary = Yii::$app->services->jd->getItemInfo('67938515689',false);
-        $ary = Yii::$app->services->jd->saveAfterGetItemInfo('67938515689');
-        var_dump($ary);
+//        $ary = Yii::$app->services->jd->getInfoViaZTK('10040713168242');
+//        $ary = Yii::$app->services->jd->getItemInfo('67938515689',true);
+//        $ary = Yii::$app->services->jd->saveAfterGetItemInfo('67938515689');
+//        var_dump($ary);
+
+        $ary = file_get_contents("http://api-gw.haojingke.com/index.php/v1/api/jd/goodsdetail?apikey=1f72908997f3c187&goods_id=10040713168242");
+        echo "\n" .($ary) . "\n";
+//        echo date('y-m-d',1668355200);
+
     }
 }

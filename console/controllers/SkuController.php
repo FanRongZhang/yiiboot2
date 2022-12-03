@@ -14,14 +14,23 @@ class SkuController extends Controller
 {
     public function actionIndex(){
         $arySku = Sku::find()->orderBy('page,checktime')->all();
+        $i = 0;
         /** @var Sku $oneSku */
         foreach ($arySku as $oneSku){
+            echo "第 $i 个商品" .$oneSku->skuid.PHP_EOL;
             try {
-                Yii::$app->services->jd->saveAfterGetItemInfo($oneSku->skuid);
+                $goods = Yii::$app->services->jd->saveAfterGetItemInfo($oneSku->skuid);
+                if(!$goods) {
+                    ##selunim 进行京东商品详情的获取
+
+                }
                 $oneSku->checktime = time();
                 $oneSku->save();
+                sleep(rand(7,15));
             }catch (\Throwable $e){
-                echo $e->getMessage();
+                echo $e->getMessage() . PHP_EOL
+                    . 'line:' . $e->getLine() . PHP_EOL
+                ;
                 break;
             }
         }

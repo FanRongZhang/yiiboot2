@@ -4,30 +4,24 @@ namespace services\jd;
 
 use common\components\Service;
 use common\helpers\ArrayHelper;
-use common\helpers\RegularHelper;
 use common\models\jd\Goods;
 use linslin\yii2\curl\Curl;
 
 /**
- *
- *
  * 广场试一试（发布支持凑单操作，同步到广场）
  *
  * 商业模式：专注    满减， 满减
  *
- *
- *
  * Class JdService
  * @package services\jd
- *
  */
 class JdService extends Service
 {
+
     public function saveAfterGetItemInfo($id){
-        $ary = $this->getItemInfo($id);
         /** @var Goods $m */
         $m = Goods::find()->andWhere([
-            'skuId' => strval($ary['skuId']),
+            'skuId' => strval($id),
         ])->one();
         if($m == false)
         {
@@ -37,6 +31,10 @@ class JdService extends Service
             if(time() - $m->program_last_check_time <= $inSec){
                 return true;
             }
+        }
+        $ary = $this->getItemInfo($id);
+        if(!$ary){
+            return false;
         }
         $m->brandCode = $ary['brandCode'];
         $m->brandName = $ary['brandName'];
@@ -58,12 +56,32 @@ class JdService extends Service
         $m->materialUrl = $ary['materialUrl'];
         $m->price = $ary['priceInfo']['price'];
         $m->skuName = $ary['skuName'];
-        $m->skuId = strval($ary['skuId']);
-        $m->promotionInfoJson = json_encode($ary['promotionInfo'],JSON_UNESCAPED_UNICODE);
+        $m->skuId = $id;
         $m->couInfoJson = json_encode($ary['promotionInfo']['couInfo'],JSON_UNESCAPED_UNICODE);
-        $m->is_up = $ary['promotionInfo']['isFit'] ? 1 :0;
+        $m->maxMeiDanSheng = $ary['promotionInfo']['maxMeiDanSheng'];
+        unset(
+            $ary['promotionInfo']['couInfo'],
+            $ary['promotionInfo']['maxMeiDanSheng']
+        );
+        $m->promotionInfoJson = json_encode($ary['promotionInfo'],JSON_UNESCAPED_UNICODE);
+        $m->isUp = $ary['promotionInfo']['isFit'] ? 1 :0;
         $m->program_last_check_time = time();
-        return $m->save();
+        $m->endTime = $ary['promotionInfo']['endTime'];
+        $m->fxg = isset($ary['skuLabelInfo'])
+            && isset($ary['skuLabelInfo']['fxg'])
+            ? $ary['skuLabelInfo']['fxg'] : 0;
+        $m->is7ToReturn = isset($ary['skuLabelInfo'])
+        && isset($ary['skuLabelInfo']['is7ToReturn']) ? $ary['skuLabelInfo']['is7ToReturn'] : 0;
+        $serviceList = [];
+        if(isset($ary['skuLabelInfo']) && isset($ary['skuLabelInfo']['fxgServiceList'])){
+            foreach ($ary['skuLabelInfo']['fxgServiceList'] as $one){
+                $serviceList[] = $one['serviceName'];
+            }
+        }
+        $m->fxgServiceList = json_encode($serviceList,JSON_UNESCAPED_UNICODE);
+        $m->isCanGetInfoFromZTK = 1;
+        $m->save();
+        return $m;
     }
 
     private function getPromWay1($sku){
@@ -137,15 +155,37 @@ class JdService extends Service
     public function getItemInfo($id, $isMergeInfo = true)
     {
         $aryZTK = $this->getInfoViaZTK($id);
+        if(!$aryZTK)return false;
+
         $price = $aryZTK['priceInfo']['price'];
-        //重要
-        $cat = implode(',',[
-            strval($aryZTK['categoryInfo']['cid1']),
-            strval($aryZTK['categoryInfo']['cid2']),
-            strval($aryZTK['categoryInfo']['cid3']),
-        ]);
-        $shopId = $aryZTK['shopInfo']['shopId'];
-        $aryPromo = $this->getPromWay2($id,$cat,$shopId);
+        /**
+         * ["promotionLabelInfoList"]=>
+        array(1) {
+        [0]=>
+            array(5) {
+                ["endTime"]=>
+                int(1672502399000)
+                ["labelName"]=>
+                string(6) "满减"
+                ["promotionLabel"]=>
+                string(57) "满248元减29元，满253元减34元，满259元减40元"
+                ["promotionLabelId"]=>
+                int(129960405214)
+                ["startTime"]=>
+                int(1668355200000)
+            }
+        }
+         */
+        $promotionLabelInfoList = isset($aryZTK['promotionLabelInfoList']) ? $aryZTK['promotionLabelInfoList'] : [];
+        $aryPromo = [];
+        $endTime = 0;
+        foreach ($promotionLabelInfoList as $one){
+            if($one['labelName'] == '满减'){
+                $aryPromo[] = $one['promotionLabel'];
+                $endTime = $one['endTime'] / 1000;
+            }
+        }
+
 
         //是否适合在平台上 凑着买
         $isFit = false;
@@ -172,13 +212,13 @@ class JdService extends Service
                         $meiDanJian = $jian / $danshu;//每单对于用户来说优惠了多少钱
 
                         //相同单量情况下，只保留对用户最划算的
-                        $meiDanJieSheng = round($meiDanJian, 2);
-                        if( isset($couInfo[$danshu]) == false || $meiDanJieSheng > $couInfo[$danshu]['meidansheng']) {
+                        $meiDanJian = round($meiDanJian, 2);
+                        if( isset($couInfo[$danshu]) == false || $meiDanJian > $couInfo[$danshu]['meidansheng']) {
                             $couInfo[$danshu] = [
                                 'man' => $man,//满
                                 'jian' => $jian,//减
                                 'danshu' => $danshu,//几单达到满
-                                'meidansheng' => $meiDanJieSheng,//每单省
+                                'meidansheng' => $meiDanJian,//每单省
                             ];
                         }
                     }
@@ -186,11 +226,20 @@ class JdService extends Service
             }
         }
 
+        $maxMeiDanSheng = 0;
+        if($couInfo) {
+            $couInfo = array_values($couInfo);
+            $couInfo = ArrayHelper::arraySort($couInfo, 'meidansheng', 'desc');
+            $maxMeiDanSheng = $couInfo[0]['meidansheng'];
+        }
+
         $promotionInfo = [
             'isFit' => $isFit,
             'price' => $price,
             'aryPromo' => $aryPromo,
             'couInfo' => $couInfo,
+            'maxMeiDanSheng' => $maxMeiDanSheng,
+            'endTime' => $endTime,
         ];
 
         return ArrayHelper::merge($isMergeInfo ? $aryZTK : [], [
@@ -199,16 +248,30 @@ class JdService extends Service
     }
 
     public $appkey_ztk = 'b05b918afdee42fc9400f153f6620883';
+
     public function getInfoViaZTK($id){
-        $url ="https://api.zhetaoke.com:10001/api/open_jing_union_open_goods_query.ashx?".http_build_query([
-                'appkey' => $this->appkey_ztk,
-                'skuIds' => $id,
-                'area' => \Yii::$app->params['jd_area_id'],
-            ]);
-        $data = file_get_contents($url);
-        $aryJson = \Qiniu\json_decode($data, true);
-//        return $aryJson;
-        return \Qiniu\json_decode( $aryJson['jd_union_open_goods_query_response']['result'] , true)['data'][0];
+        $data = '';
+        try {
+            //10040713168242
+            $url = "https://api.zhetaoke.com:10001/api/open_jing_union_open_goods_query.ashx?" . http_build_query([
+                    'appkey' => $this->appkey_ztk,
+                    'skuIds' => $id,
+                    'area' => \Yii::$app->params['jd_area_id'],
+                    'fields' => 'stockState,promotionLabelInfo,skuLabelInfo'
+                ]);
+            $data = file_get_contents($url);
+            $aryJson = \Qiniu\json_decode($data, true);
+            $aryJson = \Qiniu\json_decode($aryJson['jd_union_open_goods_query_response']['result'], true);
+            if(isset($aryJson['data']))
+                return $aryJson['data'][0];
+            else{
+                return false;
+            }
+        }catch (\Throwable $e){
+            echo $e->getMessage() . PHP_EOL;
+            echo "data is $data" . PHP_EOL;
+            throw $e;
+        }
     }
 
 }

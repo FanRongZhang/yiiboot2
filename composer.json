@@ -67,7 +67,8 @@
         "league/omnipay": "^3.0",
         "omnipay/stripe": "^3.1",
         "kartik-v/yii2-grid": "@dev",
-        "kartik-v/yii2-editable": "@dev"
+        "kartik-v/yii2-editable": "@dev",
+        "workerman/gateway-worker": "^4.0"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

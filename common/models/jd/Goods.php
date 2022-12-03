@@ -27,12 +27,13 @@ use Yii;
  * @property string $skuName
  * @property array $promotionInfoJson 优惠信息数据
  * @property int $program_last_check_time 软件上次检测数据时间
- * @property int $is_up 是否显示到平台
+ * @property int $isUp 是否显示到平台
  * @property int $stockState 1:有货  0:无货
  * @property string $shopId
  * @property string $shopLevel
  * @property array $couInfoJson 凑着买满减的信息
  * @property string $price
+ * @property string $maxMeiDanSheng
  */
 class Goods extends \yii\db\ActiveRecord
 {
@@ -47,20 +48,20 @@ class Goods extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function rules()
-    {
-        return [
-            [['brandCode', 'brandName', 'cid1', 'cid1Name', 'cid2', 'cid2Name', 'cid3', 'cid3Name', 'comments', 'isHot', 'imageList', 'whiteImage', 'isJdSale', 'materialUrl', 'shopName', 'skuId', 'skuName', 'promotionInfoJson', 'program_last_check_time', 'is_up', 'stockState', 'shopId', 'shopLevel', 'couInfoJson'], 'required'],
-            [['comments', 'isHot', 'isJdSale', 'program_last_check_time', 'is_up', 'stockState'], 'integer'],
-            [['imageList'], 'string'],
-            [['promotionInfoJson', 'couInfoJson'], 'safe'],
-            [['shopLevel','price'], 'number'],
-            [['brandCode', 'brandName', 'cid1', 'cid1Name', 'cid2', 'cid2Name', 'cid3', 'cid3Name', 'skuId', 'shopId'], 'string', 'max' => 50],
-            [['whiteImage'], 'string', 'max' => 300],
-            [['materialUrl', 'skuName'], 'string', 'max' => 200],
-            [['shopName'], 'string', 'max' => 100],
-        ];
-    }
+//    public function rules()
+//    {
+//        return [
+//            [['brandCode', 'brandName', 'cid1', 'cid1Name', 'cid2', 'cid2Name', 'cid3', 'cid3Name', 'comments', 'isHot', 'imageList', 'whiteImage', 'isJdSale', 'materialUrl', 'shopName', 'skuId', 'skuName', 'promotionInfoJson', 'program_last_check_time', 'isUp', 'stockState', 'shopId', 'shopLevel', 'couInfoJson'], 'required'],
+//            [['comments', 'isHot', 'isJdSale', 'program_last_check_time', 'isUp', 'stockState'], 'integer'],
+//            [['imageList'], 'string'],
+//            [['promotionInfoJson', 'couInfoJson'], 'safe'],
+//            [['shopLevel','price','maxMeiDanSheng'], 'number'],
+//            [['brandCode', 'brandName', 'cid1', 'cid1Name', 'cid2', 'cid2Name', 'cid3', 'cid3Name', 'skuId', 'shopId'], 'string', 'max' => 50],
+//            [['whiteImage'], 'string', 'max' => 300],
+//            [['materialUrl', 'skuName'], 'string', 'max' => 200],
+//            [['shopName'], 'string', 'max' => 100],
+//        ];
+//    }
 
     /**
      * {@inheritdoc}
@@ -88,12 +89,13 @@ class Goods extends \yii\db\ActiveRecord
             'skuName' => 'Sku Name',
             'promotionInfoJson' => 'Promotion Info Json',
             'program_last_check_time' => 'Program Last Check Time',
-            'is_up' => 'Is Up',
+            'isUp' => 'Is Up',
             'stockState' => 'Stock State',
             'shopId' => 'Shop ID',
             'shopLevel' => 'Shop Level',
             'couInfoJson' => 'Cou Info Json',
             'price' => 'Price',
+            'maxMeiDanSheng' => 'max Mei Dan Sheng'
         ];
     }
 }
