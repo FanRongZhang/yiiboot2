@@ -17,7 +17,7 @@ var storage = storages.create("ABC");
 
 let jiqiid = storage.get('jiqiid','')
 if(!jiqiid){
-  jiqiid = device.brand() + '-' + device.getAndroidId()
+  jiqiid = device.brand + '-' + device.getAndroidId()
 }
 storage.put('jiqiid',jiqiid)
 
@@ -258,7 +258,15 @@ myListener = {
         // //打开链接后，想服务器端发送一条消息
         var json = {};
         json.type="online";
-        json.data= {jiqiid:jiqiid};
+        json.data= {
+          jiqiid:jiqiid,
+          w: device.width,
+          h: device.height,
+          brand: device.brand,
+          product: device.product,
+          release: device.release,
+          imei: device.getIMEI(),
+        };
         var url = "http://www.tuling123.com/openapi/api";
         r = http.postJson(url, json);
         print(r.body.string())
