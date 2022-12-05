@@ -17,7 +17,7 @@ var storage = storages.create("ABC");
 
 let jiqiid = storage.get('jiqiid','')
 if(!jiqiid){
-  jiqiid = mytool.uuid()
+  jiqiid = device.brand() + '-' + device.getAndroidId()
 }
 storage.put('jiqiid',jiqiid)
 
