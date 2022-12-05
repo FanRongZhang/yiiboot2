@@ -9,3 +9,9 @@
 2022-12-03 18:55:33 pid:81500 Workerman[start.php] has been stopped
 2022-12-03 18:55:34 pid:81863 Workerman[GatewayWorker/start.php] start in DEBUG mode
 2022-12-03 21:27:51 pid:5936 Workerman[GatewayWorker/start.php] start in DEBUG mode
+2022-12-04 11:23:04 pid:5936 Workerman[start.php] stopping ...
+2022-12-04 11:23:04 pid:5936 Workerman[start.php] has been stopped
+2022-12-04 11:23:05 pid:15107 Workerman[GatewayWorker/start.php] start in DEBUG mode
+2022-12-04 11:23:57 pid:15107 Workerman[start.php] stopping ...
+2022-12-04 11:23:57 pid:15107 Workerman[start.php] has been stopped
+2022-12-04 11:24:04 pid:15172 Workerman[GatewayWorker/start.php] start in DEBUG mode

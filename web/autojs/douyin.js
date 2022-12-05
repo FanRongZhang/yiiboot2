@@ -1,12 +1,12 @@
 var mytool = require('tool.js')
-var myfuction = require('functions.js')
+var myfuction = require('functions.js');
 
 /**
  * 抖音版本 https://www.wandoujia.com/apps/7461948/history_v190301
  * 
  */
 // auto.waitFor()
-console.show()
+// console.show()
 
 
 //设备环境设置
@@ -86,7 +86,147 @@ function 一次关注的过程(){
     }
   }
 
+var wsGlobalMsg = {}
+var dw = device.width
+var dh = device.height
+var stopAllActions = false
+
+function doBiz(wsBizMsg){
+  wsGlobalMsg = JSON.parse(JSON.stringify(wsBizMsg))
+
+  // //先停止执行的所有指令
+  // stopAllActions = true
+  // sleep(20000)
+  // stopAllActions = false
+
+  threads.shutDownAll() //停止所有子线程
+  sleep(2000)
+
+  //先回到首页
+  while(currentActivity()!="com.ss.android.ugc.aweme.main.MainActivity"){
+    back()
+    sleep(5000)
+  }
+
+  threads.start(function(){
+    if(wsGlobalMsg.action == 'zhaoqun'){
+      zhaoqun()
+    }else{
+      zhaoqun()
+    }
+  })
   
+}
+
+function personPageInfo(){
+
+  var huozan = id('cpo').findOne().text()
+  var guanzhu = id('d51').findOne().text()
+  var fensi = id('d5t').findOne().text()
+  var nick = id('iaz').findOne().text()
+  var dyh = textStartsWith('抖音号：').exists() ? textStartsWith('抖音号：').findOne().text().replace('抖音号：','') : ''
+
+  var note = ''
+  if(textEndsWith('更多').exists()) {
+    var more = textEndsWith('更多').findOne()
+    mytool.click( more.bounds().right , more.bounds().bottom - 5 )
+    sleep(1000)
+    note = more.text()
+  }else if(id('n+s').exists()){
+    note = id('n+s').findOne().text()
+  }
+
+  var zuopin = 0
+  if(textStartsWith('作品').exists()){
+    zuopin = textStartsWith('作品').findOne().text().replace('作品','')
+  }
+
+  var xihuan = 0
+  if(textStartsWith('喜欢').exists()){
+    xihuan = textStartsWith('喜欢').findOne().text().replace('喜欢','')
+  }
+
+  var fensiqun = 0
+  var qunliao = []
+  if(textEndsWith('个群聊').exists()){
+    fensiqun = textEndsWith('个群聊').findOne().text().replace('个群聊','')
+
+    //获取群聊信息
+    
+  }
+
+  return {
+    "huozan" : huozan,
+    "guanzhu" : guanzhu,
+    "fensi" : fensi,
+    "nick" : nick,
+    "dyh" : dyh,
+    "zuopin" : zuopin,
+    "fensiqun": fensiqun,
+    "note": note,
+    "xihuan": xihuan,
+    "qunliao" : qunliao,
+  }
+
+}
+
+function shanghua(){
+  mytool.从下往上滑动(1.5)
+}
+
+function zhaoqun(){
+  mytool.click(desc('搜索').findOne())
+
+  //输入搜索关键字
+  sleep(4)
+  id('et_search_kw').findOne().setText('风韵美女')
+  mytool.click(desc('搜索').findOne())
+  
+  sleep(random(8, 10))
+
+  var userMap = {}
+  var userMapLength = 0
+
+  //持续下拉找用户
+  while(true){
+    id('user_avatar').findOne(5000) //5秒钟内找到头像
+    if(id('user_avatar').find().size() == 0){
+      shanghua()
+      continue
+    }
+
+    id('user_avatar').find().forEach(function(one){
+      var nick = one.desc()
+      if(userMap[nick]){
+        return
+      }
+
+      mytool.click(one) //点击头像位置进入
+
+      var personInfo = personPageInfo()
+      personInfo.nick = nick //保险起见，采用上面入口处昵称；和 记录刷到 用户挂钩
+
+      //记录刚刚刷到的用户
+      userMap[personInfo.nick] = 1
+      userMapLength += 1
+      if(userMapLength > 1000){
+        userMap = {}
+        userMapLength = 0
+      }
+
+      print(personInfo)
+      sleep(5000)
+      back()
+    
+    })
+    shanghua()
+    sleep(random(3, 6 ))
+  }
+
+
+}
+
+
 importPackage(Packages["okhttp3"]); //导入包
 
 var client = new OkHttpClient.Builder().retryOnConnectionFailure(true).build();
@@ -94,7 +234,7 @@ var request = new Request.Builder().url("ws://192.168.1.178:8282").build();
 client.dispatcher().cancelAll();//清理一次
 myListener = {
     onOpen: function (webSocket, response) {
-        print("建立连接中....");
+        print("已连接服务器");
         // //打开链接后，想服务器端发送一条消息
         // var json = {};
         // json.type="hello";
@@ -103,17 +243,11 @@ myListener = {
         // webSocket.send(hello);
     },
     onMessage: function (webSocket, msg) { //msg可能是字符串，也可能是byte数组，取决于服务器送的内容
-      if(msg == "ping"){
+      msg = JSON.parse(msg)
+      if(msg.action == "ping"){
         webSocket.send("pong")
       }else{
-        if(msg == "服务器已连接"){
-          print(msg)
-        }else{
-          //扫群
-          if(msg == "saoqun"){
-
-          }
-        }
+        doBiz(msg)
       }
     },
     onClosing: function (webSocket, code, response) {
@@ -130,9 +264,11 @@ myListener = {
 
 var webSocket= client.newWebSocket(request, new WebSocketListener(myListener)); //创建链接
 
+launchApp("抖音")
+sleep(10000)
+doBiz({})
+
 setInterval(() => { // 防止主线程退出
     
 }, 1000);
 
-
-launchApp("抖音")
