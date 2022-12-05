@@ -256,11 +256,12 @@ myListener = {
     onOpen: function (webSocket, response) {
         print("已连接服务器");
         // //打开链接后，想服务器端发送一条消息
-        // var json = {};
-        // json.type="hello";
-        // json.data= {device_name:"模拟设备",client_version:123,app_version:123,app_version_code:"233"};
-        // var hello=JSON.stringify(json);
-        // webSocket.send(hello);
+        var json = {};
+        json.type="online";
+        json.data= {jiqiid:jiqiid};
+        var url = "http://www.tuling123.com/openapi/api";
+        r = http.postJson(url, json);
+        print(r.body.string())
     },
     onMessage: function (webSocket, msg) { //msg可能是字符串，也可能是byte数组，取决于服务器送的内容
       msg = JSON.parse(msg)
