@@ -75,8 +75,7 @@ tool.uuid = function(len){
 tool.click = function(kongjian){
     x= kongjian.bounds().centerX()
     y= kongjian.bounds().centerY()
-    delay = 1000
-    press(x,y,delay)
+    click(x,y)
 }
 
 //---------- 滑动

@@ -119,16 +119,28 @@ function doBiz(wsBizMsg){
 }
 
 function personPageInfo(){
-
-  var huozan = id('cpo').findOne().text()
-  var guanzhu = id('d51').findOne().text()
-  var fensi = id('d5t').findOne().text()
-  var nick = id('iaz').findOne().text()
+  sleep(3000)
+  var huozan = id('cpo').exists() ? id('cpo').findOne().text() : false
+  if(huozan === false){
+    huozan = idContains('cpo').exists() ? idContains('cpo').findOne().text() : ''
+  }
+  var guanzhu = id('d51').exists() ? id('d51').findOne().text() : false
+  if(guanzhu === false){
+    guanzhu = idContains('d51').exists() ? idContains('d51').findOne().text() : ''
+  }
+  var fensi = id('d5t').exists() ? id('d5t').findOne().text() : false
+  if(fensi === false){
+    fensi = idContains('d5t').exists() ? idContains('d5t').findOne().text() : ''
+  }
+  var nick = id('iaz').exists() ? id('iaz').findOne().text() : false
+  if(nick === false){
+    nick = idContains('iaz').exists() ? idContains('iaz').findOne().text() : ''
+  }
   var dyh = textStartsWith('抖音号：').exists() ? textStartsWith('抖音号：').findOne().text().replace('抖音号：','') : ''
 
   var note = ''
-  if(textEndsWith('更多').exists()) {
-    var more = textEndsWith('更多').findOne()
+  if(textEndsWith('更多  ').exists()) {
+    var more = textEndsWith('更多  ').findOne()
     mytool.click( more.bounds().right , more.bounds().bottom - 5 )
     sleep(1000)
     note = more.text()
@@ -152,7 +164,7 @@ function personPageInfo(){
     fensiqun = textEndsWith('个群聊').findOne().text().replace('个群聊','')
 
     //获取群聊信息
-    
+
   }
 
   return {
@@ -178,18 +190,26 @@ function zhaoqun(){
   mytool.click(desc('搜索').findOne())
 
   //输入搜索关键字
-  sleep(4)
+  sleep(4000)
   id('et_search_kw').findOne().setText('风韵美女')
   mytool.click(desc('搜索').findOne())
-  
-  sleep(random(8, 10))
+
+  sleep(4000)
+
+  //是不是搜索结果页
+  // while(currentActivity() != "com.ss.android.ugc.aweme.search.activity.SearchResultActivity"){
+  //   sleep(1000)
+  // }
 
   var userMap = {}
   var userMapLength = 0
 
   //持续下拉找用户
   while(true){
-    id('user_avatar').findOne(5000) //5秒钟内找到头像
+    id('user_avatar').findOne(3500) // N/1000 秒钟内找到头像
+
+    print("id('user_avatar').find().size() : ", id('user_avatar').find().size())
+
     if(id('user_avatar').find().size() == 0){
       shanghua()
       continue
@@ -204,11 +224,11 @@ function zhaoqun(){
       mytool.click(one) //点击头像位置进入
 
       var personInfo = personPageInfo()
-      personInfo.nick = nick //保险起见，采用上面入口处昵称；和 记录刷到 用户挂钩
 
-      //记录刚刚刷到的用户
-      userMap[personInfo.nick] = 1
+      personInfo.head_nick = nick //记录刚刚刷到的用户
+      userMap[personInfo.head_nick] = 1
       userMapLength += 1
+      //到一定数量重置
       if(userMapLength > 1000){
         userMap = {}
         userMapLength = 0
@@ -268,7 +288,7 @@ launchApp("抖音")
 sleep(10000)
 doBiz({})
 
-setInterval(() => { // 防止主线程退出
+// setInterval(() => { // 防止主线程退出
     
-}, 1000);
+// }, 1000);
 
