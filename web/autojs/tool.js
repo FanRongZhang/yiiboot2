@@ -1,4 +1,5 @@
 var tool = {
+  api:"http://127.0.0.1/api",
 	now : function (type, addTime) {
 		var dateObj = new Date();
 		var cTime = dateObj.getTime();

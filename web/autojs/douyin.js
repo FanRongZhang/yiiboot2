@@ -256,9 +256,7 @@ myListener = {
     onOpen: function (webSocket, response) {
         print("已连接服务器");
         // //打开链接后，想服务器端发送一条消息
-        var json = {};
-        json.type="online";
-        json.data= {
+        var json = {
           jiqiid:jiqiid,
           w: device.width,
           h: device.height,
@@ -267,7 +265,7 @@ myListener = {
           release: device.release,
           imei: device.getIMEI(),
         };
-        var url = "http://www.tuling123.com/openapi/api";
+        var url = mytool.api + "/v1/autojs/save";
         r = http.postJson(url, json);
         print(r.body.string())
     },
@@ -284,6 +282,13 @@ myListener = {
     },
     onClosed: function (webSocket, code, response) {
         print("已关闭ws");
+
+        var json = {
+          jiqiid:jiqiid,
+        };
+        var url = mytool.api + "/v1/autojs/close";
+        r = http.postJson(url, json);
+        print(r.body.string())
     },
     onFailure: function (webSocket, t, response) {
         print("ws错误");
