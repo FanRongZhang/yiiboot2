@@ -33,7 +33,7 @@ class MainController extends BaseController
      */
     public function actionSystem()
     {
-        return $this->redirect(['package/index']);
+//        return $this->redirect(['package/index']);
         $merchant_id = Yii::$app->services->merchant->getId();
 
         return $this->render($this->action->id, [

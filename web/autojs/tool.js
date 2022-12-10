@@ -1,5 +1,6 @@
 var tool = {
-  api:"http://127.0.0.1/api",
+  ws:"ws://192.168.0.125:8282",
+  api:"http://192.168.0.125/api",
 	now : function (type, addTime) {
 		var dateObj = new Date();
 		var cTime = dateObj.getTime();
@@ -59,14 +60,30 @@ tool.uuid = function(len){
 }
 
 tool.click = function(kongjian){
-    x= kongjian.bounds().centerX()
-    y= kongjian.bounds().centerY()
-    click(x,y)
+  try{
+    if(typeof kongjian.clickable == 'function' && kongjian.clickable()){
+      return kongjian.click()
+    }else{
+      x= kongjian.bounds().centerX()
+      y= kongjian.bounds().centerY()
+      if(x < 0){
+        x = 5
+      }
+      if(y < 0){
+        y = 5
+      }
+      click(x,y)
+      return true
+    }
+  }catch(e){
+    print("click fail",e)
+    return false
+  }
 }
 
 //---------- 滑动
 function swipeRnd(x1, y1, x2, y2, duration) {
-    log(arguments.callee.name + '开始')
+    // log(arguments.callee.name + '开始')
     var k = 20
     var x1 = x1 + random(-(k), k)
     var y1 = y1 + random(-(k), k)
@@ -91,9 +108,9 @@ function swipeRnd(x1, y1, x2, y2, duration) {
     var x2 = Math.floor(w / 5 * 1)
     var y2 = Math.floor(h / 5 * 阅读文章速度)
     var duration = 300
-    log('滑动参数=', x1, y1, x2, y2, duration)
+    // log('滑动参数=', x1, y1, x2, y2, duration)
     swipeRnd(x1, y1, x2, y2, duration)
-    log(arguments.callee.name + '结束')
+    // log(arguments.callee.name + '结束')
     sleep(3000)
   }
 

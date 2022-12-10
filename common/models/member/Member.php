@@ -4,6 +4,7 @@ namespace common\models\member;
 
 use common\helpers\StringHelper;
 use common\helpers\TreeHelper;
+use common\models\autojs\Jihuoma;
 use Yii;
 use yii\behaviors\BlameableBehavior;
 use yii\db\ActiveQuery;
@@ -194,11 +195,7 @@ class Member extends User
             $this->last_time = time();
             $this->auth_key = Yii::$app->security->generateRandomString();
 
-            do{
-                $this->promo_code = strtolower(StringHelper::random(6));
-            }while(Member::findOne([
-                'promo_code' => $this->promo_code
-            ]));
+            $this->promo_code = StringHelper::uuid();
         }
 
         // 处理上下级关系
@@ -225,6 +222,16 @@ class Member extends User
                 $this->nickname = $nickname;
                 Member::updateAll(['nickname' => $nickname], ['id' => $this->id]);
             }
+
+            //送一个体验激活码
+            $modelJiHuoMa = new Jihuoma();
+            $modelJiHuoMa->user_id = $this->id;
+            $modelJiHuoMa->expire = time() + 24 * 3600;
+            $modelJiHuoMa->merchant_id = $this->merchant_id;
+            $modelJiHuoMa->createtime = time();
+            $modelJiHuoMa->had_used = 0;
+            $modelJiHuoMa->jihuoma = StringHelper::uuid();
+            $modelJiHuoMa->save();
         }
 
         if ($this->status == StatusEnum::DELETE) {

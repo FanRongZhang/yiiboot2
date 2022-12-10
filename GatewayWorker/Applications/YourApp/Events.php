@@ -40,6 +40,10 @@ class Events
 //        Gateway::sendToClient($client_id, "服务器已连接");
         // 向所有人发送
 //        Gateway::sendToAll("$client_id login\r\n");
+        Gateway::sendToCurrentClient(json_encode([
+            'action' => 'client_id',
+            'client_id' => $client_id,
+        ]));
     }
     
    /**
@@ -49,6 +53,7 @@ class Events
     */
    public static function onMessage($client_id, $message)
    {
+       echo $message . PHP_EOL;
         // 向所有人发送 
 //        Gateway::sendToAll("$client_id said $message\r\n");
    }
@@ -61,5 +66,6 @@ class Events
    {
        // 向所有人发送 
 //       GateWay::sendToAll("$client_id logout\r\n");
+       file_get_contents("http://127.0.0.1/api/v1/autojs/close?client_id=".$client_id);
    }
 }

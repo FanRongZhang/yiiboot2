@@ -54,6 +54,18 @@ $gateway->onConnect = function($connection)
         // onWebSocketConnect 里面$_GET $_SERVER是可用的
         // var_dump($_GET, $_SERVER);
 
+        $jihuoma = isset($_GET['jihuoma']) ? $_GET['jihuoma'] : '';
+
+        if($jihuoma == false){
+            $connection->close();
+        }
+
+        $r = file_get_contents("http://127.0.0.1/api/v1/autojscode/isvalid?jihuoma="+$jihuoma);
+        $r = json_decode($r,true);
+        if($r['data'] == false){
+            $connection->close();
+        }
+
     };
 }; 
 

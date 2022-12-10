@@ -1,27 +1,27 @@
 <?php
 
-namespace backend\modules\autojs\controllers;
+namespace backend\controllers;
 
 use Yii;
-use common\models\autojs\Android;
+use common\models\autojs\Douyinqun;
 use common\traits\Curd;
 use common\models\base\SearchModel;
 use backend\controllers\BaseController;
 
 /**
-* Android
+* Douyinqun
 *
-* Class AndroidController
-* @package backend\modules\autojs\controllers
+* Class DouyinqunController
+* @package backend\controllers
 */
-class AndroidController extends BaseController
+class DouyinqunController extends BaseController
 {
     use Curd;
 
     /**
-    * @var Android
+    * @var Douyinqun
     */
-    public $modelClass = Android::class;
+    public $modelClass = Douyinqun::class;
 
 
     /**
@@ -39,7 +39,7 @@ class AndroidController extends BaseController
             'defaultOrder' => [
                 'id' => SORT_DESC
             ],
-            'pageSize' => 1000
+            'pageSize' => $this->pageSize
         ]);
 
         $dataProvider = $searchModel
@@ -50,8 +50,4 @@ class AndroidController extends BaseController
             'searchModel' => $searchModel,
         ]);
     }
-
-
-
-
 }

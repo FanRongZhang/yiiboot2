@@ -18,3 +18,40 @@
 2022-12-06 03:49:32 pid:15172 Workerman[start.php] stopping ...
 2022-12-06 03:49:52 pid:15172 Workerman[start.php] stopping ...
 2022-12-06 03:49:52 pid:15172 Workerman[start.php] has been stopped
+2022-12-09 03:33:13 pid:48225 Workerman[GatewayWorker/start.php] start in DEBUG mode
+2022-12-09 06:03:20 pid:48225 Workerman[start.php] stopping ...
+2022-12-09 06:03:20 pid:48225 Workerman[start.php] has been stopped
+2022-12-09 06:03:21 pid:54267 Workerman[GatewayWorker/start.php] start in DEBUG mode
+2022-12-10 01:49:00 pid:54267 Workerman[start.php] stopping ...
+2022-12-10 01:49:00 pid:54267 Workerman[start.php] has been stopped
+2022-12-10 01:49:01 pid:77901 Workerman[GatewayWorker/start.php] start in DEBUG mode
+2022-12-10 04:47:51 pid:77901 Workerman[start.php] stopping ...
+2022-12-10 04:47:51 pid:77901 Workerman[start.php] has been stopped
+2022-12-10 04:47:54 pid:80981 Workerman[GatewayWorker/start.php] start in DEBUG mode
+2022-12-10 06:17:34 pid:80981 Workerman[start.php] stopping ...
+2022-12-10 06:17:35 pid:80981 Workerman[start.php] has been stopped
+2022-12-10 06:17:36 pid:84445 Workerman[GatewayWorker/start.php] start in DEBUG mode
+2022-12-10 13:37:02 pid:84445 Workerman[start.php] stopping ...
+2022-12-10 13:37:11 pid:84446 worker[84446] remains 4 connection(s)
+2022-12-10 13:37:11 pid:84446 worker[84446] remains 2 connection(s)
+2022-12-10 13:37:11 pid:84446 worker[84446] remains 0 connection(s)
+2022-12-10 13:37:11 pid:84453 worker[84453] remains 4 connection(s)
+2022-12-10 13:37:11 pid:84452 worker[84452] remains 4 connection(s)
+2022-12-10 13:37:11 pid:84451 worker[84451] remains 4 connection(s)
+2022-12-10 13:37:31 pid:84448 worker[84448] remains 4 connection(s)
+2022-12-10 13:37:31 pid:84448 worker[84448] remains 2 connection(s)
+2022-12-10 13:37:31 pid:84448 worker[84448] remains 0 connection(s)
+2022-12-10 13:37:31 pid:84450 worker[84450] remains 4 connection(s)
+2022-12-10 13:37:31 pid:84454 worker[84454] remains 6 connection(s)
+2022-12-10 13:37:57 pid:84449 worker[84449] remains 4 connection(s)
+2022-12-10 13:37:57 pid:84449 worker[84449] remains 2 connection(s)
+2022-12-10 13:37:57 pid:84449 worker[84449] remains 0 connection(s)
+2022-12-10 13:37:57 pid:84452 worker[84452] remains 2 connection(s)
+2022-12-10 13:37:57 pid:84453 worker[84453] remains 2 connection(s)
+2022-12-10 13:37:57 pid:84451 worker[84451] remains 2 connection(s)
+2022-12-10 13:38:11 pid:84447 worker[84447] remains 4 connection(s)
+2022-12-10 13:38:11 pid:84447 worker[84447] remains 2 connection(s)
+2022-12-10 13:38:11 pid:84447 worker[84447] remains 0 connection(s)
+2022-12-10 13:38:11 pid:84450 worker[84450] remains 2 connection(s)
+2022-12-10 13:38:32 pid:84450 SendBufferToWorker fail. The connections between Gateway and BusinessWorker are not ready. See http://doc2.workerman.net/send-buffer-to-worker-fail.html
+2022-12-10 13:38:32 pid:84450 SendBufferToWorker fail. The connections between Gateway and BusinessWorker are not ready. See http://doc2.workerman.net/send-buffer-to-worker-fail.html

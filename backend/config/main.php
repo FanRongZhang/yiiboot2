@@ -29,10 +29,6 @@ return [
         'oauth2' => [
             'class' => 'backend\modules\oauth2\Module',
         ],
-        /** ------ autojs ------ **/
-        'autojs' => [
-            'class' => 'backend\modules\autojs\Module',
-        ],
 
          'gridview' => [ 'class' => '\kartik\grid\Module' ],
     ],

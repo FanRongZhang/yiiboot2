@@ -8,17 +8,21 @@ use Yii;
  * This is the model class for table "yii_android".
  *
  * @property int $id
- * @property string $jiqiid
- * @property string $w
- * @property string $h
+ * @property string $jihuoma
+ * @property int $w
+ * @property int $h
  * @property string $brand
  * @property string $product
  * @property string $release
- * @property string $imei
- * @property int $isonline
- * @property int $createtime
+ * @property string $android_id
+ * @property string $client_id
  * @property string $fenlei
  * @property string $label
+ * @property int $isonline
+ * @property string $keyword
+ * @property string $action
+ * @property int $createtime
+ * @property int $merchant_id
  */
 class Android extends \yii\db\ActiveRecord
 {
@@ -36,9 +40,9 @@ class Android extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['jiqiid', 'w', 'h', 'brand', 'product', 'release', 'imei', 'isonline', 'createtime', 'fenlei', 'label'], 'required'],
-            [['isonline', 'createtime'], 'integer'],
-            [['jiqiid', 'w', 'h', 'brand', 'product', 'release', 'imei', 'fenlei', 'label'], 'string', 'max' => 200],
+            [['jihuoma', 'w', 'h', 'brand', 'product', 'release', 'isonline', 'createtime', 'merchant_id'], 'required'],
+            [['w', 'h', 'isonline', 'createtime', 'merchant_id'], 'integer'],
+            [['jihuoma', 'brand', 'product', 'release', 'android_id', 'client_id', 'fenlei', 'label', 'keyword', 'action'], 'string', 'max' => 200],
         ];
     }
 
@@ -49,17 +53,21 @@ class Android extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'jiqiid' => 'Jiqiid',
+            'jihuoma' => 'Jihuoma',
             'w' => 'W',
             'h' => 'H',
             'brand' => 'Brand',
             'product' => 'Product',
             'release' => 'Release',
-            'imei' => 'Imei',
-            'isonline' => 'Isonline',
-            'createtime' => 'Createtime',
+            'android_id' => 'Android ID',
+            'client_id' => 'Client ID',
             'fenlei' => 'Fenlei',
             'label' => 'Label',
+            'isonline' => 'Isonline',
+            'keyword' => 'Keyword',
+            'action' => 'Action',
+            'createtime' => 'Createtime',
+            'merchant_id' => 'Merchant ID',
         ];
     }
 }

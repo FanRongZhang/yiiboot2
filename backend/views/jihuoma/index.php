@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Androids';
+$this->title = 'Jihuomas';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -30,18 +30,13 @@ $this->params['breadcrumbs'][] = $this->title;
                 'visible' => false,
             ],
 
-            'id',
+            //'id',
+            'jihuoma',
+            //'merchant_id',
+            'expire',
             'jiqiid',
-            'w',
-            'h',
-            'brand',
-            'product',
-            'release',
-            'imei',
-            'isonline',
+            //'had_used',
             'createtime:datetime',
-            'fenlei',
-            'label',
             [
                 'class' => 'yii\grid\ActionColumn',
                 'header' => '操作',
