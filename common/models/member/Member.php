@@ -224,14 +224,7 @@ class Member extends User
             }
 
             //送一个体验激活码
-            $modelJiHuoMa = new Jihuoma();
-            $modelJiHuoMa->user_id = $this->id;
-            $modelJiHuoMa->expire = time() + 24 * 3600;
-            $modelJiHuoMa->merchant_id = $this->merchant_id;
-            $modelJiHuoMa->createtime = time();
-            $modelJiHuoMa->had_used = 0;
-            $modelJiHuoMa->jihuoma = StringHelper::uuid();
-            $modelJiHuoMa->save();
+            Yii::$app->services->autojs->makeJiHuoma(1,time()+3600*24,$this->id);
         }
 
         if ($this->status == StatusEnum::DELETE) {

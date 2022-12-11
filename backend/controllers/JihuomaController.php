@@ -23,7 +23,6 @@ class JihuomaController extends BaseController
     */
     public $modelClass = Jihuoma::class;
 
-
     /**
     * 首页
     *
@@ -50,4 +49,9 @@ class JihuomaController extends BaseController
             'searchModel' => $searchModel,
         ]);
     }
+
+    public function actionMake(){
+        Yii::$app->services->autojs->makeJiHuoma(100,time()+3600*24*30);
+    }
+
 }

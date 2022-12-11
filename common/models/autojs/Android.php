@@ -22,7 +22,9 @@ use Yii;
  * @property string $keyword
  * @property string $action
  * @property int $createtime
- * @property int $merchant_id
+ * @property int $user_id
+ * @property int $can_upgrade_code
+ * @property int $codetime
  */
 class Android extends \yii\db\ActiveRecord
 {
@@ -40,8 +42,8 @@ class Android extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['jihuoma', 'w', 'h', 'brand', 'product', 'release', 'isonline', 'createtime', 'merchant_id'], 'required'],
-            [['w', 'h', 'isonline', 'createtime', 'merchant_id'], 'integer'],
+            [['jihuoma', 'w', 'h', 'brand', 'product', 'release', 'isonline', 'createtime', 'user_id'], 'required'],
+            [['w', 'h', 'isonline', 'createtime', 'user_id', 'can_upgrade_code', 'codetime'], 'integer'],
             [['jihuoma', 'brand', 'product', 'release', 'android_id', 'client_id', 'fenlei', 'label', 'keyword', 'action'], 'string', 'max' => 200],
         ];
     }
@@ -67,7 +69,9 @@ class Android extends \yii\db\ActiveRecord
             'keyword' => 'Keyword',
             'action' => 'Action',
             'createtime' => 'Createtime',
-            'merchant_id' => 'Merchant ID',
+            'user_id' => 'User ID',
+            'can_upgrade_code' => 'Can Upgrade Code',
+            'codetime' => 'Codetime',
         ];
     }
 }

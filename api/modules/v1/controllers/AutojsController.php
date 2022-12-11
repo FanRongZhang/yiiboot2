@@ -26,24 +26,24 @@ class AutojsController extends OnAuthController
         $m = Android::findOne([
             'jihuoma' => $this->getPageParam('jihuoma')
         ]);
-        if($m == false){
-            $m = new Android();
-            $m->createtime = time();
-            $m->label = $m->fenlei = '';
-        }
-        $m->setAttributes($this->pageParam, false);
-        $m->isonline = 1;
 
         //激活码被使用
         $jihuoma = Jihuoma::findOne([
             'jihuoma' => $m->jihuoma,
         ]);
-        if($jihuoma){
-            $jihuoma->had_used = 1;
-            $jihuoma->save();
-        }
+        $jihuoma->had_used = 1;
+        $jihuoma->save();
 
-        Gateway::bindUid($m->client_id,$m->jiqiid);
+        if($m == false){
+            $m = new Android();
+            $m->createtime = time();
+            $m->label = $m->fenlei = '';
+            $m->user_id = $jihuoma->user_id;
+        }
+        $m->setAttributes($this->pageParam, false);
+        $m->isonline = 1;
+
+        Gateway::bindUid($m->client_id,$m->jihuoma);
 
         if( $m->save() ){
             return "ok";
@@ -57,7 +57,7 @@ class AutojsController extends OnAuthController
         $m = Android::findOne([
             'client_id' => $this->getPageParam('client_id')
         ]);
-        $m->isonline = Gateway::isUidOnline($m->jiqiid);
+        $m->isonline = Gateway::isUidOnline($m->jihuoma);
 
         return $m->save();
     }

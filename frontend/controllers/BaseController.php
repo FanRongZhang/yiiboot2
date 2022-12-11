@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use common\helpers\Url;
 use Yii;
 use yii\web\Controller;
 use common\traits\BaseAction;
@@ -15,6 +16,33 @@ use common\behaviors\ActionLogBehavior;
 class BaseController extends Controller
 {
     use BaseAction;
+
+    public $needLogin = false;
+
+
+    /**
+     * 页面提交参数
+     * get post 一起存储
+     *
+     * @var array
+     */
+    protected $pageParam = [];
+
+    /**
+     * 获取页面参数
+     * @param string $name
+     * @param false $default
+     * @return array|false|mixed
+     */
+    public function getPageParam($name='',$default=false){
+        if($name == false){
+            return $this->pageParam;
+        }
+        if(isset($this->pageParam[$name])){
+            return $this->pageParam[$name];
+        }
+        return $default;
+    }
 
     /**
      * @return array
@@ -35,6 +63,10 @@ class BaseController extends Controller
     {
         // 指定使用哪个语言翻译
         // Yii::$app->language = 'en';
-        return parent::init();
+         parent::init();
+
+         if($this->needLogin && Yii::$app->getUser()->getIsGuest()){
+             return $this->redirect($this->message('请先登录',Url::to(['site/login'])));
+         }
     }
 }

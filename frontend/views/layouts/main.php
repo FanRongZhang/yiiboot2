@@ -36,17 +36,18 @@ AppAsset::register($this);
     ]);
     $menuItems = [
         ['label' => Yii::t('app', '主页'), 'url' => ['/site/index']],
-        ['label' => Yii::t('app', '关于'), 'url' => ['/site/about']],
-        ['label' => Yii::t('app', '联系我们'), 'url' => ['/site/contact']],
+//        ['label' => Yii::t('app', '关于'), 'url' => ['/site/about']],
+//        ['label' => Yii::t('app', '联系我们'), 'url' => ['/site/contact']],
     ];
     if (Yii::$app->user->isGuest) {
         $menuItems[] = ['label' => Yii::t('app', '注册'), 'url' => ['/site/signup']];
         $menuItems[] = ['label' => Yii::t('app', '登录'), 'url' => ['/site/login']];
     } else {
+        $menuItems[] = ['label' => Yii::t('app', '个人中心'), 'url' => ['/user/index']];
         $menuItems[] = '<li>'
             . Html::beginForm(['/site/logout'], 'post')
             . Html::submitButton(
-                'Logout (' . Yii::$app->user->identity->username . ')',
+                '退出 (' . Yii::$app->user->identity->username . ')',
                 ['class' => 'btn btn-link logout']
             )
             . Html::endForm()

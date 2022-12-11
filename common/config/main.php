@@ -1,6 +1,6 @@
 <?php
 return [
-    'name' => 'yiiboot2',
+    'name' => '抖音助手',
     'version' => '5.0.9',
     'aliases' => [
         '@bower' => '@vendor/bower-asset',

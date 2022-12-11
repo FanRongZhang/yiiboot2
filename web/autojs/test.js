@@ -2,4 +2,5 @@
 var mytool = require('tool.js')
 
 
-//进群
+
+text('青少年模式').exists() && text('我知道了').exists() && mytool.click(text('我知道了').findOne())

@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Jihuomas';
+$this->title = '激活码';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -32,10 +32,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
             //'id',
             'jihuoma',
-            //'merchant_id',
             'expire',
-            'jiqiid',
-            //'had_used',
+            'had_used',
             'createtime:datetime',
             [
                 'class' => 'yii\grid\ActionColumn',
@@ -45,9 +43,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 'edit' => function($url, $model, $key){
                         return Html::edit(['edit', 'id' => $model->id]);
                 },
-               'status' => function($url, $model, $key){
-                        return Html::status($model['status']);
-                  },
                 'delete' => function($url, $model, $key){
                         return Html::delete(['delete', 'id' => $model->id]);
                 },

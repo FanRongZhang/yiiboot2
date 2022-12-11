@@ -134,6 +134,13 @@ $this->registerJs($script);
 //                'value' => function($model){
 //                    return $model->isonline?'在线':'离线';
 //                }],
+            [
+                'attribute' => 'can_upgrade_code',  'label' => '代码',
+                'value' => function($model){
+                    return date('Y-m-d H:i:s',$model->codetime)
+                        . ($model->can_upgrade_code?'(可升级)':'');
+                }
+            ],
             [ 'attribute' => 'keyword', 'class'=>'kartik\grid\EditableColumn',  'label' => '关键字',],
             [
                 'attribute' => 'action',

@@ -22,7 +22,8 @@ class AutojscodeController extends OnAuthController
      */
     protected $authOptional = ['*'];
 
-    public function actionIsvalid(){
+    public function actionIsvalid()
+    {
         $jihuoma = $this->getPageParam('jihuoma');
 
         $modelJiHuoMa = Jihuoma::findOne([
@@ -31,7 +32,9 @@ class AutojscodeController extends OnAuthController
         return $modelJiHuoMa && $modelJiHuoMa->had_used == 0 && $modelJiHuoMa->expire > time();
     }
 
-    private function getJavascriptCode(){
+    private function getJavascriptCode()
+    {
+        $codetime = date('Y-m-d H:i:s');
         $host = \Yii::$app->request->getHostName();
 
         $jihuoma = $this->getPageParam('jihuoma');
@@ -39,37 +42,66 @@ class AutojscodeController extends OnAuthController
         $modelJiHuoMa = Jihuoma::findOne([
             'jihuoma' => $jihuoma,
         ]);
-        $user_id = $modelJiHuoMa?$modelJiHuoMa->user_id:'0';
+        $user_id = $modelJiHuoMa ? $modelJiHuoMa->user_id : '0';
 
         $tool = file_get_contents(\Yii::getAlias("@root/web/autojs/tool.js"));
-        $tool = str_replace("module.exports = tool",'', $tool);
+        $tool = str_replace("module.exports = tool", '', $tool);
 
         $douyin = file_get_contents(\Yii::getAlias("@root/web/autojs/douyin_v6.js"));
 
-        $douyin = str_replace("//toolcode占位","tool.ws = 'ws://{$host}:8282' \n tool.api = 'http://{$host}/api' ", $douyin);
-        $douyin = str_replace("//激活码code占位","jihuoma = '$jihuoma'", $douyin);
-        $douyin = str_replace("//usercode占位","user_id = '$user_id'", $douyin);
-        $douyin = str_replace("//版本code占位","JSVERSION='221210'", $douyin);
-        $douyin = str_replace("var mytool = require('tool.js')",'', $douyin);
-        $douyin = str_replace("mytool.",'tool.', $douyin);
+        $douyin = str_replace("//toolcode占位", "tool.ws = 'ws://{$host}:8282' \n tool.api = 'http://{$host}/api' ", $douyin);
+        $douyin = str_replace("//激活码code占位", "jihuoma = '$jihuoma'", $douyin);
+        $douyin = str_replace("//usercode占位", "user_id = '$user_id'", $douyin);
+        $douyin = str_replace("//codetime占位", "codetime='{$codetime}'", $douyin);
+        $douyin = str_replace("var mytool = require('tool.js')", '', $douyin);
+        $douyin = str_replace("mytool.", 'tool.', $douyin);
 
-        return $tool . PHP_EOL . $douyin ;
+        return $tool . PHP_EOL . $douyin;
     }
 
     public function actionJs()
     {
-        echo $this->getJavascriptCode();
-        exit;
-    }
-
-    public function actionJihuoma(){
         $jihuoma = $this->getPageParam('jihuoma');
-        $modelJiHuoMa = Jihuoma::findOne([
+        if ($this->actionIsvalid() == false) {
+            return [
+                'code' => "toast('激活码无效或已使用或已过期') \n print('激活码无效或已使用或已过期') \n",
+                'md5' => '',
+            ];
+        }
+
+        $code = $this->getJavascriptCode();
+        $m5 = md5($code);
+
+        $a = Android::findOne([
             'jihuoma' => $jihuoma,
         ]);
+        $a->codetime = time();
+        $a->can_upgrade_code = 0;
+        $a->save();
+
         return [
-            'isvalid' => $modelJiHuoMa ? $modelJiHuoMa->expire > time() : false,
-            'md5' => md5($this->getJavascriptCode()),
+            'code' => $code,
+            'md5' => $m5,
+        ];
+    }
+
+    public function actionCheck()
+    {
+        $jihuoma = $this->getPageParam('jihuoma');
+        $filemd5 = $this->getPageParam('md5');
+
+        $a = Android::findOne([
+            'jihuoma' => $jihuoma,
+        ]);
+        $code = $this->getJavascriptCode();
+        $m5 = md5($code);
+
+        $a->can_upgrade_code = (int)$filemd5 != $m5;
+        $a->save();
+
+        return [
+            'isvalid' => $this->actionIsvalid(),
+            'md5' => $m5,
         ];
     }
 }

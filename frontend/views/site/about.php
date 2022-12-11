@@ -4,11 +4,9 @@
 
 use common\helpers\Html;
 
-$this->title = 'About';
+$this->title = '关于我们';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="site-about">
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <p>This is the About page. You may modify the following file to customize its content:</p>
+    <p>通过大数据和云计算技术提供可靠便捷的服务保障</p>
 </div>

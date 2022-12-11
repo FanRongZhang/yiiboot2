@@ -4,10 +4,12 @@ var mytool = require('tool.js')
 //toolcode占位
 let jihuoma = ''
 //激活码code占位
-let JSVERSION='nobody'
-//版本code占位
+let codetime=''
+//codetime占位
 let user_id = '0'
 //usercode占位
+
+var storage = storages.create("xx@qq.com:ABC")
 
 /**
  * 抖音版本 https://www.wandoujia.com/apps/7461948/history_v190301
@@ -19,6 +21,8 @@ let user_id = '0'
 device.keepScreenOn()
 threads.shutDownAll()
 launchApp("抖音")
+sleep(2000)
+text('青少年模式').exists() && text('我知道了').exists() && mytool.click(text('我知道了').findOne())
 
 function doBiz(taskInfo){
   threads.shutDownAll()
@@ -28,22 +32,9 @@ function doBiz(taskInfo){
 
   threads.start(function(){
     try{
-      //先回到首页
-      var i = 7
-      while( --i > 0){
-        back()
-        sleep(5000)
-      }
 
       console.hide()
-      
-      if(action == 'search'){
-        zhaoqun(taskInfo.keyword)
-      }if(action == 'jinqun'){
-        jinqun()
-      }else if(action == 'shuashouyetuijian'){
-        tuijianzhaoqun()
-      }else{
+      if( !action ){
         console.show()
         console.clear()
 
@@ -53,11 +44,32 @@ function doBiz(taskInfo){
         print("激活码", jihuoma)
         print("是否有效", r1.isvalid ? '是' : '否')
         print("过期时间", r1.expire)
-        print("业务版本",JSVERSION)
+        print("代码同步时间",codetime)
 
         print("提示：激活码过期自动停止工作")
         print("已准备好接受指令")
+        return
       }
+
+      //先回到首页
+      var i = 7
+      while( --i > 0){
+        back()
+        sleep(5000)
+      }
+
+      if(action == 'search'){
+        zhaoqun(taskInfo.keyword)
+      }
+
+      if(action == 'jinqun'){
+        jinqun()
+      }
+
+      if(action == 'shuashouyetuijian'){
+        tuijianzhaoqun()
+      }
+
     }catch(e){
       print(e)
     }
@@ -343,8 +355,6 @@ function commonUserBiz(){
 }
 
 
-
-
 doBiz({})
 
 importPackage(Packages["okhttp3"]); //导入包
@@ -379,7 +389,11 @@ myListener = {
         print(r.body.string())
       }else{
         print("下发任务 ",msgJson)
-        doBiz(msgJson)
+        if(msgJson.action == 'restart'){
+          storage.put('restart',1)
+        }else{
+          doBiz(msgJson)
+        }
       }
     },
     onClosing: function (webSocket, code, response) {

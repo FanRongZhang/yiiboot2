@@ -9,26 +9,37 @@ if(files.exists(file) == false)
 
 let filemd5 = ''
 let exf = {}
+let jihuoma = ''
+var storage = storages.create("xx@qq.com:ABC")
 
 function pullCode(){
-    var r2 = http.get(api + "/v1/autojscode/js?jihuoma="+jihuoma)
-
+    var r = http.get(api + "/v1/autojscode/js?jihuoma="+jihuoma)
+    r = r.body.json().data
     try{
-        files.write(file, r2.body.string())
+        filemd5 = r.
+        files.write(file, r.code)
     }catch(e){
         // print( files.read(file) )
     }
 }
 
 function pullAndRun(){
-    var jihuoma = rawInput("请输入激活码", "")
-    try{
+    jihuoma = storage.get('jihuoma')
+    if( !jihuoma )
+    {
+        jihuoma = rawInput("请输入激活码", "")
+    }
 
+    try{
         var r1 = http.get(api + "/v1/autojscode/isvalid?jihuoma="+jihuoma)
         var r1 = r1.body.json().data
-        if(r1.isvalid == false){
+        if( ! r1.isvalid){
             toast('激活码无效或已使用或已过期')
+            storage.remove('jihuoma')
+            pullAndRun()
             return
+        }else{
+            storage.put('jihuoma', jihuoma)
         }
 
         pullCode()
@@ -37,20 +48,20 @@ function pullAndRun(){
         //定时查 激活码 是否过期
         setInterval(()=>{
 
-            var res = http.get( api + "/v1/autojscode/check?jihuoma="+jihuoma)
+            var res = http.get( api + "/v1/autojscode/check?jihuoma="+jihuoma+'&md5='+filemd5)
             res = res.body.json().data
             if(res.isvalid == false){
                 !exf.getEngine().isDestroyed() && exf.getEngine().forceStop()
             }else{
-                if(!filemd5){
-                    filemd5 = res.md5
-                }
-                if(filemd5 != res.md5){
+
+                if(storage.get('restart') == 1){
+                    storage.remove('restart')
                     !exf.getEngine().isDestroyed() && exf.getEngine().forceStop()
                     print("自动 pull 代码")
                     pullCode()
                     engines.execScriptFile(file)
                 }
+
             }
 
         },3000)

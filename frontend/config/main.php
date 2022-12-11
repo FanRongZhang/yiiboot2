@@ -21,6 +21,8 @@ return [
         'open' => [
             'class' => 'frontend\modules\open\Module',
         ],
+
+        'gridview' => [ 'class' => '\kartik\grid\Module' ],
     ],
     'components' => [
         'request' => [
