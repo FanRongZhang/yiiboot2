@@ -23,8 +23,9 @@ use Yii;
  * @property string $action
  * @property int $createtime
  * @property int $user_id
- * @property int $can_upgrade_code
- * @property int $codetime
+ * @property int $can_upgrade_code 可以升级代码
+ * @property int $upgrade_code 是否升级代码
+ * @property int $codetime 最近一次获取代码时间
  */
 class Android extends \yii\db\ActiveRecord
 {
@@ -43,7 +44,7 @@ class Android extends \yii\db\ActiveRecord
     {
         return [
             [['jihuoma', 'w', 'h', 'brand', 'product', 'release', 'isonline', 'createtime', 'user_id'], 'required'],
-            [['w', 'h', 'isonline', 'createtime', 'user_id', 'can_upgrade_code', 'codetime'], 'integer'],
+            [['w', 'h', 'isonline', 'createtime', 'user_id', 'can_upgrade_code', 'upgrade_code', 'codetime'], 'integer'],
             [['jihuoma', 'brand', 'product', 'release', 'android_id', 'client_id', 'fenlei', 'label', 'keyword', 'action'], 'string', 'max' => 200],
         ];
     }
@@ -70,8 +71,9 @@ class Android extends \yii\db\ActiveRecord
             'action' => 'Action',
             'createtime' => 'Createtime',
             'user_id' => 'User ID',
-            'can_upgrade_code' => 'Can Upgrade Code',
-            'codetime' => 'Codetime',
+            'can_upgrade_code' => '可以升级代码',
+            'upgrade_code' => '是否升级代码',
+            'codetime' => '最近一次获取代码时间',
         ];
     }
 }

@@ -22,14 +22,10 @@ class AutojscodeController extends OnAuthController
      */
     protected $authOptional = ['*'];
 
-    public function actionIsvalid()
-    {
-        $jihuoma = $this->getPageParam('jihuoma');
-
-        $modelJiHuoMa = Jihuoma::findOne([
-            'jihuoma' => $jihuoma,
-        ]);
-        return $modelJiHuoMa && $modelJiHuoMa->had_used == 0 && $modelJiHuoMa->expire > time();
+    private function getJavascriptCodeMd5(){
+        $tool = file_get_contents(\Yii::getAlias("@root/web/autojs/tool.js"));
+        $douyin = file_get_contents(\Yii::getAlias("@root/web/autojs/douyin_v6.js"));
+        return md5($tool . $douyin);
     }
 
     private function getJavascriptCode()
@@ -62,45 +58,46 @@ class AutojscodeController extends OnAuthController
     public function actionJs()
     {
         $jihuoma = $this->getPageParam('jihuoma');
-        if ($this->actionIsvalid() == false) {
+        $user_id = $this->getPageParam('user_id');
+
+        $android = Android::findOne([
+            'jihuoma' => $jihuoma,
+        ]);
+
+        $modelJiHuoMa = Jihuoma::findOne([
+            'jihuoma' => $jihuoma,
+            'user_id' => $user_id,
+        ]);
+        $isvalid = $modelJiHuoMa && $modelJiHuoMa->expire > time();
+        if( !$isvalid ){
+            $msg = '激活码无效或已过期';
+        }else{
+            if($android && $android->isonline){
+                $msg = '激活码正在被使用，请将使用手机重启等待1分钟后重新操作';
+                $isvalid = false;
+            }
+        }
+
+        if ($isvalid == false) {
             return [
-                'code' => "toast('激活码无效或已使用或已过期') \n print('激活码无效或已使用或已过期') \n",
-                'md5' => '',
+                'msg' => $msg,
             ];
+        }else{
+            $modelJiHuoMa->had_used = 1;
+            $modelJiHuoMa->save();
         }
 
         $code = $this->getJavascriptCode();
-        $m5 = md5($code);
+        $m5 = $this->getJavascriptCodeMd5();
 
-        $a = Android::findOne([
-            'jihuoma' => $jihuoma,
-        ]);
-        $a->codetime = time();
-        $a->can_upgrade_code = 0;
-        $a->save();
+        if($android){
+            $android->can_upgrade_code = $android->upgrade_code = 0;//已是最新代码
+            $android->codetime = time();
+            $android->save();
+        }
 
         return [
             'code' => $code,
-            'md5' => $m5,
-        ];
-    }
-
-    public function actionCheck()
-    {
-        $jihuoma = $this->getPageParam('jihuoma');
-        $filemd5 = $this->getPageParam('md5');
-
-        $a = Android::findOne([
-            'jihuoma' => $jihuoma,
-        ]);
-        $code = $this->getJavascriptCode();
-        $m5 = md5($code);
-
-        $a->can_upgrade_code = (int)$filemd5 != $m5;
-        $a->save();
-
-        return [
-            'isvalid' => $this->actionIsvalid(),
             'md5' => $m5,
         ];
     }
@@ -111,9 +108,50 @@ class AutojscodeController extends OnAuthController
         $jihuoma = $this->getPageParam('jihuoma');
         $user_id = $this->getPageParam('user_id');
 
-        return Jihuoma::findOne([
+        $m = Jihuoma::findOne([
            'user_id' => $user_id,
            'jihuoma' => $jihuoma,
         ]);
+        $m->expire = date('Y-m-d H:i:s', $m->expire);
+        return $m;
     }
+
+
+    public function actionCheck()
+    {
+        $jihuoma = $this->getPageParam('jihuoma');
+        $filemd5 = $this->getPageParam('md5');
+
+        $m5 = $this->getJavascriptCodeMd5();
+
+        //如果有设备，是否对不上代码的md5
+        $android = Android::findOne([
+            'jihuoma' => $jihuoma,
+        ]);
+        if($android) {
+            $android->can_upgrade_code = $filemd5 != $m5 ? 1 : 0;
+            $android->save();
+        }
+
+        $modelJiHuoMa = Jihuoma::findOne([
+            'jihuoma' => $jihuoma,
+        ]);
+        $isvalid = $modelJiHuoMa && $modelJiHuoMa->expire > time();
+
+        $doUpgrade = $android ? $android->upgrade_code : 0;
+
+        //关闭后让设备代码正常升级后重新运行
+        if($doUpgrade && $android){
+            \Yii::$app->services->autojs->wsClose($android);
+            $android->isonline = 0;
+            $android->save();
+        }
+
+        return [
+            'isvalid' => $isvalid,
+            'md5' => $m5,
+            'upgrade_code' => $doUpgrade,
+        ];
+    }
+
 }

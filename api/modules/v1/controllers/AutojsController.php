@@ -23,27 +23,31 @@ class AutojsController extends OnAuthController
 
     public function actionOnline()
     {
-        $m = Android::findOne([
-            'jihuoma' => $this->getPageParam('jihuoma')
-        ]);
-
         //激活码被使用
         $jihuoma = Jihuoma::findOne([
-            'jihuoma' => $m->jihuoma,
+            'jihuoma' => $this->getPageParam('jihuoma'),
+            'user_id' => $this->getPageParam('user_id'),
         ]);
-        $jihuoma->had_used = 1;
-        $jihuoma->save();
+        if($jihuoma){
+            $jihuoma->had_used = 1;
+            $jihuoma->usedtime = time();
+            $jihuoma->save();
+        }
+
+        $m = Android::findOne([
+            'jihuoma' => $this->getPageParam('jihuoma'),
+        ]);
 
         if($m == false){
             $m = new Android();
             $m->createtime = time();
             $m->label = $m->fenlei = '';
             $m->user_id = $jihuoma->user_id;
+            $m->jihuoma = $this->getPageParam('jihuoma');
         }
         $m->setAttributes($this->pageParam, false);
         $m->isonline = 1;
-
-        Gateway::bindUid($m->client_id,$m->jihuoma);
+        \Yii::$app->services->autojs->jihuomaOnline($m);
 
         if( $m->save() ){
             return "ok";

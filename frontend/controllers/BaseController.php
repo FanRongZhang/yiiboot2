@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use common\helpers\ArrayHelper;
 use common\helpers\Url;
 use Yii;
 use yii\web\Controller;
@@ -64,6 +65,8 @@ class BaseController extends Controller
         // 指定使用哪个语言翻译
         // Yii::$app->language = 'en';
          parent::init();
+
+         $this->pageParam = ArrayHelper::merge($_GET,$_POST);
 
          if($this->needLogin && Yii::$app->getUser()->getIsGuest()){
              header("location: " . $this->message('请先登录','/site/login'));

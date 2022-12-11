@@ -88,7 +88,7 @@ $(".g5").on("click", function () {
 
     var keys = $("#grid").yiiGridView("getSelectedRows");
      $.ajax({
-            url: '$url?action=restart',
+            url: '$url?action=upgrade',
             data: {ids:keys},
             type: 'post',
             success: function (t) {
@@ -101,6 +101,62 @@ $(".g5").on("click", function () {
      })
     
 });
+
+
+$(".g6").on("click", function () {
+
+    var keys = $("#grid").yiiGridView("getSelectedRows");
+     $.ajax({
+            url: '$url?action=checkonline',
+            data: {ids:keys},
+            type: 'post',
+            success: function (t) {
+                alert('成功')
+            },
+            error: function () {
+                alert("删除失败！")
+            }
+     
+     })
+    
+});
+
+$(".g7").on("click", function () {
+
+    var keys = $("#grid").yiiGridView("getSelectedRows");
+     $.ajax({
+            url: '$url?action=doagain',
+            data: {ids:keys},
+            type: 'post',
+            success: function (t) {
+                alert('成功')
+            },
+            error: function () {
+                alert("删除失败！")
+            }
+     
+     })
+    
+});
+
+$(".g8").on("click", function () {
+
+    var keys = $("#grid").yiiGridView("getSelectedRows");
+     $.ajax({
+            url: '$url?action=shutdown',
+            data: {ids:keys},
+            type: 'post',
+            success: function (t) {
+                alert('成功')
+            },
+            error: function () {
+                alert("删除失败！")
+            }
+     
+     })
+    
+});
+
 SCRIPT;
 $this->registerJs($script);
 
@@ -112,12 +168,14 @@ $this->registerJs($script);
     ?>
     <div class="col-xs-10">
         <div style="margin-bottom: 20px;">
-            <?= Html::a('批量刷首页推荐', "javascript:void(0);", ['class' => 'btn btn-primary g1']) ?>
-            <?= Html::a('批量进群', "javascript:void(0);", ['class' => 'btn btn-primary g2']) ?>
-            <?= Html::a('批量重新操作', Url::to(['reset']), ['class' => 'btn btn-primary']) ?>
-            <?= Html::a('批量重新搜索', "javascript:void(0);", ['class' => 'btn btn-primary g3']) ?>
+            <?= Html::a('推荐操作', "javascript:void(0);", ['class' => 'btn btn-primary g1']) ?>
+            <?= Html::a('进群操作', "javascript:void(0);", ['class' => 'btn btn-primary g2']) ?>
+            <?= Html::a('搜索操作', "javascript:void(0);", ['class' => 'btn btn-primary g3']) ?>
             <?= Html::a('设备信息展示', "javascript:void(0);", ['class' => 'btn btn-primary g4']) ?>
-            <?= Html::a('重启升级代码', "javascript:void(0);", ['class' => 'btn btn-primary g5']) ?>
+            <?= Html::a('升级到最新代码', "javascript:void(0);", ['class' => 'btn btn-primary g5']) ?>
+            <?= Html::a('检查激活码使用情况', "javascript:void(0);", ['class' => 'btn btn-primary g6']) ?>
+            <?= Html::a('重复上次操作', "javascript:void(0);", ['class' => 'btn btn-primary g7']) ?>
+            <?= Html::a('设备下线', "javascript:void(0);", ['class' => 'btn btn-primary g8']) ?>
         </div>
 
         <div>
@@ -140,23 +198,30 @@ $this->registerJs($script);
                     [ 'attribute' => 'label', 'class'=>'kartik\grid\EditableColumn', 'label' => '标签', ],
                     [ 'attribute' => 'fenlei', 'class'=>'kartik\grid\EditableColumn', 'label' => '分类', ],
                     [
-                        'label' => '分辨率',
+                        'attribute' => 'isonline',
+                        'label' => '状态',
                         'value' => function($model){
-                            return $model->w .'x'.$model->h;
+                            return $model->isonline?'使用中':'未使用';
                         }
                     ],
-            'brand',
+                    [
+                        'label' => '设备',
+                        'value' => function($model){
+                            return $model->brand . ' ' . $model->product . ' ' . $model->w .'x'.$model->h;
+                        }
+                    ],
 //            'product',
 //            'release',
 //            'android_id',
-//            [ 'attribute' => 'isonline',  'label' => '是否在线',
-//                'value' => function($model){
-//                    return $model->isonline?'在线':'离线';
-//                }],
                     [
-                        'attribute' => 'can_upgrade_code',  'label' => '代码',
+                        'attribute' => 'can_upgrade_code',
+                        'label' => '代码',
                         'value' => function($model){
-                            return $model->can_upgrade_code?'(可升级)' . date('Y-m-d H:i:s',$model->codetime):'最新代码';
+                            if($model->can_upgrade_code == 1){
+                                return '可同步,上次更新时间：'.date('Y-m-d H:i:s',$model->codetime);
+                            }else{
+                                return '最新';
+                            }
                         }
                     ],
                     [ 'attribute' => 'keyword', 'class'=>'kartik\grid\EditableColumn',  'label' => '关键字',],

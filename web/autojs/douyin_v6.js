@@ -9,7 +9,7 @@ let codetime=''
 let user_id = '0'
 //usercode占位
 
-var storage = storages.create("xx@qq.com:ABC")
+let shutdown = false
 
 /**
  * 抖音版本 https://www.wandoujia.com/apps/7461948/history_v190301
@@ -21,8 +21,7 @@ var storage = storages.create("xx@qq.com:ABC")
 device.keepScreenOn()
 threads.shutDownAll()
 launchApp("抖音")
-sleep(5000)
-text('青少年模式').exists() && text('我知道了').exists() && mytool.click(text('我知道了').findOne())
+
 
 function doBiz(taskInfo){
   threads.shutDownAll()
@@ -33,23 +32,24 @@ function doBiz(taskInfo){
   threads.start(function(){
     try{
 
-      console.hide()
       if( !action ){
-        console.show()
-        console.clear()
 
         var r1 = http.get(mytool.api + "/v1/autojscode/jihuoma-info?jihuoma="+jihuoma+"&user_id="+user_id)
         r1 = r1.body.json().data
 
+        console.clear()
+        console.show()
+
         print("激活码", jihuoma)
-        print("是否有效", r1 && r1.isvalid ? '是' : '否')
         print("过期时间", r1 && r1.expire)
         print("代码同步时间",codetime)
 
         print("提示：激活码过期自动停止工作")
-        print("已准备好接受指令")
+        print("已准备好接受操作指令，在网页 用户中心 进行操作")
         return
       }
+
+      console.hide()
 
       //先回到首页
       var i = 7
@@ -58,16 +58,18 @@ function doBiz(taskInfo){
         sleep(5000)
       }
 
-      if(action == 'search'){
-        zhaoqun(taskInfo.keyword)
-      }
-
-      if(action == 'jinqun'){
-        jinqun()
-      }
-
-      if(action == 'shuashouyetuijian'){
-        tuijianzhaoqun()
+      switch(action){
+        case 'search':
+          zhaoqun(taskInfo.keyword)
+          break
+        case 'jinqun':
+          jinqun()
+          break
+        case 'shuashouyetuijian':
+          tuijianzhaoqun()
+          break
+        default:
+          toast('不支持的操作，升级代码后再来')
       }
 
     }catch(e){
@@ -383,14 +385,19 @@ myListener = {
           android_id: device.getAndroidId(),
           client_id: client_id,
         }
-        print(json)
-        var url = mytool.api + "/v1/autojs/online"
+        // print(json)
+        var url = mytool.api + "/v1/autojs/online?user_id="+user_id
         r = http.postJson(url, json)
-        print(r.body.string())
+        // print(r.body.string())
       }else{
         print("下发任务 ",msgJson)
-        if(msgJson.action == 'restart'){
-          storage.put('restart',1)
+        if(msgJson.action == 'shutdown'){
+          threads.shutDownAll()
+          console.clear()
+          console.show()
+          toast('已下线，停止工作，激活码已未在该机器上使用')
+          print('已下线，停止工作，激活码已未在该机器上使用')
+          shutdown = true
         }else{
           doBiz(msgJson)
         }
@@ -402,27 +409,39 @@ myListener = {
     onClosed: function (webSocket, code, response) {
         print("已关闭ws");
 
-        var json = {
-          client_id:client_id,
-        };
-        var url = mytool.api + "/v1/autojs/close";
-        r = http.postJson(url, json);
-        print(r.body.string())
+        //auto ws 有关闭 bug ，一直在
+
+        // var json = {
+        //   client_id:client_id,
+        // };
+        // var url = mytool.api + "/v1/autojs/close";
+        // r = http.postJson(url, json);
+        // print(r.body.string())
     },
     onFailure: function (webSocket, t, response) {
         print("ws onFailure:");
         print( t);
 
-        var json = {
-          client_id:client_id,
-        };
-        var url = mytool.api + "/v1/autojs/close";
-        r = http.postJson(url, json);
-        print(r.body.string())
+        //auto ws 有关闭 bug ，一直在
+
+        // var json = {
+        //   client_id:client_id,
+        // };
+        // var url = mytool.api + "/v1/autojs/close";
+        // r = http.postJson(url, json);
+        // print(r.body.string())
     }
 }
 
 var webSocket= client.newWebSocket(request, new WebSocketListener(myListener)); //创建链接
 
-setInterval(function(){},3000)
+//去掉弹窗 
+let iloop = setInterval(function(){
+  text('青少年模式').exists() && text('我知道了').exists() && mytool.click(text('我知道了').findOne())
+  text('以后再说').exists() && text('立即升级').exists() && mytool.click(text('以后再说').findOne())
+  if(shutdown){
+    clearInterval(iloop)
+    exit()
+  }
+},3000)
 

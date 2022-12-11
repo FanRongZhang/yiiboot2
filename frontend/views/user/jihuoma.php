@@ -38,9 +38,10 @@ $this->registerJs($script);
     ?>
     <div class="col-xs-10">
         <div>
+
             <div class="alert-info alert">激活码请联系微信号 xxxx 获取</div>
             <div class="alert-info alert">代理招募，请联系 xxxx </div>
-
+            <div class="alert-info alert">一个激活码同时只能在一台手机上使用;如果需要在其他手机上使用同一个激活码，可先下线操作后再再其他手机上进行使用</div>
 
             <?= GridView::widget([
                 'dataProvider' => $dataProvider,

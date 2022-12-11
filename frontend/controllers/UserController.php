@@ -10,6 +10,7 @@ use common\models\autojs\Jihuoma;
 use common\models\base\SearchModel;
 use GatewayWorker\Lib\Gateway;
 use Yii;
+use yii\web\HtmlResponseFormatter;
 use yii\web\Response;
 
 
@@ -90,47 +91,62 @@ class UserController extends BaseController
 
     public function actionSendAction()
     {
+        Yii::$app->response->format = Yii::$app->response::FORMAT_JSON;
+
         $all = Android::find()->andWhere([
             'id' => $this->getPageParam('ids'),
             'user_id' => Yii::$app->user->identity->getId(),
         ])->all();
+
+        $action = $this->getPageParam('action');
+
         /** @var Android $one */
         foreach ($all as $one) {
-            $one->action = $this->getPageParam('action');
-            $one->save();
-            if($one->action == 'search' && $one->keyword){
+            if($action == 'search' && $one->keyword){ // 搜索
+                $one->action = $action;
+                $one->save();
                 Gateway::sendToClient($one->client_id, json_encode([
                     'action' => $one->action,
                     'keyword' => $one->keyword,
                 ]));
-            }elseif($one->action == 'restart' && $one->can_upgrade_code){
+            }elseif($action == 'doagain'){//重复上一个操作
+
+                //有些需要关键字等额外条件
+                if( in_array($one->action,['search'])  && $one->keyword) {
+                    Gateway::sendToClient($one->client_id, json_encode([
+                        'action' => $one->action,
+                        'keyword' => $one->keyword,
+                    ]));
+                }else{
+                    Gateway::sendToClient($one->client_id, json_encode([
+                        'action' => $one->action,
+                        'keyword' => $one->keyword,
+                    ]));
+                }
+
+            }elseif($action == 'upgrade' && $one->can_upgrade_code){ //代码升级
+                $one->action = $action;
+                $one->upgrade_code = 1;
+                $one->save();
+            }elseif($action == 'checkonline'){ //查在线
+                $one->isonline = \Yii::$app->services->autojs->isJihuomaOnline($one);
+                $one->save();
+            }elseif($action == 'shutdown'){ //shut down
                 Gateway::sendToClient($one->client_id, json_encode([
-                    'action' => $one->action,
-                    'keyword' => $one->keyword,
+                    'action' => $action,
                 ]));
-            }else{
+                $one->isonline = 0;
+                $one->save();
+                Yii::$app->services->autojs->wsClose($one);
+            }else{ //发指令
+                $one->action = $action;
+                $one->save();
                 Gateway::sendToClient($one->client_id, json_encode([
                     'action' => $one->action,
                 ]));
             }
         }
-        return '';
-    }
-
-    public function actionReset()
-    {
-        $all = Android::find()->andWhere([
-            'id' => $this->getPageParam('ids'),
-            'user_id' => Yii::$app->user->identity->getId(),
-        ])->all();
-        foreach ($all as $one) {
-
-            Gateway::sendToClient($one->client_id, json_encode([
-                'action' => $one->action,
-                'keyword' => $one->keyword
-            ]));
-        }
-        return $this->redirect($this->message("操作成功", Url::to(['index'])));
+        return '';//
     }
 
     public function actionUser()
