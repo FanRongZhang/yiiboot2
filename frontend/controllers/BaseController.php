@@ -66,7 +66,8 @@ class BaseController extends Controller
          parent::init();
 
          if($this->needLogin && Yii::$app->getUser()->getIsGuest()){
-             return $this->redirect($this->message('请先登录',Url::to(['site/login'])));
+             header("location: " . $this->message('请先登录','/site/login'));
+             exit();
          }
     }
 }

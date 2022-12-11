@@ -10,7 +10,6 @@ use common\models\member\Member;
 use common\enums\StatusEnum;
 use backend\controllers\BaseController;
 use backend\modules\member\forms\RechargeForm;
-use yii\data\ActiveDataProvider;
 
 /**
  * 会员管理

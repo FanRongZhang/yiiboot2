@@ -10,11 +10,7 @@ use common\models\autojs\Jihuoma;
 use common\models\base\SearchModel;
 use GatewayWorker\Lib\Gateway;
 use Yii;
-use linslin\yii2\curl\Curl;
-use common\helpers\ResultHelper;
-use common\models\common\Attachment;
 use yii\web\Response;
-use Qiniu\Auth;
 
 
 class UserController extends BaseController
@@ -26,7 +22,7 @@ class UserController extends BaseController
      */
     public $enableCsrfValidation = false;
 
-    public $needLogin = false;
+    public $needLogin = true;
 
     /**
      * @var Android
@@ -81,6 +77,8 @@ class UserController extends BaseController
 
         $dataProvider = $searchModel
             ->search(Yii::$app->request->queryParams);
+        $dataProvider->query
+            ->andFilterWhere(['user_id' => Yii::$app->user->identity->getId()]);
 
         return $this->render('index', [
             'dataProvider' => $dataProvider,
@@ -93,7 +91,8 @@ class UserController extends BaseController
     public function actionSendAction()
     {
         $all = Android::find()->andWhere([
-            'id' => $this->getPageParam('ids')
+            'id' => $this->getPageParam('ids'),
+            'user_id' => Yii::$app->user->identity->getId(),
         ])->all();
         /** @var Android $one */
         foreach ($all as $one) {
@@ -121,7 +120,8 @@ class UserController extends BaseController
     public function actionReset()
     {
         $all = Android::find()->andWhere([
-            'id' => $this->getPageParam('ids')
+            'id' => $this->getPageParam('ids'),
+            'user_id' => Yii::$app->user->identity->getId(),
         ])->all();
         foreach ($all as $one) {
 
@@ -149,6 +149,8 @@ class UserController extends BaseController
 
         $dataProvider = $searchModel
             ->search(Yii::$app->request->queryParams);
+        $dataProvider->query
+            ->andFilterWhere(['user_id' => Yii::$app->user->identity->getId()]);
 
         return $this->render('user', [
             'dataProvider' => $dataProvider,
@@ -174,6 +176,8 @@ class UserController extends BaseController
 
         $dataProvider = $searchModel
             ->search(Yii::$app->request->queryParams);
+        $dataProvider->query
+            ->andFilterWhere(['user_id' => Yii::$app->user->identity->getId()]);
 
         return $this->render('qun', [
             'dataProvider' => $dataProvider,
@@ -198,6 +202,8 @@ class UserController extends BaseController
 
         $dataProvider = $searchModel
             ->search(Yii::$app->request->queryParams);
+        $dataProvider->query
+            ->andFilterWhere(['user_id' => Yii::$app->user->identity->getId()]);
 
         return $this->render('jihuoma', [
             'dataProvider' => $dataProvider,

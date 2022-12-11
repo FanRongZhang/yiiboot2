@@ -104,4 +104,16 @@ class AutojscodeController extends OnAuthController
             'md5' => $m5,
         ];
     }
+
+
+    public function actionJihuomaInfo()
+    {
+        $jihuoma = $this->getPageParam('jihuoma');
+        $user_id = $this->getPageParam('user_id');
+
+        return Jihuoma::findOne([
+           'user_id' => $user_id,
+           'jihuoma' => $jihuoma,
+        ]);
+    }
 }

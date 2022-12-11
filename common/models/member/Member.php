@@ -88,7 +88,7 @@ class Member extends User
             [['username'], 'unique', 'filter' => function (ActiveQuery $query) {
                 return $query->andWhere(['>=', 'status', StatusEnum::DISABLED]);
             }, 'on' => ['backendCreate']],
-            [['id', 'current_level', 'level', 'merchant_id', 'type', 'gender','visit_count', 'role', 'last_time', 'province_id', 'city_id', 'area_id', 'pid', 'status', 'created_at', 'updated_at','is_fake'], 'integer'],
+            [['id', 'current_level', 'level', 'merchant_id', 'type', 'gender','visit_count', 'role', 'last_time', 'province_id', 'city_id', 'area_id', 'pid', 'status', 'created_at', 'updated_at',], 'integer'],
             [['birthday'], 'safe'],
             [['username', 'qq', 'home_phone', 'mobile'], 'string', 'max' => 20],
             [['password_hash', 'password_reset_token', 'head_portrait'], 'string', 'max' => 150],

@@ -65,16 +65,19 @@ class AutojsController extends OnAuthController
 
     public function actionFoundUser(){
         $dyh = $this->getPageParam('dyh');
+        $user_id = $this->getPageParam('user_id');
         if( $dyh== false){
             return "no dyh";
         }
 
         $user = Douyinuser::findOne([
             'dyh' => $dyh,
+            'user_id' => $user_id,
         ]);
         if($user == false){
             $user = new Douyinuser([
                 'dyh' => $dyh,
+                'user_id' => $user_id,
                 'createtime' => time(),
             ]);
         }
@@ -87,6 +90,7 @@ class AutojsController extends OnAuthController
                 $qun = Douyinqun::findOne([
                     'douyinhao' => $dyh,
                     'mingcheng' => $one['mingcheng'],
+                    'user_id' => $user_id,
                 ]);
                 if($qun == false){
                     $qun = new Douyinqun([
@@ -94,6 +98,7 @@ class AutojsController extends OnAuthController
                         'mingcheng' => $one['mingcheng'],
                         'createtime' => time(),
                         'isjoined' => 0,
+                        'user_id' => $user_id,
                     ]);
                 }
                 $qun->setAttributes($one,false);

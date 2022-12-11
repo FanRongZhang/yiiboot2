@@ -21,7 +21,7 @@ var storage = storages.create("xx@qq.com:ABC")
 device.keepScreenOn()
 threads.shutDownAll()
 launchApp("抖音")
-sleep(2000)
+sleep(5000)
 text('青少年模式').exists() && text('我知道了').exists() && mytool.click(text('我知道了').findOne())
 
 function doBiz(taskInfo){
@@ -38,12 +38,12 @@ function doBiz(taskInfo){
         console.show()
         console.clear()
 
-        var r1 = http.get(mytool.api + "/v1/autojscode/jihuoma?jihuoma="+jihuoma)
-        var r1 = r1.body.json().data
+        var r1 = http.get(mytool.api + "/v1/autojscode/jihuoma-info?jihuoma="+jihuoma+"&user_id="+user_id)
+        r1 = r1.body.json().data
 
         print("激活码", jihuoma)
-        print("是否有效", r1.isvalid ? '是' : '否')
-        print("过期时间", r1.expire)
+        print("是否有效", r1 && r1.isvalid ? '是' : '否')
+        print("过期时间", r1 && r1.expire)
         print("代码同步时间",codetime)
 
         print("提示：激活码过期自动停止工作")

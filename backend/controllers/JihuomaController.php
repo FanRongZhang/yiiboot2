@@ -6,7 +6,6 @@ use Yii;
 use common\models\autojs\Jihuoma;
 use common\traits\Curd;
 use common\models\base\SearchModel;
-use backend\controllers\BaseController;
 
 /**
 * Jihuoma
@@ -43,6 +42,8 @@ class JihuomaController extends BaseController
 
         $dataProvider = $searchModel
             ->search(Yii::$app->request->queryParams);
+        $dataProvider->query
+            ->andFilterWhere(['merchant_id' => $this->getMerchantId()]);
 
         return $this->render('index', [
             'dataProvider' => $dataProvider,

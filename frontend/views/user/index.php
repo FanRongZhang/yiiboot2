@@ -1,6 +1,5 @@
 <?php
-
-use common\helpers\Html;
+use \yii\helpers\Html;
 use common\helpers\Url;
 use kartik\grid\GridView;
 
@@ -112,14 +111,12 @@ $this->registerJs($script);
     echo $this->render('left');
     ?>
     <div class="col-xs-10">
-        <div>
-
+        <div style="margin-bottom: 20px;">
             <?= Html::a('批量刷首页推荐', "javascript:void(0);", ['class' => 'btn btn-primary g1']) ?>
             <?= Html::a('批量进群', "javascript:void(0);", ['class' => 'btn btn-primary g2']) ?>
             <?= Html::a('批量重新操作', Url::to(['reset']), ['class' => 'btn btn-primary']) ?>
             <?= Html::a('批量重新搜索', "javascript:void(0);", ['class' => 'btn btn-primary g3']) ?>
             <?= Html::a('设备信息展示', "javascript:void(0);", ['class' => 'btn btn-primary g4']) ?>
-
             <?= Html::a('重启升级代码', "javascript:void(0);", ['class' => 'btn btn-primary g5']) ?>
         </div>
 
