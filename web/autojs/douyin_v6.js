@@ -288,6 +288,9 @@ function jinqun(){
                     text("立即加入").find().each(function(v){
                       mytool.click(v) && ci++
                     })
+                    text("申请加入").find().each(function(v){
+                      mytool.click(v) && ci++
+                    })
                     if(ci > 0)
                     {
                       http.get(mytool.api + '/v1/autojs/qun-join?douyinhao='+qunModel.douyinhao+'&user_id='+user_id)
