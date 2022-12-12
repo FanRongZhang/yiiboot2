@@ -98,20 +98,20 @@ function swipeRnd(x1, y1, x2, y2, duration) {
   //   gesture(duration, [x1, y1], [x1 + 60, y1 - 80], [x2, y2])
   // }
   
-  tool.从下往上滑动 = function(阅读文章速度) {
+  tool.从下往上滑动 = function(y) {
     log(arguments.callee.name + '开始')
-    var 阅读文章速度 = 阅读文章速度 || 2.5
+    var y = y || 2
     var w = device.width
     var h = device.height
     var x1 = Math.floor(w / 5 * 2)
     var y1 = Math.floor(h / 5 * 4)
     var x2 = Math.floor(w / 5 * 1)
-    var y2 = Math.floor(h / 5 * 阅读文章速度)
+    var y2 = Math.floor(h / 5 * y)
     var duration = 300
     // log('滑动参数=', x1, y1, x2, y2, duration)
     swipeRnd(x1, y1, x2, y2, duration)
     // log(arguments.callee.name + '结束')
-    sleep(3000)
+    sleep(1000)
   }
 
   tool.congshangwangxiahua = function(kongjian, times){

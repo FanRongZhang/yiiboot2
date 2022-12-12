@@ -186,7 +186,7 @@ function getAndPostPersonPageInfo(){
 }
 
 function shanghua(){
-  mytool.从下往上滑动(1.2)
+  mytool.从下往上滑动(2.3)
 }
 
 //首页推荐页找群
@@ -199,7 +199,7 @@ function tuijianzhaoqun(){
 
   //持续滑动界面
   while(true){
-    id('user_avatar').findOne(3500) // N/1000 秒钟内找到头像
+    id('user_avatar').findOne(1000) // N/1000 秒钟内找到头像
 
     if(id('user_avatar').clickable(true).find().size() == 0){
       shanghua()
@@ -222,7 +222,7 @@ function tuijianzhaoqun(){
         return
       }
 
-      let clicked = one.click() //点击头像位置进入
+      let clicked = mytool.click(one) //点击头像位置进入
       if(clicked){
         print("点击头像位置进入")
 
@@ -439,6 +439,7 @@ var webSocket= client.newWebSocket(request, new WebSocketListener(myListener)); 
 let iloop = setInterval(function(){
   text('青少年模式').exists() && text('我知道了').exists() && mytool.click(text('我知道了').findOne())
   text('以后再说').exists() && text('立即升级').exists() && mytool.click(text('以后再说').findOne())
+  text('反馈邀请').exists() && text('直接退出').exists() && mytool.click(text('直接退出').findOne())
   if(shutdown){
     clearInterval(iloop)
     exit()
