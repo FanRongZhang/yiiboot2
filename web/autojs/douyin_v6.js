@@ -77,7 +77,7 @@ function doBiz(taskInfo){
 
 function getAndPostPersonPageInfo(){
   try{
-      id('cpo').findOne(2500)
+      idContains('cpo').findOne(5000)
       var huozan = id('cpo').exists() ? id('cpo').findOne().text() : false
       if(huozan === false){
         huozan = idContains('cpo').exists() ? idContains('cpo').findOne().text() : ''
@@ -100,7 +100,7 @@ function getAndPostPersonPageInfo(){
       if(id('n+s').exists()){
         var more = id('n+s').findOne()
         click( more.bounds().right - 10 , more.bounds().bottom - 10 ) //原生点击，展开更多
-        sleep(1000)
+        sleep(30)
         
         note = more.text()
       }else if(textContains('更多').exists()) {
@@ -108,7 +108,7 @@ function getAndPostPersonPageInfo(){
         if(more.text().indexOf('...') > 0)
         {
           click( more.bounds().right - 10 , more.bounds().bottom - 10 ) //原生点击，展开更多
-          sleep(1000)
+          sleep(30)
         }
         note = more.text()
       }
@@ -186,7 +186,7 @@ function getAndPostPersonPageInfo(){
 }
 
 function shanghua(){
-  mytool.从下往上滑动(1.4)
+  mytool.从下往上滑动(1.2)
 }
 
 //首页推荐页找群
@@ -212,7 +212,8 @@ function tuijianzhaoqun(){
       var top = one.bounds().top
 
       print("right, top", right, top)
-      var zhengquetouxiang = right - top >= 150 && right - top <= 250 && right + one.bounds().width() > device.width
+      //right - top <= 250 &&
+      var zhengquetouxiang = right - top >= 150 &&  right + one.bounds().width() > device.width
       if(zhengquetouxiang == false){
         return
       }
@@ -222,25 +223,25 @@ function tuijianzhaoqun(){
       }
 
       let clicked = one.click() //点击头像位置进入
-      print("点击头像位置进入")
-      sleep(2000)
+      if(clicked){
+        print("点击头像位置进入")
 
-      var personInfo = getAndPostPersonPageInfo()
+        var personInfo = getAndPostPersonPageInfo()
 
-      personInfo.head_nick = nick //记录刚刚刷到的用户
-      userMap[personInfo.head_nick] = 1
-      userMapLength += 1
-      //到一定数量重置
-      if(userMapLength > 1000){
-        userMap = {}
-        userMapLength = 0
+        personInfo.head_nick = nick //记录刚刚刷到的用户
+        userMap[personInfo.head_nick] = 1
+        userMapLength += 1
+        //到一定数量重置
+        if(userMapLength > 1000){
+          userMap = {}
+          userMapLength = 0
+        }
+        back()
       }
 
-
-      clicked && back()
     })
     shanghua()
-    sleep(random(1200, 2000 ))
+    // sleep(random(1200, 2000 ))
   }
 
 
@@ -333,21 +334,23 @@ function commonUserBiz(){
       }
 
       let clicked = mytool.click(one) //点击头像位置进入
-      clicked && print("点击头像位置进入")
-      sleep(1200)
+      if(clicked){
+        print("点击头像位置进入")
 
-      var personInfo = getAndPostPersonPageInfo()
-
-      personInfo.head_nick = nick //记录刚刚刷到的用户
-      userMap[personInfo.head_nick] = 1
-      userMapLength += 1
-      //到一定数量重置
-      if(userMapLength > 1000){
-        userMap = {}
-        userMapLength = 0
+        var personInfo = getAndPostPersonPageInfo()
+  
+        personInfo.head_nick = nick //记录刚刚刷到的用户
+        userMap[personInfo.head_nick] = 1
+        userMapLength += 1
+        //到一定数量重置
+        if(userMapLength > 1000){
+          userMap = {}
+          userMapLength = 0
+        }
+  
+        back()
       }
-
-      clicked && back()
+      
     })
     shanghua()
     sleep(random(1200, 2600 ))
