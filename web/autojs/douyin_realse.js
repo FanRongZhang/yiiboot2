@@ -1,3 +1,4 @@
+auto()
 
 let api = 'http://jd.xiaozhumeimeigou.com/api'
 
