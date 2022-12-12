@@ -66,6 +66,6 @@ class Events
    {
        // 向所有人发送 
 //       GateWay::sendToAll("$client_id logout\r\n");
-       file_get_contents("http://127.0.0.1/api/v1/autojs/close?client_id=".$client_id);
+       file_get_contents("http://jd.xiaozhumeimeigou.com/api/v1/autojs/close?client_id=".$client_id);
    }
 }
