@@ -201,22 +201,22 @@ function tuijianzhaoqun(){
   while(true){
     id('user_avatar').findOne(1000) // N/1000 秒钟内找到头像
 
-    if(id('user_avatar').clickable(true).find().size() == 0){
+    if(id('user_avatar').find().size() == 0){
       shanghua()
       continue
     }
 
-    id('user_avatar').clickable(true).find().each(function(one){
+    id('user_avatar').find().each(function(one){
       var nick = one.desc()
-      var right = one.bounds().right
-      var top = one.bounds().top
+      // var right = one.bounds().right
+      // var top = one.bounds().top
 
-      print("right, top", right, top)
+      // print("right, top", right, top)
       //right - top <= 250 &&
-      var zhengquetouxiang = right - top >= 150 &&  right + one.bounds().width() > device.width
-      if(zhengquetouxiang == false){
-        return
-      }
+      // var zhengquetouxiang = right - top >= 150 &&  right + one.bounds().width() > device.width
+      // if(zhengquetouxiang == false){
+      //   return
+      // }
 
       if(userMap[nick]){
         return
