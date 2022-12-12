@@ -1,5 +1,5 @@
 
-let api = 'http://192.168.0.125/api'
+let api = 'http://jd.xiaozhumeimeigou.com/api'
 
 let file = "/sdcard/autojs/douyin.js"
 if(files.exists(file) == false)

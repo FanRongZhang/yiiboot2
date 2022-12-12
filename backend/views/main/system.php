@@ -19,6 +19,9 @@ $this->params['breadcrumbs'][] = ['label' => $this->title];
 </style>
 
 <div class="row">
+    <div class="alert alert-info">在线设备：<?= \GatewayWorker\Lib\Gateway::getAllUidCount() ?></div>
+</div>
+<div class="row">
     <div class="col-md-2 col-sm-6 col-xs-12">
         <div class="info-box">
             <div class="info-box-content p-md">
