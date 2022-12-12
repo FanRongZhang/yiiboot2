@@ -20,7 +20,7 @@ class TestController extends Controller
 {
     public function actionIndex(){
 
-        Yii::$app->services->autojs->makeJiHuoma(10,time()+24*3600*60);
+        Yii::$app->services->autojs->makeJiHuoma(10,time()+24*3600*60,2);
 
     }
 }
