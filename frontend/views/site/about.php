@@ -4,9 +4,11 @@
 
 use common\helpers\Html;
 
-$this->title = '关于我们';
+$this->title = '资源下载';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="site-about">
-    <p>通过大数据和云计算技术提供可靠便捷的服务保障</p>
+    <a href="https://www.wandoujia.com/apps/7461948/history_v190301" target="_blank">抖音版本下载</a>
+    <br><br><br><br>
+    <a>助手下载</a>
 </div>

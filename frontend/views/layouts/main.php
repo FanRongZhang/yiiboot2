@@ -36,7 +36,7 @@ AppAsset::register($this);
     ]);
     $menuItems = [
         ['label' => Yii::t('app', '主页'), 'url' => ['/site/index']],
-//        ['label' => Yii::t('app', '关于'), 'url' => ['/site/about']],
+        ['label' => Yii::t('app', '资源'), 'url' => ['/site/about']],
 //        ['label' => Yii::t('app', '联系我们'), 'url' => ['/site/contact']],
     ];
     if (Yii::$app->user->isGuest) {

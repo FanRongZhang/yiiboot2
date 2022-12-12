@@ -1,5 +1,6 @@
 auto()
 
+console.hide()
 var mytool = require('tool.js')
 //toolcode占位
 let jihuoma = ''
@@ -16,7 +17,6 @@ let shutdown = false
  * 
  */
 // auto.waitFor()
-// console.show()
 
 device.keepScreenOn()
 threads.shutDownAll()
@@ -37,9 +37,6 @@ function doBiz(taskInfo){
         var r1 = http.get(mytool.api + "/v1/autojscode/jihuoma-info?jihuoma="+jihuoma+"&user_id="+user_id)
         r1 = r1.body.json().data
 
-        console.clear()
-        console.show()
-
         print("激活码", jihuoma)
         print("过期时间", r1 && r1.expire)
         print("代码同步时间",codetime)
@@ -49,7 +46,6 @@ function doBiz(taskInfo){
         return
       }
 
-      console.hide()
 
       //先回到首页
       var i = 7
@@ -393,9 +389,7 @@ myListener = {
         print("下发任务 ",msgJson)
         if(msgJson.action == 'shutdown'){
           threads.shutDownAll()
-          console.clear()
-          console.show()
-          toast('已下线，停止工作，激活码已未在该机器上使用')
+          
           print('已下线，停止工作，激活码已未在该机器上使用')
           shutdown = true
         }else{
