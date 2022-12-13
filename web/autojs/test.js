@@ -2,32 +2,48 @@
 var mytool = require('tool.js')
 
 
+
 function shanghua(){
-    mytool.从下往上滑动(2.3)
-  }
-  
+    mytool.从下往上滑动(1)
+    print('shang hua')
+}
+var left = 660
+var top = 583
+var right = 10
+var bottom = 660
 
-function tuijianzhaoqun(){
-    mytool.click(descContains('推荐').findOne())
-    // sleep(2000)
-    
-    var left = 660
-    var top = 583
-    var right = 10
-    var bottom = 660
-  
-    while(true){
-      if(textContains('直播中').exists() == false){
-        click(left,top)
-        // getAndPostPersonPageInfo()
-        back()    
-      }
-      shanghua()
-      // sleep(random(1200, 2000 ))
+// click(left,top)
+// sleep(1000)
+// back()
+
+var i =3
+while(--i){
+    if((textContains('直播').exists()) == false){
+    print('dianji ')
+      click(left,top)
+      sleep(1000)
+    //   getAndPostPersonPageInfo()
+        print(back())
     }
+    shanghua()
+    sleep(random(1200, 2000 ))
   }
 
-  tuijianzhaoqun()
+// exit()
+// var i =10
+// while(--i>4){
+//   if((textContains('直播').exists()) == false){
+//     if(click(left,top)){
+//         idContains('cpo').findOne()
+//         back()
+//     }
+//   }
+//   shanghua()
+//   sleep(random(1200, 2000 ))
+// }
+  
+
+  
 // print(id('user_avatar').find().size(),'----')
 // // id('user_avatar').find().children()[0].click()
 // id('user_avatar').find().each(function(v){

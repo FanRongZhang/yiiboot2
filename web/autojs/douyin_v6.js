@@ -212,13 +212,13 @@ function tuijianzhaoqun(){
   var bottom = 660
 
   while(true){
-    if(textContains('直播中').exists() == false){
-      if(click(left,top)){
-        getAndPostPersonPageInfo()
-      }
+    if((textContains('直播').exists()) == false){
+      click(left,top)
+      sleep(1000)
+      getAndPostPersonPageInfo()
     }
     shanghua()
-    // sleep(random(1200, 2000 ))
+    sleep(random(1200, 2000 ))
   }
 }
 
@@ -412,6 +412,7 @@ let iloop = setInterval(function(){
   text('青少年模式').exists() && text('我知道了').exists() && mytool.click(text('我知道了').findOne())
   text('以后再说').exists() && text('立即升级').exists() && mytool.click(text('以后再说').findOne())
   text('反馈邀请').exists() && text('直接退出').exists() && mytool.click(text('直接退出').findOne())
+  text('暂不使用').exists() && mytool.click(text('暂不使用').findOne())
   if(shutdown){
     clearInterval(iloop)
     exit()
