@@ -11,6 +11,7 @@ let user_id = '0'
 //usercode占位
 
 let shutdown = false
+setScreenMetrics(720, 1600)
 
 /**
  * 抖音版本 https://www.wandoujia.com/apps/7461948/history_v190301
@@ -77,6 +78,11 @@ function doBiz(taskInfo){
 
 function getAndPostPersonPageInfo(){
   try{
+      if(text('更多直播').exists()){
+        back()
+        return
+      }
+
       idContains('cpo').findOne(1000)
       var huozan = id('cpo').exists() ? id('cpo').findOne().text() : false
       if(huozan === false){
@@ -172,6 +178,11 @@ function getAndPostPersonPageInfo(){
 
       print(personInfo)
 
+      //表示已成功正确进入了个人中心页
+      if(personInfo.nick || personInfo.huozan){
+        back()
+      }
+
       if(dyh){
         var url = mytool.api + "/v1/autojs/found-user?user_id="+user_id
         r = http.postJson(url, personInfo)
@@ -192,25 +203,18 @@ function shanghua(){
 //首页推荐页找群
 function tuijianzhaoqun(){
   mytool.click(descContains('推荐').findOne())
-  sleep(2000)
+  // sleep(2000)
   
-  var w = device.width
-  var h = device.height
-  var x = 660
-  var y = 580
-  if( w == 720 && h == 1600){
-    x = 660
-    y = 580
-  }else{
-    x = w * x / w
-    y = y * y / h
-  }
+  var left = 660
+  var top = 583
+  var right = 10
+  var bottom = 660
 
   while(true){
     if(textContains('直播中').exists() == false){
-      click(x, y)
-      getAndPostPersonPageInfo()
-      back()    
+      if(click(left,top)){
+        getAndPostPersonPageInfo()
+      }
     }
     shanghua()
     // sleep(random(1200, 2000 ))
@@ -317,13 +321,10 @@ function commonUserBiz(){
           userMap = {}
           userMapLength = 0
         }
-  
-        back()
       }
       
     })
     shanghua()
-    sleep(random(1200, 2600 ))
   }
 
 }

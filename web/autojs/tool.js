@@ -66,8 +66,7 @@ tool.click = function(kongjian){
     }else{
       x= kongjian.bounds().centerX()
       y= kongjian.bounds().centerY()
-      click(x,y)
-      return true
+      return click(x,y)
     }
   }catch(e){
     print("click fail",e)
