@@ -206,9 +206,11 @@ function tuijianzhaoqun(){
   }
 
   while(true){
-    click(x, y)
-    getAndPostPersonPageInfo()
-    back()    
+    if(text('点击进入直播间').exists() == false){
+      click(x, y)
+      getAndPostPersonPageInfo()
+      back()    
+    }
     shanghua()
     // sleep(random(1200, 2000 ))
   }
