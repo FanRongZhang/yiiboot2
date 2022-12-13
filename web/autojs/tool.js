@@ -1,6 +1,6 @@
 var tool = {
-  ws:"ws://192.168.0.125:8282",
-  api:"http://192.168.0.125/api",
+  ws:"ws://jd.xiaozhumeimeigou.com:8282",
+  api:"http://jd.xiaozhumeimeigou.com/api",
 	now : function (type, addTime) {
 		var dateObj = new Date();
 		var cTime = dateObj.getTime();
@@ -92,7 +92,7 @@ function swipeRnd(x1, y1, x2, y2, duration) {
   // }
   
   tool.从下往上滑动 = function(y) {
-    log(arguments.callee.name + '开始')
+    // log(arguments.callee.name + '开始')
     var y = y || 2
     var w = device.width
     var h = device.height

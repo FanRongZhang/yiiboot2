@@ -3,11 +3,12 @@ var mytool = require('tool.js')
 
 
 
+
 function shanghua(){
     mytool.从下往上滑动(1)
     print('shang hua')
 }
-var left = 660
+var left = 658
 var top = 583
 var right = 10
 var bottom = 660
@@ -15,19 +16,12 @@ var bottom = 660
 // click(left,top)
 // sleep(1000)
 // back()
-
+back()
 var i =3
-
-
-    if((textContains('直播').exists()) == false){
-    print('dianji ')
-      click(left,top)
-      sleep(1000)
-    //   getAndPostPersonPageInfo()
-        print(back())
-    }
-    
-  
+// print(click(left,top))
+// var w = className("ImageView").id('user_avatar').depth(28).clickable(true).findOne()
+// print(w.bounds().left,w.bounds().top)
+// w.click()
 
 // exit()
 // var i =10
