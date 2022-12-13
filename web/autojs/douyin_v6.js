@@ -11,7 +11,6 @@ let user_id = '0'
 //usercode占位
 
 let shutdown = false
-setScreenMetrics(720, 1600)
 
 /**
  * 抖音版本 https://www.wandoujia.com/apps/7461948/history_v190301
@@ -78,12 +77,7 @@ function doBiz(taskInfo){
 
 function getAndPostPersonPageInfo(){
   try{
-      if(text('更多直播').exists()){
-        back()
-        return
-      }
-
-      idContains('cpo').findOne(1000)
+      id('cpo').findOne(2500)
       var huozan = id('cpo').exists() ? id('cpo').findOne().text() : false
       if(huozan === false){
         huozan = idContains('cpo').exists() ? idContains('cpo').findOne().text() : ''
@@ -106,7 +100,7 @@ function getAndPostPersonPageInfo(){
       if(id('n+s').exists()){
         var more = id('n+s').findOne()
         click( more.bounds().right - 10 , more.bounds().bottom - 10 ) //原生点击，展开更多
-        sleep(30)
+        sleep(1000)
         
         note = more.text()
       }else if(textContains('更多').exists()) {
@@ -114,7 +108,7 @@ function getAndPostPersonPageInfo(){
         if(more.text().indexOf('...') > 0)
         {
           click( more.bounds().right - 10 , more.bounds().bottom - 10 ) //原生点击，展开更多
-          sleep(30)
+          sleep(1000)
         }
         note = more.text()
       }
@@ -135,33 +129,32 @@ function getAndPostPersonPageInfo(){
       if(dyh && textEndsWith('个群聊').exists() ){ // 有抖音号才进去
         fensiqun = textEndsWith('个群聊').findOne().text().replace('个群聊','')
 
-        if( fensiqun > 0 ){
-          //获取群聊信息
-          let clicked = mytool.click(textEndsWith('个群聊').findOne()) //点进去
+        //获取群聊信息
+        let clicked = mytool.click(textEndsWith('个群聊').findOne()) //点进去
 
-          sleep(1000)
+        sleep(5000)
 
-          textEndsWith("人)").find().each(function(v){
+        textEndsWith("人)").find().each(function(v){
+          try{
+            var _mc = ''
+            var _menkan =  ''
             try{
-              var _mc = ''
-              var _menkan =  ''
-              try{
-                _mc = v.parent().child(0).text()
-                _menkan = v.parent().parent().findOne(textStartsWith("进群门槛")).text()
-              }catch(e2){}
-              qunliao.push({
-                "renshu": v.text(),
-                "mingcheng" : _mc,
-                "menkan" : _menkan,
-                // "anniu" : _anniu,
-              })
-            }catch(e){
-              print(e)
-            }
-          })
+              _mc = v.parent().child(0).text()
+              _menkan = v.parent().parent().findOne(textStartsWith("进群门槛")).text()
+            }catch(e2){}
+            qunliao.push({
+              "renshu": v.text(),
+              "mingcheng" : _mc,
+              "menkan" : _menkan,
+              // "anniu" : _anniu,
+            })
+          }catch(e){
+            print(e)
+          }
+        })
 
-          clicked && back() //回退
-        }
+        clicked && back() //回退
+
       }
 
       var personInfo = {
@@ -179,11 +172,6 @@ function getAndPostPersonPageInfo(){
 
       print(personInfo)
 
-      //表示已成功正确进入了个人中心页
-      if(personInfo.nick || personInfo.huozan){
-        back()
-      }
-
       if(dyh){
         var url = mytool.api + "/v1/autojs/found-user?user_id="+user_id
         r = http.postJson(url, personInfo)
@@ -198,28 +186,64 @@ function getAndPostPersonPageInfo(){
 }
 
 function shanghua(){
-  mytool.从下往上滑动(2.3)
+  mytool.从下往上滑动(1.4)
 }
 
 //首页推荐页找群
 function tuijianzhaoqun(){
   mytool.click(descContains('推荐').findOne())
-  // sleep(2000)
+  sleep(2000)
   
-  var left = 660
-  var top = 583
-  var right = 10
-  var bottom = 660
+  var userMap = {}
+  var userMapLength = 0
 
+  //持续滑动界面
   while(true){
-    if((textContains('直播').exists()) == false){
-      click(left,top)
-      sleep(1000)
-      getAndPostPersonPageInfo()
+    id('user_avatar').findOne(3500) // N/1000 秒钟内找到头像
+
+    if(id('user_avatar').clickable(true).find().size() == 0){
+      shanghua()
+      continue
     }
+
+    id('user_avatar').clickable(true).find().each(function(one){
+      var nick = one.desc()
+      var right = one.bounds().right
+      var top = one.bounds().top
+
+      print("right, top", right, top)
+      var zhengquetouxiang = right - top >= 150 && right - top <= 250 && right + one.bounds().width() > device.width
+      if(zhengquetouxiang == false){
+        return
+      }
+
+      if(userMap[nick]){
+        return
+      }
+
+      let clicked = one.click() //点击头像位置进入
+      print("点击头像位置进入")
+      sleep(2000)
+
+      var personInfo = getAndPostPersonPageInfo()
+
+      personInfo.head_nick = nick //记录刚刚刷到的用户
+      userMap[personInfo.head_nick] = 1
+      userMapLength += 1
+      //到一定数量重置
+      if(userMapLength > 1000){
+        userMap = {}
+        userMapLength = 0
+      }
+
+
+      clicked && back()
+    })
     shanghua()
     sleep(random(1200, 2000 ))
   }
+
+
 }
 
 //搜索找群
@@ -309,23 +333,24 @@ function commonUserBiz(){
       }
 
       let clicked = mytool.click(one) //点击头像位置进入
-      if(clicked){
-        print("点击头像位置进入")
+      clicked && print("点击头像位置进入")
+      sleep(1200)
 
-        var personInfo = getAndPostPersonPageInfo()
-  
-        personInfo.head_nick = nick //记录刚刚刷到的用户
-        userMap[personInfo.head_nick] = 1
-        userMapLength += 1
-        //到一定数量重置
-        if(userMapLength > 1000){
-          userMap = {}
-          userMapLength = 0
-        }
+      var personInfo = getAndPostPersonPageInfo()
+
+      personInfo.head_nick = nick //记录刚刚刷到的用户
+      userMap[personInfo.head_nick] = 1
+      userMapLength += 1
+      //到一定数量重置
+      if(userMapLength > 1000){
+        userMap = {}
+        userMapLength = 0
       }
-      
+
+      clicked && back()
     })
     shanghua()
+    sleep(random(1200, 2600 ))
   }
 
 }
@@ -411,8 +436,6 @@ var webSocket= client.newWebSocket(request, new WebSocketListener(myListener)); 
 let iloop = setInterval(function(){
   text('青少年模式').exists() && text('我知道了').exists() && mytool.click(text('我知道了').findOne())
   text('以后再说').exists() && text('立即升级').exists() && mytool.click(text('以后再说').findOne())
-  text('反馈邀请').exists() && text('直接退出').exists() && mytool.click(text('直接退出').findOne())
-  text('暂不使用').exists() && mytool.click(text('暂不使用').findOne())
   if(shutdown){
     clearInterval(iloop)
     exit()

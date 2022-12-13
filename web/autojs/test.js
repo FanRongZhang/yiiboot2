@@ -17,7 +17,8 @@ var bottom = 660
 // back()
 
 var i =3
-while(--i){
+
+
     if((textContains('直播').exists()) == false){
     print('dianji ')
       click(left,top)
@@ -25,9 +26,8 @@ while(--i){
     //   getAndPostPersonPageInfo()
         print(back())
     }
-    shanghua()
-    sleep(random(1200, 2000 ))
-  }
+    
+  
 
 // exit()
 // var i =10
