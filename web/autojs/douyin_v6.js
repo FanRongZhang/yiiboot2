@@ -135,32 +135,33 @@ function getAndPostPersonPageInfo(){
       if(dyh && textEndsWith('个群聊').exists() ){ // 有抖音号才进去
         fensiqun = textEndsWith('个群聊').findOne().text().replace('个群聊','')
 
-        //获取群聊信息
-        let clicked = mytool.click(textEndsWith('个群聊').findOne()) //点进去
+        if( fensiqun > 0 ){
+          //获取群聊信息
+          let clicked = mytool.click(textEndsWith('个群聊').findOne()) //点进去
 
-        sleep(5000)
+          sleep(1000)
 
-        textEndsWith("人)").find().each(function(v){
-          try{
-            var _mc = ''
-            var _menkan =  ''
+          textEndsWith("人)").find().each(function(v){
             try{
-              _mc = v.parent().child(0).text()
-              _menkan = v.parent().parent().findOne(textStartsWith("进群门槛")).text()
-            }catch(e2){}
-            qunliao.push({
-              "renshu": v.text(),
-              "mingcheng" : _mc,
-              "menkan" : _menkan,
-              // "anniu" : _anniu,
-            })
-          }catch(e){
-            print(e)
-          }
-        })
+              var _mc = ''
+              var _menkan =  ''
+              try{
+                _mc = v.parent().child(0).text()
+                _menkan = v.parent().parent().findOne(textStartsWith("进群门槛")).text()
+              }catch(e2){}
+              qunliao.push({
+                "renshu": v.text(),
+                "mingcheng" : _mc,
+                "menkan" : _menkan,
+                // "anniu" : _anniu,
+              })
+            }catch(e){
+              print(e)
+            }
+          })
 
-        clicked && back() //回退
-
+          clicked && back() //回退
+        }
       }
 
       var personInfo = {
