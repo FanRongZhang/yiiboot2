@@ -3,4 +3,4 @@ var mytool = require('tool.js')
 
 
 
-text('青少年模式').exists() && text('我知道了').exists() && mytool.click(text('我知道了').findOne())
+print("id('user_avatar').find().size()", id('user_avatar').find().size())

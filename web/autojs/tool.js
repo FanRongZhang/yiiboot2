@@ -66,12 +66,6 @@ tool.click = function(kongjian){
     }else{
       x= kongjian.bounds().centerX()
       y= kongjian.bounds().centerY()
-      if(x < 0){
-        x = 5
-      }
-      if(y < 0){
-        y = 5
-      }
       click(x,y)
       return true
     }

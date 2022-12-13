@@ -2,6 +2,7 @@ auto()
 
 console.hide()
 var mytool = require('tool.js')
+const { click } = require('./tool')
 //toolcode占位
 let jihuoma = ''
 //激活码code占位
@@ -194,57 +195,24 @@ function tuijianzhaoqun(){
   mytool.click(descContains('推荐').findOne())
   sleep(2000)
   
-  var userMap = {}
-  var userMapLength = 0
+  var w = device.width
+  var h = device.height
+  var x = y = 0
+  if( w == 720 && h == 1600){
+    x = 50
+    y = 640
+  }else{
+    x = w * x / w
+    y = y * y / h
+  }
 
-  //持续滑动界面
   while(true){
-    id('user_avatar').findOne(1000) // N/1000 秒钟内找到头像
-
-    if(id('user_avatar').find().size() == 0){
-      shanghua()
-      continue
-    }
-
-    id('user_avatar').find().each(function(one){
-      var nick = one.desc()
-      // var right = one.bounds().right
-      // var top = one.bounds().top
-
-      // print("right, top", right, top)
-      //right - top <= 250 &&
-      // var zhengquetouxiang = right - top >= 150 &&  right + one.bounds().width() > device.width
-      // if(zhengquetouxiang == false){
-      //   return
-      // }
-
-      if(userMap[nick]){
-        return
-      }
-
-      let clicked = mytool.click(one) //点击头像位置进入
-      if(clicked){
-        print("点击头像位置进入")
-
-        var personInfo = getAndPostPersonPageInfo()
-
-        personInfo.head_nick = nick //记录刚刚刷到的用户
-        userMap[personInfo.head_nick] = 1
-        userMapLength += 1
-        //到一定数量重置
-        if(userMapLength > 1000){
-          userMap = {}
-          userMapLength = 0
-        }
-        back()
-      }
-
-    })
+    click(x, y)
+    getAndPostPersonPageInfo()
+    back()    
     shanghua()
     // sleep(random(1200, 2000 ))
   }
-
-
 }
 
 //搜索找群
