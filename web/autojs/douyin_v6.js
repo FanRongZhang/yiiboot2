@@ -77,7 +77,7 @@ function doBiz(taskInfo){
 
 function getAndPostPersonPageInfo(){
   try{
-      idContains('cpo').findOne(5000)
+      idContains('cpo').findOne(1000)
       var huozan = id('cpo').exists() ? id('cpo').findOne().text() : false
       if(huozan === false){
         huozan = idContains('cpo').exists() ? idContains('cpo').findOne().text() : ''
@@ -207,7 +207,7 @@ function tuijianzhaoqun(){
   }
 
   while(true){
-    if(text('点击进入直播间').exists() == false){
+    if(textContains('直播中').exists() == false){
       click(x, y)
       getAndPostPersonPageInfo()
       back()    
