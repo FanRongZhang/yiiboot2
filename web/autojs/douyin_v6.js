@@ -2,7 +2,6 @@ auto()
 
 console.hide()
 var mytool = require('tool.js')
-const { click } = require('./tool')
 //toolcode占位
 let jihuoma = ''
 //激活码code占位
