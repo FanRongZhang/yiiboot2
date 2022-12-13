@@ -196,9 +196,10 @@ function tuijianzhaoqun(){
   
   var w = device.width
   var h = device.height
-  var x = y = 0
+  var x = 660
+  var y = 640
   if( w == 720 && h == 1600){
-    x = 50
+    x = 660
     y = 640
   }else{
     x = w * x / w
