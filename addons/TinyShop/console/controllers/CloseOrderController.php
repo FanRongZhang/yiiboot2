@@ -13,6 +13,9 @@ use yii\console\Controller;
  */
 class CloseOrderController extends Controller
 {
+    /**
+     * ./yii tiny-shop/close-order/run
+     */
     public function actionRun()
     {
 

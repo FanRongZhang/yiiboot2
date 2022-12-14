@@ -2,6 +2,7 @@
 
 namespace common\controllers;
 
+use common\helpers\ArrayHelper;
 use Yii;
 use yii\web\Controller;
 use yii\web\UnauthorizedHttpException;
@@ -94,6 +95,7 @@ class AddonsController extends Controller
             $this->setReferrer($action->id);
         }
 
+        $this->pageParam = ArrayHelper::merge($_GET,$_POST);
         return true;
     }
 
@@ -117,4 +119,30 @@ class AddonsController extends Controller
     {
         return AddonHelper::setConfig($config);
     }
+
+
+    /**
+     * 页面提交参数
+     * get post 一起存储
+     *
+     * @var array
+     */
+    protected $pageParam = [];
+
+    /**
+     * 获取页面参数
+     * @param string $name
+     * @param false $default
+     * @return array|false|mixed
+     */
+    public function getPageParam($name='',$default=false){
+        if($name == false){
+            return $this->pageParam;
+        }
+        if(isset($this->pageParam[$name])){
+            return $this->pageParam[$name];
+        }
+        return $default;
+    }
+
 }

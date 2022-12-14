@@ -43,7 +43,7 @@ AppAsset::register($this);
         $menuItems[] = ['label' => Yii::t('app', '注册'), 'url' => ['/site/signup']];
         $menuItems[] = ['label' => Yii::t('app', '登录'), 'url' => ['/site/login']];
     } else {
-        $menuItems[] = ['label' => Yii::t('app', '个人中心'), 'url' => ['/user/index']];
+        $menuItems[] = ['label' => Yii::t('app', '个人中心'), 'url' => ['/autocellphone/user/index']];
         $menuItems[] = '<li>'
             . Html::beginForm(['/site/logout'], 'post')
             . Html::submitButton(
