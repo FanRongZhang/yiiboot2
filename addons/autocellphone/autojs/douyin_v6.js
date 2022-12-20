@@ -27,6 +27,12 @@ function plog(msg){
   print(msg)
 }
 
+function backAndWait(secs){
+  back()
+  if(!secs)secs = 1.5
+  sleep(secs*1000)
+}
+
 function doBiz(taskInfo){
   threads.shutDownAll()
 
@@ -89,7 +95,7 @@ function getAndPostPersonPageInfo(){
       }
 
       if(textContains('企业号').exists()){
-        back()
+        backAndWait()
         return {}
       }
 
@@ -169,7 +175,7 @@ function getAndPostPersonPageInfo(){
             }
           })
 
-          print("back()",back())
+          backAndWait()
         }
       }
 
@@ -197,7 +203,7 @@ function getAndPostPersonPageInfo(){
         plog('没抖音号')
       }
 
-      back()
+      backAndWait()
 
       return personInfo
   }catch(e1){print(e1)}
@@ -277,10 +283,9 @@ function jinqun(){
                     {
                       http.get(mytool.api + '/v1/autojs/qun-join?douyinhao='+qunModel.douyinhao+'&user_id='+user_id)
                     }
-                    back() //回退到用户信息页
-                    sleep(2000)
+                    backAndWait() //回退到用户信息页
                   }
-                  back() //返回到搜索结果页面
+                  backAndWait() //返回到搜索结果页面
                 }
           }
           
