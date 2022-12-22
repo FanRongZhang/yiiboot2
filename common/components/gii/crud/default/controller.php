@@ -73,4 +73,16 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
             'searchModel' => $searchModel,
         ]);
     }
+
+
+    public function actionShow(){
+        $id = Yii::$app->request->get('id');
+        $model = $this->findModel($id);
+
+        return $this->render($this->action->id, [
+            'model' => $model,
+        ]);
+    }
+
+
 }

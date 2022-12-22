@@ -9,12 +9,20 @@ use yii\helpers\StringHelper;
 $urlParams = $generator->generateUrlParams();
 $nameAttribute = $generator->getNameAttribute();
 
+/* @var $model \yii\db\ActiveRecord */
+$model = new $generator->modelClass();
+$safeAttributes = $model->safeAttributes();
+if (empty($safeAttributes)) {
+    $safeAttributes = $model->attributes();
+}
+
 echo "<?php\n";
 ?>
 
 use common\helpers\Html;
 use common\helpers\Url;
-use <?= $generator->indexWidgetType === 'grid' ? "yii\\grid\\GridView" : "yii\\widgets\\ListView" ?>;
+use yii\bootstrap\ActiveForm;
+use <?= $generator->indexWidgetType === 'grid' ? "kartik\grid\GridView" : "yii\\widgets\\ListView" ?>;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -33,10 +41,37 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
             </div>
             <div class="box-body table-responsive">
+
+                <div class="post-search">
+                    <?php echo '<?php'; ?>
+                    $this->registerCss('.form-group{display:inline-block !important;width:200px;}');
+                    $form = ActiveForm::begin([
+                        'method' => 'get',
+                        'layout' => 'default',
+                    ]);<?php echo ' ?>'; ?>
+
+                    <?php
+                    foreach ($generator->getColumnNames() as $attribute) {
+                        if (in_array($attribute, $safeAttributes)) {
+                            echo "<?php echo \$form->field(\$searchModel, '$attribute'); ?> \n";
+                        }
+                    }
+                    ?>
+
+                    <div class="form-group">
+                        <?php echo ' <?='; ?> Html::submitButton('搜索', ['class' => 'btn btn-primary'])  <?php echo " ?>\n"; ?>
+                        <?php echo ' <?='; ?> Html::submitButton('重置', ['class' => 'btn btn-default'])  <?php echo ' ?>'; ?>
+                    </div>
+
+                    <?php echo '<?php'; ?> ActiveForm::end(); ?>
+                </div>
+
+
 <?php if ($generator->indexWidgetType === 'grid'): ?>
     <?= "<?= " ?>GridView::widget([
         'dataProvider' => $dataProvider,
         'tableOptions' => ['class' => 'table table-hover'],
+        //'filterModel' => $searchModel,
         <?= !empty($generator->searchModelClass) ? "'filterModel' => \$searchModel,\n        'columns' => [\n" : "'columns' => [\n"; ?>
             [
                 'class' => 'yii\grid\SerialColumn',
@@ -68,17 +103,22 @@ if (($tableSchema = $generator->getTableSchema()) === false) {
             [
                 'class' => 'yii\grid\ActionColumn',
                 'header' => '操作',
-                'template' => '{edit} {status} {delete}',
+                'template' => '{show} {edit} {delete}',
                 'buttons' => [
-                'edit' => function($url, $model, $key){
-                        return Html::edit(['edit', 'id' => $model->id]);
-                },
-               'status' => function($url, $model, $key){
-                        return Html::status($model['status']);
-                  },
-                'delete' => function($url, $model, $key){
-                        return Html::delete(['delete', 'id' => $model->id]);
-                },
+
+                    'show' => function($url, $model, $key){
+                        return Html::linkButton(['show','id'=>$model->id],'查看');
+                    },
+
+                    'edit' => function($url, $model, $key){
+                        return Html::linkButton(['edit','id'=>$model->id],'编辑');
+                        //return Html::edit(['edit', 'id' => $model->id]);
+                    },
+
+                    'delete' => function($url, $model, $key){
+                            return Html::delete(['delete', 'id' => $model->id]);
+                    },
+
                 ]
             ]
     ]
