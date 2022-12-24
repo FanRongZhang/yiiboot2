@@ -105,8 +105,7 @@ class JdController extends Controller
             $model->brand_id = $b->id;
             $model->type_id = '';
             $model->sketch = '';
-            $model->intro = '';
-            $model->keywords = '';
+            $model->keywords = $model->intro = $one->skuName;
 //            $model->tags = '';
             $model->marque = '';
             $model->barcode = '';
@@ -130,11 +129,12 @@ class JdController extends Controller
 //            $model->covers ='';
             $model->posters = '';
             $model->state = 1;
-            $model->sort = $model->is_package = $model->is_attribute = 0;
+            $model->sort = 0;
+            $model->is_package = $model->is_attribute = '0';
             $model->product_status = 1;
             $model->shipping_type = 2;
             $model->shipping_fee = 10;
-            $model->marketing_type = 0;
+            $model->marketing_type = '0';
             $model->is_open_commission = $model->is_open_presell = $model->is_virtual = $model->is_bill = $model->min_buy = $model->max_buy = 0;
 
             // 开启事务
