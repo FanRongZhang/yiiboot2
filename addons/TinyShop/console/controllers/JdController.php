@@ -4,6 +4,7 @@ namespace addons\TinyShop\console\controllers;
 
 use addons\TinyShop\common\models\jd\Goods;
 use addons\TinyShop\common\models\jd\Sku;
+use addons\TinyShop\common\models\product\Brand;
 use addons\TinyShop\common\models\product\Cate;
 use addons\TinyShop\merchant\forms\ProductForm;
 use yii\console\Controller;
@@ -80,14 +81,28 @@ class JdController extends Controller
             ->all();
         /** @var Goods $one */
         foreach ($aryAll as $one) {
+            $b = Brand::findOne([
+                'id' => $one->brandCode,
+                'title' => $one->brandName,
+            ]);
+            if ($b == false) {
+                $b = new Brand([
+                    'id' => $one->brandCode,
+                    'title' => $one->brandName,
+                    'merchant_id' => 0,
+                    'cate_id' => $one->cid3,
+                ]);
+                $b->save();
+            }
+
             $model = $this->findFormModel($one->skuId);
             $model->id = $one->skuId;
-            $model->tags = !empty($one->fxgServiceList) ? \Qiniu\json_decode( $one->fxgServiceList,true) : [];
-            $model->covers = \Qiniu\json_decode($one->imageList,true);
+            $model->tags = !empty($one->fxgServiceList) ? \Qiniu\json_decode($one->fxgServiceList, true) : [];
+            $model->covers = \Qiniu\json_decode($one->imageList, true);
             $model->name = $one->skuName;
             $model->picture = $one->whiteImage;
             $model->cate_id = $one->cid3;
-            $model->brand_id='';
+            $model->brand_id = $b->id;
             $model->type_id = '';
             $model->sketch = '';
             $model->intro = '';
@@ -95,21 +110,21 @@ class JdController extends Controller
 //            $model->tags = '';
             $model->marque = '';
             $model->barcode = '';
-            $model->sales = rand(10000,30000);
+            $model->sales = rand(10000, 30000);
             $model->price = $one->price;
             $model->market_price = '';
             $model->cost_price = '';
             /**
-            [
-            'man' => $man,//满
-            'jian' => $jian,//减
-            'danshu' => $danshu,//几单达到满
-            'meidansheng' => $meiDanJian,//每单省
-            ];
+             * [
+             * 'man' => $man,//满
+             * 'jian' => $jian,//减
+             * 'danshu' => $danshu,//几单达到满
+             * 'meidansheng' => $meiDanJian,//每单省
+             * ];
              */
             $model->is_open_wholesale = 1;
             $model->wholesale_people = $one->couInfoJson[0]['danshu'];
-            $model->wholesale_price = bcsub( $one->price , $one->couInfoJson[0]['meidansheng'] , 2 );
+            $model->wholesale_price = bcsub($one->price, $one->couInfoJson[0]['meidansheng'], 2);
             $model->stock = 20000;
             $model->warning_stock = 100;
 //            $model->covers ='';
@@ -120,16 +135,16 @@ class JdController extends Controller
             $model->shipping_type = 2;
             $model->shipping_fee = 10;
             $model->marketing_type = 0;
-            $model->is_open_commission = $model->is_open_presell = $model->is_virtual = $model->is_bill =  $model->min_buy = $model->max_buy = 0;
+            $model->is_open_commission = $model->is_open_presell = $model->is_virtual = $model->is_bill = $model->min_buy = $model->max_buy = 0;
 
             // 开启事务
             $transaction = \Yii::$app->db->beginTransaction();
             try {
                 // 载入数据并验证
                 $model->skuData = [];
-                $model->attributeValueData =   [];
-                $model->specValueData =  [];
-                $model->specValueFieldData =  [];
+                $model->attributeValueData = [];
+                $model->specValueData = [];
+                $model->specValueFieldData = [];
                 !empty($model->covers) && $model->covers = serialize($model->covers);
                 !empty($model->tags) && $model->tags = implode(',', $model->tags);
                 if (!$model->save()) {
@@ -140,7 +155,7 @@ class JdController extends Controller
             } catch (\Exception $e) {
                 $transaction->rollBack();
 
-                echo  $e->getMessage();
+                echo $e->getMessage();
             }
 
         }
