@@ -4,7 +4,7 @@ use yii\db\Migration;
 
 /**
  * Class m221214_123754_addon_shop_jd_v1
- * ./yii migrate --migrationPath=@addons/TinyShop/console/migrations_v2
+ * ./yii migrate --migrationPath=@addons/TinyShop/console/migrations
 
  */
 class m221214_123754_addon_shop_jd_v1 extends Migration
