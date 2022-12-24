@@ -97,7 +97,7 @@ class JdController extends Controller
 
             $model = $this->findFormModel($one->skuId);
             $model->id = $one->skuId;
-            $model->tags = !empty($one->fxgServiceList) ? \Qiniu\json_decode($one->fxgServiceList, true) : [];
+            $model->tags = !empty($one->fxgServiceList) ? \Qiniu\json_decode($one->fxgServiceList, true) : '[]';
             $model->covers = \Qiniu\json_decode($one->imageList, true);
             $model->name = $one->skuName;
             $model->picture = $one->whiteImage;
