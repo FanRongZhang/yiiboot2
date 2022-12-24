@@ -97,6 +97,7 @@ class JdController extends Controller
 
             $model = $this->findFormModel($one->id);
             $model->id = $one->id;
+            $model->merchant_id = 0;
             $model->tags = $one->fxgServiceList;
             $model->covers = \Qiniu\json_decode($one->imageList, true);
             $model->name = $one->skuName;
@@ -111,8 +112,7 @@ class JdController extends Controller
             $model->barcode = '';
             $model->sales = rand(10000, 30000);
             $model->price = $one->price;
-            $model->market_price = '';
-            $model->cost_price = '';
+            $model->market_price = $one->price;
             /**
              * [
              * 'man' => $man,//满
@@ -123,7 +123,7 @@ class JdController extends Controller
              */
             $model->is_open_wholesale = 1;
             $model->wholesale_people = $one->couInfoJson[0]['danshu'];
-            $model->wholesale_price = bcsub($one->price, $one->couInfoJson[0]['meidansheng'], 2);
+            $model->cost_price = $model->wholesale_price = bcsub($one->price, $one->couInfoJson[0]['meidansheng'], 2);
             $model->stock = 20000;
             $model->warning_stock = 100;
 //            $model->covers ='';
