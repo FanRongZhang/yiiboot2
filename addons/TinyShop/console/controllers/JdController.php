@@ -127,7 +127,7 @@ class JdController extends Controller
             $model->stock = 20000;
             $model->warning_stock = 100;
 //            $model->covers ='';
-            $model->posters = '';
+            $model->posters = '[]';
             $model->state = 1;
             $model->sort = 0;
             $model->is_package = $model->is_attribute = '0';
