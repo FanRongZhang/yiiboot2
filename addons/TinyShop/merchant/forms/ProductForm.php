@@ -192,7 +192,7 @@ class ProductForm extends \addons\TinyShop\common\models\product\Product
 
         // 更新系统主图
         $covers = unserialize($this->covers);
-        $this->picture = $covers[0] ?? '';
+        !trim($this->picture) && $this->picture = $covers[0] ?? '';
 
         // 非积分兑换
         if ($this->point_exchange_type == PointExchangeTypeEnum::NOT_EXCHANGE) {
