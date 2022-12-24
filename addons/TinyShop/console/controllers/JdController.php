@@ -148,7 +148,7 @@ class JdController extends Controller
                 !empty($model->covers) && $model->covers = serialize($model->covers);
                 !empty($model->tags) && $model->tags = implode(',', $model->tags);
                 if (!$model->save()) {
-                    throw new NotFoundHttpException('保存失败');
+                    throw new NotFoundHttpException(json_encode($model->firstErrors));
                 }
 
                 $transaction->commit();
