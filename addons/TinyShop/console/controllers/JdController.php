@@ -95,8 +95,8 @@ class JdController extends Controller
                 $b->save();
             }
 
-            $model = $this->findFormModel($one->skuId);
-            $model->id = $one->skuId;
+            $model = $this->findFormModel($one->id);
+            $model->id = $one->id;
             $model->tags = $one->fxgServiceList;
             $model->covers = \Qiniu\json_decode($one->imageList, true);
             $model->name = $one->skuName;
