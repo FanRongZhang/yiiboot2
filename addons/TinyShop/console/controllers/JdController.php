@@ -98,15 +98,21 @@ class JdController extends Controller
             $model = $this->findFormModel($one->id);
             $model->id = $one->id;
             $model->merchant_id = 0;
-            $model->tags = $one->fxgServiceList;
-            $model->covers = \Qiniu\json_decode($one->imageList, true);
+            $model->tags = $one->fxgServiceList ? implode(',',$one->fxgServiceList) : '';
+            $_ary = \Qiniu\json_decode($one->imageList, true);
+            $_intro = '';
+            foreach ($_ary as $_img){
+                $_intro .= "<img src='{$_img['url']}'/>";
+            }
+            $model->intro = $_intro;
             $model->name = $one->skuName;
             $model->picture = $one->whiteImage;
+            $model->covers = [$one->whiteImage];
             $model->cate_id = $one->cid3;
             $model->brand_id = $b->id;
             $model->type_id = '';
             $model->sketch = '';
-            $model->keywords = $model->intro = $one->skuName;
+            $model->keywords = $one->skuName;
 //            $model->tags = '';
             $model->marque = '';
             $model->barcode = '';
@@ -136,6 +142,8 @@ class JdController extends Controller
             $model->shipping_fee = 10;
             $model->marketing_type = '0';
             $model->is_open_commission = $model->is_open_presell = $model->is_virtual = $model->is_bill = $model->min_buy = $model->max_buy = 0;
+            $model->supplier_id = $one->isJdSale ? 1 : 0;
+            $model->comment_num = $one->comments;
 
             // 开启事务
             $transaction = \Yii::$app->db->beginTransaction();
@@ -146,16 +154,16 @@ class JdController extends Controller
                 $model->specValueData = [];
                 $model->specValueFieldData = [];
                 !empty($model->covers) && $model->covers = serialize($model->covers);
-                !empty($model->tags) && $model->tags = implode(',', $model->tags);
                 if (!$model->save()) {
-                    throw new NotFoundHttpException(json_encode($model->firstErrors));
+                    throw new \Exception(json_encode($model->errors));
                 }
 
                 $transaction->commit();
             } catch (\Exception $e) {
                 $transaction->rollBack();
-
-                echo $e->getMessage();
+                echo $e->getMessage()  . "\n";
+//                var_dump('model is ', $model->toArray());
+//                exit;
             }
 
         }

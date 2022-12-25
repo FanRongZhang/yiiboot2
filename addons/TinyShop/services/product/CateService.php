@@ -58,8 +58,8 @@ class CateService extends Service
         return Cate::find()
             ->select(['id', 'title', 'pid', 'cover', 'level'])
             ->where(['status' => StatusEnum::ENABLED])
-            //->andFilterWhere(['merchant_id' => $this->getMerchantId()])
-            ->andWhere(['merchant_id' => $this->getMerchantId() ? $this->getMerchantId() : 0])
+            ->andFilterWhere(['merchant_id' => $this->getMerchantId()])
+//            ->andWhere(['merchant_id' => $this->getMerchantId() ? $this->getMerchantId() : 0])
             ->orderBy('sort asc, id desc')
             ->asArray()
             ->all();
