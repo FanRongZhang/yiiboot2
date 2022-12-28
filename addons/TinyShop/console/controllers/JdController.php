@@ -2,6 +2,7 @@
 
 namespace addons\TinyShop\console\controllers;
 
+use addons\TinyShop\common\models\forms\ProductSearch;
 use addons\TinyShop\common\models\jd\Goods;
 use addons\TinyShop\common\models\jd\Sku;
 use addons\TinyShop\common\models\product\Brand;
@@ -33,6 +34,16 @@ class JdController extends Controller
                     'pid' => 0,
                 ]);
             }
+
+            //看分类下数量
+            $model = new ProductSearch();
+            $model->cate_id = $m1->id;
+            $aryM = \Yii::$app->tinyShopService->product->getListBySearch($model);
+            if(!$aryM || count($aryM) < 5){
+                $m1->index_block_status = 0;
+            }else{
+                $m1->index_block_status = 1;
+            }
             $m1->save();
 
 
@@ -46,6 +57,7 @@ class JdController extends Controller
                     'pid' => $m1->id,
                 ]);
             }
+            $m1->index_block_status = 0;
             $m2->save();
 
 

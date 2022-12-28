@@ -45,7 +45,7 @@
 							class="banner"
 							@tap="indexTopToDetailPage(cateTop)"
 						>
-							<image :src="cateTop && cateTop.cover" mode="aspectFill" />
+							<image :src="cateTop.cover" mode="aspectFill" />
 						</view>
 						<view
 							class="box"

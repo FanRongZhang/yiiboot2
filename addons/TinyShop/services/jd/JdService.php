@@ -48,24 +48,26 @@ class JdService extends Service
             }
             return false;
         }
-        $m->brandCode = $ary['brandCode'];
-        $m->brandName = $ary['brandName'];
-        $m->cid1 = strval($ary['categoryInfo']['cid1']);
-        $m->cid1Name = $ary['categoryInfo']['cid1Name'];
-        $m->cid2 = strval($ary['categoryInfo']['cid2']);
-        $m->cid2Name = $ary['categoryInfo']['cid2Name'];
-        $m->cid3 = strval($ary['categoryInfo']['cid3']);
-        $m->cid3Name = $ary['categoryInfo']['cid3Name'];
-        $m->comments = $ary['comments'];
-        $m->imageList = json_encode($ary['imageInfo']['imageList'], JSON_UNESCAPED_UNICODE);
-        $m->whiteImage = $ary['imageInfo']['whiteImage'];
-        $m->isHot = $ary['isHot'];
-        $m->isJdSale = $ary['isJdSale'];
-        $m->shopId = strval($ary['shopInfo']['shopId']);
-        $m->shopLevel = $ary['shopInfo']['shopLevel'];
-        $m->shopName = $ary['shopInfo']['shopName'];
-        $m->stockState = 1;
-        $m->materialUrl = $ary['materialUrl'];
+        if($m->isNewRecord) {
+            $m->brandCode = $ary['brandCode'];
+            $m->brandName = $ary['brandName'];
+            $m->cid1 = strval($ary['categoryInfo']['cid1']);
+            $m->cid1Name = $ary['categoryInfo']['cid1Name'];
+            $m->cid2 = strval($ary['categoryInfo']['cid2']);
+            $m->cid2Name = $ary['categoryInfo']['cid2Name'];
+            $m->cid3 = strval($ary['categoryInfo']['cid3']);
+            $m->cid3Name = $ary['categoryInfo']['cid3Name'];
+            $m->comments = $ary['comments'];
+            $m->imageList = json_encode($ary['imageInfo']['imageList'], JSON_UNESCAPED_UNICODE);
+            $m->whiteImage = isset($ary['imageInfo']['whiteImage']) ? $ary['imageInfo']['whiteImage'] : '';
+            $m->isHot = $ary['isHot'];
+            $m->isJdSale = $ary['isJdSale'];
+            $m->shopId = strval($ary['shopInfo']['shopId']);
+            $m->shopLevel = $ary['shopInfo']['shopLevel'];
+            $m->shopName = $ary['shopInfo']['shopName'];
+            $m->stockState = 1;
+            $m->materialUrl = $ary['materialUrl'];
+        }
         $m->price = $ary['priceInfo']['price'];
         $m->skuName = $ary['skuName'];
         $m->skuId = $id;
@@ -219,22 +221,31 @@ class JdService extends Service
                 if ($matches && count($matches) == 3 && is_numeric($matches[1]) && is_numeric($matches[2])) {
                     $man = $matches[1];//满多少
                     $jian = $matches[2];//减去的金额
-                    if ($man > $price) {//满的金额需要大于单个卖价，不然凑屁
-                        $isFit = true;
-                        $danshu = ceil($man / $price);//获取满减需要购买的件数
-                        $meiDanJian = $jian / $danshu;//每单对于用户来说优惠了多少钱
 
-                        //相同单量情况下，只保留对用户最划算的
-                        $meiDanJian = round($meiDanJian, 2);
-                        if( isset($couInfo[$danshu]) == false || $meiDanJian > $couInfo[$danshu]['meidansheng']) {
-                            $couInfo[$danshu] = [
-                                'man' => $man,//满
-                                'jian' => $jian,//减
-                                'danshu' => $danshu,//几单达到满
-                                'meidansheng' => $meiDanJian,//每单省
-                            ];
-                        }
+                    //  卖价已经满足 满减 ， 大概率没搞手
+                    //  比如 item.jd.com/67979174964.html
+                    //  满299减50  满598减100  卖价 335
+                    if ($man <= $price) {
+                        $couInfo = [];
+                        $isFit = false;
+                        break;
                     }
+
+                    $isFit = true;
+                    $danshu = ceil($man / $price);//获取满减需要购买的件数
+                    $meiDanJian = $jian / $danshu;//每单对于用户来说优惠了多少钱
+
+                    //相同单量情况下，只保留对用户最划算的
+                    $meiDanJian = round($meiDanJian, 2);
+                    if (isset($couInfo[$danshu]) == false || $meiDanJian > $couInfo[$danshu]['meidansheng']) {
+                        $couInfo[$danshu] = [
+                            'man' => $man,//满
+                            'jian' => $jian,//减
+                            'danshu' => $danshu,//几单达到满
+                            'meidansheng' => $meiDanJian,//每单省
+                        ];
+                    }
+
                 }
             }
         }
