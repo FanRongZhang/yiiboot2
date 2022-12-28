@@ -68,6 +68,13 @@
 		>
 			确认支付
 		</button>
+		<button
+			class="confirm-btn"
+			:class="'bg-' + themeColor.name"
+			@tap="myorder"
+		>
+			我的订单
+		</button>
 	</view>
 </template>
 
@@ -114,6 +121,11 @@ export default {
 			/*  #endif  */
 	},
 	methods: {
+		myorder(){
+			this.$mRouter.push({
+				route: '/pages/order/order'
+			});
+		},
 		// 数据初始化
 		async initData(options) {
 			this.orderInfo['order_id'] = parseInt(options.id, 10);

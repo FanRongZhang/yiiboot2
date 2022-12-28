@@ -189,13 +189,13 @@
 						<text>{{ moneySymbol }}{{ shippingMoney }}</text>
 					</text>
 				</view>
-				<view class="yt-list-cell b-b" v-if="invoiceAmount > 0">
+				<view class="yt-list-cell b-b" v-if="invoiceAmount > 0" style="display:none">
 					<text class="cell-tit clamp">发票税费</text>
 					<text class="cell-tip" :class="'text-' + themeColor.name">
 						<text>{{ moneySymbol }}{{ invoiceAmount }}</text>
 					</text>
 				</view>
-				<navigator url="/pages/set/invoice/invoice?source=1">
+				<navigator url="/pages/set/invoice/invoice?source=1" style="display:none">
 					<view class="yt-list-cell b-b">
 						<text class="cell-tit clamp">开具发票</text>
 						<view class="cell-tip">
@@ -633,7 +633,7 @@ export default {
 						this.orderDetail.pickup_point_config.list = [];
 					}
 					if (this.pickerShippingType.length > 0) {
-            this.currentShippingType = this.pickerShippingType[0];
+            			this.currentShippingType = this.pickerShippingType[0];
 					}
 				})
 				.catch(err => {

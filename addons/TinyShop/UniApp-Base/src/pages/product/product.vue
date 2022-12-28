@@ -79,11 +79,11 @@ export default {
 		},
 		// 数据初始化
 		async initData() {
-      if (this.userInfo.promo_code) {
-        this.currentUrl = `${this.$mConfig.hostUrl}/pages/product/product?id=${this.productId}&promo_code=${this.userInfo.promo_code}`;
-      } else {
-        this.currentUrl = `${this.$mConfig.hostUrl}/pages/product/product?id=${this.productId}`;
-      }
+			if (this.userInfo.promo_code) {
+				this.currentUrl = `${this.$mConfig.hostUrl}/pages/product/product?id=${this.productId}&promo_code=${this.userInfo.promo_code}`;
+			} else {
+				this.currentUrl = `${this.$mConfig.hostUrl}/pages/product/product?id=${this.productId}`;
+			}
 			this.hasLogin = this.$mStore.getters.hasLogin;
 			await this.getProductDetail();
 		},

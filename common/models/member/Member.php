@@ -222,9 +222,6 @@ class Member extends User
                 $this->nickname = $nickname;
                 Member::updateAll(['nickname' => $nickname], ['id' => $this->id]);
             }
-
-            //送一个体验激活码
-            Yii::$app->services->autojs->makeJiHuoma(1,time()+3600*24,$this->id);
         }
 
         if ($this->status == StatusEnum::DELETE) {

@@ -52,8 +52,13 @@ class OrderService extends \common\components\Service
         $order = new Order();
         $order = $order->loadDefaultValues();
         $order->attributes = ArrayHelper::toArray($previewForm);
-        $order->marketing_id = $previewForm->marketing_id;
-        $order->marketing_type = $previewForm->marketing_type;
+        if($previewForm->marketing_id) {
+            $order->marketing_id = $previewForm->marketing_id;
+            $order->marketing_type = $previewForm->marketing_type;
+        }else{
+            $order->marketing_id = 0;
+            $order->marketing_type = '';
+        }
         $order->order_status = OrderStatusEnum::NOT_PAY;
         $order->out_trade_no = date('YmdHis') . StringHelper::random(10, true);
         $order->order_sn = time() . StringHelper::random(10, true);

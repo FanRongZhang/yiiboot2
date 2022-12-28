@@ -97,15 +97,18 @@ class JdController extends Controller
 
             $model = $this->findFormModel($one->id);
             $model->id = $one->id;
+            $model->end_time = $one->endTime;
             $model->merchant_id = 0;
             $model->tags = $one->fxgServiceList ? implode(',',$one->fxgServiceList) : '';
             $_ary = \Qiniu\json_decode($one->imageList, true);
             $_intro = '';
             foreach ($_ary as $_img){
-                $_intro .= "<img src='{$_img['url']}'/>";
+                $_intro .= "<img src='{$_img['url']}' style='width:100%;border:0;'/>";
             }
             $model->intro = $_intro;
             $model->name = $one->skuName;
+            $model->jd_sku_id = $one->skuId;
+            $model->shop_name = $one->shopName;
             $model->picture = $one->whiteImage;
             $model->covers = [$one->whiteImage];
             $model->cate_id = $one->cid3;
@@ -117,7 +120,6 @@ class JdController extends Controller
             $model->marque = '';
             $model->barcode = '';
             $model->sales = rand(10000, 30000);
-            $model->price = $one->price;
             $model->market_price = $one->price;
             /**
              * [
@@ -128,8 +130,10 @@ class JdController extends Controller
              * ];
              */
             $model->is_open_wholesale = 1;
+            $model->couInfoJson = json_encode($one->couInfoJson,JSON_UNESCAPED_UNICODE);
             $model->wholesale_people = $one->couInfoJson[0]['danshu'];
-            $model->cost_price = $model->wholesale_price = bcsub($one->price, $one->couInfoJson[0]['meidansheng'], 2);
+            $model->meidansheng = $one->couInfoJson[0]['meidansheng'];
+            $model->price = $model->cost_price = $model->wholesale_price = bcsub($one->price, $one->couInfoJson[0]['meidansheng'], 2);
             $model->stock = 20000;
             $model->warning_stock = 100;
 //            $model->covers ='';
@@ -140,10 +144,18 @@ class JdController extends Controller
             $model->product_status = 1;
             $model->shipping_type = 2;
             $model->shipping_fee = 10;
+            $model->shipping_fee_id = 1;
+            $model->shipping_fee_type = 1;
+            $model->product_weight = 1;
             $model->marketing_type = '0';
             $model->is_open_commission = $model->is_open_presell = $model->is_virtual = $model->is_bill = $model->min_buy = $model->max_buy = 0;
             $model->supplier_id = $one->isJdSale ? 1 : 0;
             $model->comment_num = $one->comments;
+
+            //省不到这个金额就下架
+            if($model->meidansheng < 20){
+                $model->product_status = 0;
+            }
 
             // 开启事务
             $transaction = \Yii::$app->db->beginTransaction();

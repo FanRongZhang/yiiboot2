@@ -210,7 +210,7 @@ export default {
 	},
 	data() {
 		return {
-			tabCurrentIndex: null,
+			tabCurrentIndex: 0,
 			loadingType: 'more',
 			navList: this.$mConstDataConfig.orderNavList,
 			moneySymbol: this.moneySymbol,
@@ -255,6 +255,10 @@ export default {
 		 * 替换onLoad下代码即可
 		 */
 		this.tabCurrentIndex = parseInt(options.state, 10) + 1;
+		
+		if( isNaN(this.tabCurrentIndex ) ){
+			this.tabCurrentIndex = 0
+		}
 	},
 	// 下拉刷新
 	onPullDownRefresh() {
@@ -264,7 +268,7 @@ export default {
 	},
 	// 加载更多
 	onReachBottom() {
-    if (this.loadingType === 'nomore' || this.orderList.length === 0) return;
+    	if (this.loadingType === 'nomore' || this.orderList.length === 0) return;
 		this.page++;
 		this.getOrderList();
 	},

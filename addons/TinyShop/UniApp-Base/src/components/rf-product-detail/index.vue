@@ -75,25 +75,39 @@
 					</view>
 				</view>
 				<view class="product-tag">
-					<uni-tag
+					<!-- <uni-tag
 						@tap="openPoster"
 						class="tag"
 						circle
 						type="base"
 						text="生成海报"
 						size="small"
+					/> -->
+					<uni-tag
+						class="tag"
+						circle
+						type="base"
+						:text="product.shop_name"
+						size="small"
 					/>
 				</view>
 				<view class="data" v-if="product">
-					<text class="item">快递: {{ product.shipping_type === '1' ? '包邮' : '买家自付' }}</text>
+					<!-- <text class="item">快递: {{ product.shipping_type === '1' ? '包邮' : '买家自付' }}</text> -->
+					<text class="item">结束时间 {{ product.end_time | time }}</text>
 					<text class="item">月销 {{ product.total_sales }}</text>
 					<text v-if="product.address_name" class="item in1line">{{ product.address_name }}</text>
 				</view>
 			</view>
 			<!--商品参数-->
 			<view class="c-list">
-				<!--商品库存-->
+				<!--成团-->
 				<rf-item-popup
+					title="拼单"
+				>
+					<view slot="content" :class="'text-' + themeColor.name">满{{ product.wholesale_people }}人</view>
+				</rf-item-popup>
+				<!--商品库存-->
+				<!-- <rf-item-popup
 					title="商品库存"
 					v-if="parseInt(product.is_stock_visible, 10) == 1"
 					:isEmpty="parseInt(currentStock, 10) === 0"
@@ -102,7 +116,7 @@
 					<view slot="content">
 						{{ currentStock || product.stock || 0 }} {{ product.unit || '件' }}
 					</view>
-				</rf-item-popup>
+				</rf-item-popup> -->
 				<!--满减送-->
 				<rf-item-popup
 					v-if="product.fullGiveRule.length > 0"
@@ -407,7 +421,7 @@
 			<!-- 评价 -->
 			<view class="eva-section" @tap="toEvaluateList">
 				<view class="e-header">
-					<text class="tit">评价({{ product.comment_num || 0 }})</text>
+					<text class="tit">京东评价({{ product.comment_num || 0 }})</text>
 					<text class="tip" v-if="product.match_ratio"
 						>好评率 {{ product.match_ratio }}%</text
 					>
@@ -515,18 +529,26 @@
 						class="action-btn"
 						:class="'bg-' + themeColor.name"
 						:disabled="buyBtnDisabled"
-						@tap="addCart('buy')"
+						@tap="jd()"
 					>
-						立即购买
+						京东原价购买
 					</button>
 					<button
+						class="action-btn"
+						:class="'bg-' + themeColor.name"
+						:disabled="buyBtnDisabled"
+						@tap="addCart('buy')"
+					>
+						立即拼单购买
+					</button>
+					<!-- <button
 						:disabled="addCartBtnDisabled"
 						class="action-btn"
 						:class="'bg-' + themeColor.name"
 						@tap="addCart('cart')"
 					>
 						加入购物车
-					</button>
+					</button> -->
 				</view>
 				<view class="action-btn">
 					<button
@@ -591,11 +613,11 @@
 	import rfLive from '@/components/rf-live';
 	import { cartItemCount, cartItemCreate } from '@/api/product';
 	import { collectCreate, collectDel, pickupPointIndex, transmitCreate } from '@/api/basic';
-  import { couponReceive, addressList } from '@/api/userInfo';
+  	import { couponReceive, addressList } from '@/api/userInfo';
 	import { mapMutations } from 'vuex';
-  export default {
-    name: 'rfProductDetail',
-    props: {
+  	export default {
+		name: 'rfProductDetail',
+		props: {
 			product: {
 				type: Object,
 				default() {
@@ -617,7 +639,7 @@
 				type: String,
 				default: 'buy_now'
 			}
-    },
+		},
 		components: {
 			rfNav,
 			rfItemPopup,
@@ -629,7 +651,7 @@
 		},
 		data() {
 			return {
-        appServiceQr: this.$mSettingConfig.appServiceQr,
+        		appServiceQr: this.$mSettingConfig.appServiceQr,
 				kefuShow: false,
 				addressClass: 'none',
 				canvasShow: true,
@@ -666,24 +688,24 @@
 				poster: {},
 				promoCode: '',
 				addressList: [],
-        moneySymbol: this.moneySymbol,
+        		moneySymbol: this.moneySymbol,
 				state: 1,
-        singleSkuText: this.singleSkuText,
+        		singleSkuText: this.singleSkuText,
 				thirdPartyQrCodeImg: ''
 			};
 		},
 		async onShareAppMessage () {
-      // #ifdef MP
-      await this.$http.post(`${transmitCreate}`, {
-        topic_type: 'product',
-        topic_id: this.productId
-      }).then(() => {
-        return {
-          title: this.productDetail.name,
-          path: `/pages/product/product?id=${this.productId}`
-        };
-      });
-      // #endif
+			// #ifdef MP
+			await this.$http.post(`${transmitCreate}`, {
+				topic_type: 'product',
+				topic_id: this.productId
+			}).then(() => {
+				return {
+				title: this.productDetail.name,
+				path: `/pages/product/product?id=${this.productId}`
+				};
+			});
+			// #endif
 		},
 		filters: {
 			time(val) {
@@ -710,9 +732,9 @@
 			}
 		},
 		computed: {
-      type() {
-				return 'buy_now';
-      },
+			type() {
+						return 'buy_now';
+			},
 			// 购买按钮禁用
 			buyBtnDisabled() {
 				return parseInt(this.currentStock || this.product.stock, 10) === 0;
@@ -745,40 +767,46 @@
 				};
 			},
 			currentProductPrice () {
-        let price;
-        if (this.type === 'buy_now') {
-          if (this.product.memberDiscount && this.product.memberDiscount.length !== 0) {
-            // eslint-disable-next-line
-            this.product.minSkuPrice = this.product.minSkuPrice * (1 - this.product.memberDiscount.discount / 100).toFixed(2);
-            // eslint-disable-next-line
-            this.product.maxSkuPrice = this.product.maxSkuPrice ? (this.product.maxSkuPrice * (1 - this.product.memberDiscount.discount / 100)).toFixed(2) : 0;
-          }
-          // eslint-disable-next-line
-          price = this.currentSkuPrice || ((this.product.maxSkuPrice && (this.product.minSkuPrice !== this.product.maxSkuPrice)) ? (this.product.minSkuPrice + ' ~ ' + this.product.maxSkuPrice) : parseFloat(this.product.minSkuPrice).toFixed(2));
-          return price;
-        }
-        return parseFloat(price || '0').toFixed(2);
+				let price;
+				if (this.type === 'buy_now') {
+					if (this.product.memberDiscount && this.product.memberDiscount.length !== 0) {
+						// eslint-disable-next-line
+						this.product.minSkuPrice = this.product.minSkuPrice * (1 - this.product.memberDiscount.discount / 100).toFixed(2);
+						// eslint-disable-next-line
+						this.product.maxSkuPrice = this.product.maxSkuPrice ? (this.product.maxSkuPrice * (1 - this.product.memberDiscount.discount / 100)).toFixed(2) : 0;
+					}
+					// eslint-disable-next-line
+					price = this.currentSkuPrice || ((this.product.maxSkuPrice && (this.product.minSkuPrice !== this.product.maxSkuPrice)) ? (this.product.minSkuPrice + ' ~ ' + this.product.maxSkuPrice) : parseFloat(this.product.minSkuPrice).toFixed(2));
+					return price;
+				}
+				return parseFloat(price || '0').toFixed(2);
 			}
 		},
     methods: {
-      ...mapMutations(['setCartNum']),
-			// 返回上一页
-			navBack() {
-				this.$mRouter.back();
+			...mapMutations(['setCartNum']),
+				// 返回上一页
+				navBack() {
+					this.$mRouter.back();
+				},
+			hide() {
+				this.kefuShow = false;
 			},
-      hide() {
-        this.kefuShow = false;
-      },
-      // 分享商品
-      share() {
-        // #ifdef H5
-        if (this.$mPayment.isWechat()) {
-          this.shareClass = 'show';
-        } else {
-          this.$mHelper.h5Copy(this.url);
-        }
-        // #endif
-        // #ifdef APP-PLUS
+			jd(){
+				this.$mRouter.push({
+					route: `/pages/product/jd?url=https://item.jd.com/${this.product.jd_sku_id}.html`
+				});
+			},
+			// 分享商品
+			share() {
+				// #ifdef H5
+				if (this.$mPayment.isWechat()) {
+					this.shareClass = 'show';
+				} else {
+					this.$mHelper.h5Copy(this.url);
+				}
+				// #endif
+
+				// #ifdef APP-PLUS
 				this.$mHelper.handleAppShare(this.url, this.appName, this.product.name, this.product.picture);
 				// #endif
 			},
@@ -834,6 +862,11 @@
 						this.product.comment_num
 					}&evaluateStat=${JSON.stringify(this.product.evaluateStat)}`
 				});
+
+				// this.$mRouter.push({
+				// 	route: `/pages/product/jd?url=https://item.m.jd.com/product/${this.product.jd_sku_id}.html#summary`
+				// });
+
 			},
 			// 顶部tab点击
 			tabClick(index, state) {
@@ -942,8 +975,8 @@
 					});
 			},
 			async buy(skuId) {
-        const params = {};
-        params.data = JSON.stringify({ sku_id: skuId, num: this.currentCartCount });
+				const params = {};
+				params.data = JSON.stringify({ sku_id: skuId, num: this.currentCartCount });
 				if (
 					this.product.point_exchange_type === '2' ||
 					this.product.point_exchange_type === '4' ||

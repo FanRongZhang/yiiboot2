@@ -17,7 +17,8 @@ class m221225_073234_alter_addon_shop_product extends Migration
         $this->addColumn('{{%addon_shop_product}}','end_time','int default 0 comment "满减结束时间"');
         $this->addColumn('{{%addon_shop_product}}','meidansheng','decimal(10,2) default 0 comment "最少单数每单省多少钱"');
         $this->addColumn('{{%addon_shop_product}}','shop_name','varchar(100) null comment "店铺名称"');
-        $this->addColumn('{{%addon_shop_product}}','couInfoJson','json null comment "满减json信息"');
+        $this->addColumn('{{%addon_shop_product}}','couInfoJson','varchar(300) null comment "满减json信息"');
+        $this->addColumn('{{%addon_shop_product}}','jd_sku_id','varchar(50) null comment "jd sku"');
 
     }
 

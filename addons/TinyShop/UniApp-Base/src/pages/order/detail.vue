@@ -345,7 +345,7 @@
 				>
 					查看物流
 				</button>
-				<navigator url="/pages/set/invoice/invoice?source=1">
+				<navigator url="/pages/set/invoice/invoice?source=1" style="display: none;">
 					<button
 						v-if="orderDetail.pay_money > 0 && !orderDetail.invoice"
 						class="action-btn"
@@ -422,7 +422,7 @@
 				<button @tap.stop="handleOrderInvoiceCreate" class="confirm-btn" :class="'bg-' + themeColor.name">确定</button>
 			</view>
 		</view>
-		<rf-kefu></rf-kefu>
+		<!-- <rf-kefu></rf-kefu> -->
 	</view>
 </template>
 <script>

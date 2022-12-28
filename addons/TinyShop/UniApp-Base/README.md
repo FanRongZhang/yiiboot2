@@ -106,11 +106,37 @@ location / {
 
 > [详见配置说明](docs/CONFIG.md)
 
+### 官网
+
+http://www.rageframe.com
+
+### 问题反馈
+
+在使用中有任何问题，欢迎反馈给我，可以用以下联系方式跟我们交流
+
+QQ群2：[1148015133](https://jq.qq.com/?_wv=1027&k=Wk663e9N)
 
 ### 特别鸣谢
+
+感谢以下的项目，排名不分先后
+
+Vuejs： https://github.com/vuejs/vue
+
+uni-app： https://uniapp.dcloud.io/
 
 mix-mall: https://ext.dcloud.net.cn/plugin?id=200
 
 ColorUI: https://github.com/weilanwl/ColorUI
 
+...
 
+### 版权信息
+
+RF商城 遵循 [Apache2](LICENSE.md) 开源协议和 [附加使用协议](docs/LICENSE-SUPPLEMENTAL.md) 发布，并提供免费使用。
+
+本项目包含的第三方源码和二进制文件之版权信息另行标注。
+
+版权所有Copyright © 2016-2022 by RageFrame [www.rageframe.com](http://www.rageframe.com)
+
+All rights reserved。
+LICENSE-SUPPLEMENTAL.md
