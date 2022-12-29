@@ -9,7 +9,6 @@ use addons\TinyShop\common\models\product\Brand;
 use addons\TinyShop\common\models\product\Cate;
 use addons\TinyShop\merchant\forms\ProductForm;
 use yii\console\Controller;
-use yii\web\NotFoundHttpException;
 
 
 class JdController extends Controller
@@ -88,6 +87,13 @@ class JdController extends Controller
     {
         $this->actionCat();
 
+        //下架不合适产品
+        ProductForm::updateAll([
+            'product_status' => 0,
+        ],[
+           'id' =>  Goods::find()->select('id')->andWhere('isUp=0'),
+        ]);
+
         $aryAll = Goods::find()
             ->andWhere('isUp=1')
             ->all();
@@ -146,8 +152,10 @@ class JdController extends Controller
             $model->wholesale_people = $one->couInfoJson[0]['danshu'];
             $model->meidansheng = $one->couInfoJson[0]['meidansheng'];
             $model->price = $model->cost_price = $model->wholesale_price = bcsub($one->price, $one->couInfoJson[0]['meidansheng'], 2);
-            $model->stock = 20000;
-            $model->warning_stock = 100;
+            if($model->isNewRecord) {
+                $model->stock = rand(15000, 50000);
+                $model->warning_stock = 100;
+            }
 //            $model->covers ='';
             $model->posters = '[]';
             $model->state = 1;
@@ -160,9 +168,10 @@ class JdController extends Controller
             $model->shipping_fee_type = 1;
             $model->product_weight = 1;
             $model->marketing_type = '0';
-            $model->is_open_commission = $model->is_open_presell = $model->is_virtual = $model->is_bill = $model->min_buy = $model->max_buy = 0;
+            $model->is_open_commission = $model->is_open_presell = $model->is_virtual = $model->is_bill =0;
             $model->supplier_id = $one->isJdSale ? 1 : 0;
             $model->comment_num = $one->comments;
+            $model->min_buy = $model->max_buy = 1;
 
             //省不到这个金额就下架
             if($model->meidansheng < 20){
