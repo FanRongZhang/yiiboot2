@@ -68,14 +68,13 @@ class jd(object):
         # self.driver.set_window_size(1440, 900)
         self.driver.maximize_window()
 
-        self.api = 'http://gg.lucktp.com/api/v1'
+        self.api = 'http://jd.xiaozhumeimeigou.com/api/tiny-shop/v1/jd'
 
         self.url = 'https://www.jd.com'
 
         self.cookie_file = "jd_cookie"
 
-    def check_status(self):
-        url = "https://order.jd.com/center/list.action"
+    def load_cookie(self):
         if os.path.exists(self.cookie_file):
             #获取cookies文件
             with open(self.cookie_file,"r") as fp:
@@ -84,23 +83,69 @@ class jd(object):
             jd_cookies_dict = json.loads(jd_cookies)
             for cookie in jd_cookies_dict:
                 self.driver.add_cookie(cookie)
+    
+    def save_cookie(self):
+        #获取cookie
+        my_cookie = self.driver.get_cookies()
+        print(my_cookie)
+        data_cookie = json.dumps(my_cookie)
+        with open(self.cookie_file,"w") as fp:
+            fp.write(data_cookie)
+
+
+    def check_status(self):
+        self.load_cookie()
+        url = "https://order.jd.com/center/list.action"
         self.driver.get(url)
-        time.sleep(2)
+
+        time.sleep(5)
         print(self.driver.current_url)
+
         if self.driver.current_url.startswith("https://passport.jd.com"):
             self.driver.find_element(By.XPATH,"//div[@class='qrcode-img']").screenshot("login_qr.png")
-            #等待扫码登录
-            #urllib.request.urlopen(self.api + "/jd/qr?name=zrf") #发送扫码提醒
-            time.sleep(30)
-            #获取cookie
-            my_cookie = self.driver.get_cookies()
-            print(my_cookie)
-            data_cookie = json.dumps(my_cookie)
-            with open(self.cookie_file,"w") as fp:
-                fp.write(data_cookie)
 
+            urllib.request.urlopen(self.api + "/account/login-notify?name=zrf") #发送扫码提醒
+        
+            #等待扫码登录看是否已成功登录
+            while True:
+                time.sleep(5)
+                #应该会自动返回到目标页
+                if self.driver.current_url.startswith("https://order.jd.com/center/list.action"):
+                    self.save_cookie()
 
-    def xd(self, name):
+    def xiadan(self,goods_id):
+        url="https://item.jd.com/"+goods_id+".html"
+        self.driver.get(url)
+
+        # 点击加入购物车
+        self.driver.find_element_by_xpath("//div[@class='itemInfo-wrap']/div/div/a[contains(@onclick,'加入购物车')]").click()
+        # 调用driver的page_source属性获取页面源码
+        pageSource = self.driver.page_source
+
+        # 断言页面源码中是否包含“商品已成功加入购物车”关键字，以此判断页面内容是否正确
+        assert "商品已成功加入购物车" in pageSource
+
+        print("商品已成功加入购物车")
+
+        # 点击“我的购物车”
+        self.driver.find_element_by_xpath("//a[text()='我的购物车']").click()
+        time.sleep(5)
+
+        # 点击“去结算”button
+        # self.driver.find_element_by_xpath("//div[@id='cart-floatbar']/div/div/div/div[2]/div[4]/div[1]/div/div[1]").click()
+
+        # time.sleep(5)
+
+        # 点击“提交订单”button
+        # self.driver.find_element_by_xpath("//button[@id='order-submit']").click()
+
+        # 调用driver的page_source属性获取页面源码
+        # pageSource = self.driver.page_source
+
+        # 断言页面源码中是否包含“商品已成功加入购物车”关键字，以此判断页面内容是否正确
+        # assert "订单提交成功，请尽快付款" in pageSource
+        
+    def google(self, name):
         try:
             url="https://play.google.com/store/search?q="+name+"&c=apps&gl=us"
             
@@ -163,9 +208,11 @@ class jd(object):
         finally:
             self.driver.quit()
 
-# python google_play.py whatsapp 
+# python xiadan.py 192821 
 if __name__ == "__main__":
+    goods_id = sys.argv[1]
     h = jd()
     h.check_status()
+    h.xiadan(goods_id=goods_id)
 
 
